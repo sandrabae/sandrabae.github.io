@@ -124,7 +124,7 @@ h4 {
 #resume{
 	position: relative;
 	left: 10%;
-	
+
 }
 
 #name{
@@ -1454,6 +1454,9 @@ div.col-sm-3.col-xs-6.projectTextBlock {
 
 	h2 {
 		font-size: 1.4166em;
+	}
+	#home{
+		overflow-y: hidden !important;
 	}
 
 	#home .textPanel {
