@@ -1485,6 +1485,9 @@ div.col-sm-3.col-xs-6.projectTextBlock {
 	.imageGridItem-lg, .imageGridItem-sm, .imageGridItem-md {
 		padding: 3px;
 	}
+	.spacing{
+		left: 0% !important;
+	}
 
 
 	/* Site

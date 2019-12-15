@@ -133,6 +133,15 @@ body .section:last-child {
 .section-item-links, .section-item-links a {
     color: #9E9E9E;
 }
+.pub-img{
+  height: auto;
+  width: 100%;
+}
+
+.spacing{
+    position: relative;
+    left: 4%;
+}
 
 #my-name {
     /* margin-bottom: .2em; */
