@@ -31,7 +31,7 @@ a:hover {
 }
 
 .underline {
-    text-decoration: underline;
+    text-decoration: underline !important;
 }
 
 body {
