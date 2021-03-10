@@ -127,11 +127,11 @@ body .section:last-child {
 }
 
 .section-item-description-small {
-    font-size: 0.825em;
+    font-size: 0.925em;
 }
 
 .section-item-links, .section-item-links a {
-    color: #9E9E9E;
+    color: #888;
 }
 .pub-img{
   height: auto;

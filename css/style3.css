@@ -14,7 +14,7 @@
 -------------------------------------------------- */
 
 a {
-	color: #000;
+	color: #333;
 	text-decoration: none;
 	transition: color .2s;
 }
@@ -30,6 +30,14 @@ a:hover {
 .faketextlink:hover {
 	color: #6e6e6e;
 	cursor: pointer;
+}
+
+.italics{
+	font-style: italic;
+}
+
+.underline{
+	text-decoration: underline;
 }
 
 body {
@@ -63,7 +71,7 @@ p:only-child {
 }
 
 p {
-	color: #6e6e6e;
+	color: #333;
 	margin: 1.4285714em 0em 1.4285714em 0em;
 
 }
@@ -115,7 +123,7 @@ h3 {
 
 h4 {
 	font-weight: 100;
-	color: #6e6e6e;
+	color: #333;
 	font-size: 1em;
 	line-height: 1.42857142856em;
 	margin: 0;
