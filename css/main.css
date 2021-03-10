@@ -30,7 +30,7 @@ a:hover {
 	cursor: pointer;
 }
 
-.underline {
+a.underline {
     text-decoration: underline !important;
 }
 
