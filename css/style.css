@@ -91,6 +91,12 @@ em, i {
   pointer-events: none;
 }
 
+ul.no-bullets {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
 #menu_link, h1 {
   font-family: "Karla";
   font-weight: 100;
@@ -221,7 +227,7 @@ hr {
 -------------------------------------------------- */
 #main {
   width: 100%;
-  height: 110vh;
+  /* height: 100%; */
   position: absolute;
   left: 0;
   right: 0;
@@ -231,6 +237,11 @@ hr {
   justify-content: center;
   flex-wrap: wrap;
   overflow-y: scroll;
+}
+
+.single {
+  justify-content: left !important;
+  /* top: 10%; */
 }
 
 #main .carousel {
