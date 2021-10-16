@@ -37,7 +37,7 @@ class Wanderlust extends HTMLElement {
       <li>Lady Flower (二胡 女人花) / Shen Lin (沈林)</li>
       <li>Song for Lindsay / Andrew Boysen Jr.</li>
       <li>Arabeseque / Samuel Hazo</li>
-      <li>Wind Scene (Chrono Trigger) / </li>
+      <li>Wind Scene (Chrono Trigger) / Yasunori Mitsuda</li>
       <li>Opus Posthumous / Maurice Ravel</li>
       <li>Melody to You / Hideo Kobayashi</li>
       <li>Exit / Boris Brejcha</li>
