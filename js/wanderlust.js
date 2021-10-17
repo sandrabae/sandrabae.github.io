@@ -70,6 +70,7 @@ class Wanderlust extends HTMLElement {
       <li>Fuck Content / Michael Rock</li>
       <li>User Interface: A Personal View / Alan Kay</li>
       <li>Tangible Bits / Hiroshi Ishii</li>
+      <li>A Brief Rant on the Future of Interaction Design / Bret Victor</li>
     </ul>
   `;
   }
