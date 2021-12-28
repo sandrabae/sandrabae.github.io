@@ -1,0 +1,231 @@
+/* Project
+-------------------------------------------------- */
+.hero-banner {
+  width: 100%;
+  height: auto;
+  /* background-position: left; */
+  /* background-repeat: no-repeat; */
+  background-size: cover;
+  padding: none !important;
+  /* left: -1%; */
+  /* top: -8%; */
+  /* position: fixed; */
+  position: relative;
+  z-index: -1000000;
+  padding-bottom: 80px;
+}
+
+main h3 {
+  font-weight: 600;
+  margin: 0;
+  font-size: 1.5em;
+}
+
+.section {
+  margin: 15px 0px 15px 0px;
+}
+
+/* Photos */
+.imageGrid {
+  margin-top: 15px;
+  margin-left: 15px;
+}
+
+.imageRow {
+  width: 100%;
+  margin-right: 15px;
+}
+
+.imageGridFull {
+  float: left;
+  width: 100%;
+}
+
+.gridTwoColumn {
+  float: left;
+  width: 50%;
+}
+
+.gridThreeColumn {
+  float: left;
+  width: 33.33%;
+}
+
+.projectPictureContainer {
+  margin-left: -15px;
+  margin-bottom: 30px;
+  margin-right: 15px;
+}
+
+/*Grid for Columns */
+.project-title {
+  float: left;
+  width: 100%;
+  height: 100%;
+  margin-bottom: 50px;
+}
+
+.project-one-column {
+  float: left;
+  width: 100%;
+  height: 100%;
+  margin-bottom: 20px;
+}
+
+.project-two-columns {
+  float: left;
+  width: 50%;
+  height: 100%;
+  margin-bottom: 50px;
+}
+
+.project-header-title {
+  float: left;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.project-header-title-n {
+  margin-top: 50px;
+}
+
+.right-column-trim {
+  margin-right: 15px;
+}
+
+.left-column-trim {
+  margin-right: 15px;
+}
+
+.three-grid-trim {
+  margin-left: -15px;
+}
+
+#project .caption {
+  display: inline-block;
+  padding-top: 10px;
+}
+
+.projectTextContainer {
+  display: block;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+.projectTextContainer .projectTextBlock:first-of-type {
+  padding-bottom: 20px;
+}
+
+.title {
+  line-height: 0.9 !important;
+  font-weight: 600 !important;
+  text-transform: uppercase;
+}
+
+.venue {
+  max-width: 480px;
+}
+
+div.col-sm-3.col-xs-6.projectTextBlock {
+  display: block;
+  vertical-align: none;
+  float: none;
+}
+
+#mosaic-banner {
+  padding: 50px 80px 0px 80px;
+  max-width: 1500px;
+}
+
+/*
+.figure-caption {
+  max-width: 500px;
+  display: flex;
+  justify-content: center;
+  line-height: 1.2;
+} */
+@media (max-width: 767px) {
+  .banner {
+    padding: 20px 0px !important;
+    width: 100% !important;
+  }
+
+  #flax {
+    height: auto !important;
+  }
+
+  #skin-text {
+    padding-bottom: 20px;
+  }
+
+  #skin-banner {
+    padding: 5px 0px !important;
+    width: 100% !important;
+  }
+
+  span, h4 {
+    font-size: 1.15em !important;
+  }
+
+  .project-title {
+    margin-bottom: 20px;
+  }
+
+  .title {
+    line-height: 1.0;
+  }
+
+  .line {
+    display: none;
+  }
+
+  .no-banner {
+    top: 10%;
+  }
+
+  #mosaic-banner {
+    padding: 60px 20px 0px 20px;
+  }
+
+  #main {
+    padding-bottom: 30px !important;
+  }
+
+  #main, .topnav {
+    font-size: 1.1em;
+    padding: 0px 2em;
+  }
+
+  .topnav {
+    display: none !important;
+  }
+
+  .project-two-columns {
+    margin-bottom: 30px;
+  }
+
+  .project-two-columns, .gridTwoColumn, .gridThreeColumn {
+    width: 100%;
+  }
+
+  nav-component a {
+    line-height: 18.4px;
+  }
+
+  .hero-banner {
+    padding-bottom: 30px;
+  }
+
+  .inside-li {
+    font-size: large;
+  }
+
+  p, ul {
+    font-size: 1.25em;
+    line-height: 1.3;
+  }
+
+  main h3 {
+    font-size: 1.3em;
+  }
+}

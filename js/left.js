@@ -49,7 +49,34 @@ class Left extends HTMLElement {
           <div class="media stream-item">
             <div class="media-body">
               <h3 class="article-title mb-0 mt-0">
-                <a class="disabled" href="${json.papers.dustdevil.projectpage}">${json.papers.dustdevil.title}</a>
+                <a href="${json.papers.dataphys.projectpage}">${json.papers.dataphys.title}</a>
+              </h3>
+              <div class="article-style">${json.papers.dataphys.sentence}</div>
+              <div class="stream-meta article-metadata">
+                <div>
+                  <span><strong>Sandra Bae</strong></span>,
+                  <span><a href="${json.people.czheng}" target="_blank">Clement Zheng</a></span>,
+                  <span><a href="${json.people.mwest}" target="_blank">Mary Etta West</a></span>,
+                  <span><a href="${json.people.shuron}" target="_blank">Samuel Huron</a></span>,
+                  <span><a href="${json.people.edo}" target="_blank">Ellen Do</a></span>,
+                  <span><a href="${json.people.dszafir}"target="_blank">Danielle Szafir</a></span>
+                </div>
+                <div class="venue">${json.papers.dataphys.venue}</div>
+              </div>
+              <!-- <div class="btn-links">
+                <a class="btn btn-outline-primary my-1 mr-1 btn-sm" href="${json.papers.dataphys.pdf}" target="_blank" rel="noopener">PDF</a>
+              </div> -->
+            </div>
+            <div class="ml-3">
+              <a href="${json.papers.dataphys.projectpage}">
+                <img src="${json.papers.dataphys.icon}" alt="">
+              </a>
+            </div>
+            </div>
+          <div class="media stream-item">
+            <div class="media-body">
+              <h3 class="article-title mb-0 mt-0">
+                <a href="${json.papers.dustdevil.projectpage}">${json.papers.dustdevil.title}</a>
               </h3>
               <div class="article-style">${json.papers.dustdevil.sentence}</div>
               <div class="stream-meta article-metadata">
@@ -69,7 +96,7 @@ class Left extends HTMLElement {
               </div>
             </div>
             <div class="ml-3">
-              <a class="disabled" href="${json.papers.dustdevil.projectpage}">
+              <a href="${json.papers.dustdevil.projectpage}">
                 <img src="${json.papers.dustdevil.icon}" alt="">
               </a>
             </div>
@@ -77,7 +104,7 @@ class Left extends HTMLElement {
           <div class="media stream-item">
             <div class="media-body">
               <h3 class="article-title mb-0 mt-0">
-                <a class="disabled" href="${json.papers.smartcity.projectpage}">${json.papers.smartcity.title}</a>
+                <a href="${json.papers.smartcity.projectpage}">${json.papers.smartcity.title}</a>
               </h3>
               <div class="article-style">${json.papers.smartcity.sentence}</div>
               <div class="stream-meta article-metadata">
@@ -96,7 +123,7 @@ class Left extends HTMLElement {
               </div>
             </div>
             <div class="ml-3">
-              <a class="disabled" href="${json.papers.smartcity.projectpage}">
+              <a href="${json.papers.smartcity.projectpage}">
                 <img src="${json.papers.smartcity.icon}" alt="">
               </a>
             </div>
@@ -104,7 +131,7 @@ class Left extends HTMLElement {
           <div class="media stream-item">
             <div class="media-body">
               <h3 class="article-title mb-0 mt-0">
-                <a class="disabled" href="${json.papers.mosaic.projectpage}">${json.papers.mosaic.title}</a>
+                <a href="${json.papers.mosaic.projectpage}">${json.papers.mosaic.title}</a>
               </h3>
               <div class="article-style">${json.papers.mosaic.sentence}</div>
               <div class="stream-meta article-metadata">
@@ -125,7 +152,7 @@ class Left extends HTMLElement {
               </div>
             </div>
             <div class="ml-3">
-              <a class="disabled" href="${json.papers.mosaic.projectpage}">
+              <a href="${json.papers.mosaic.projectpage}">
                 <img src="${json.papers.mosaic.icon}" alt="">
               </a>
             </div>
@@ -133,7 +160,7 @@ class Left extends HTMLElement {
           <div class="media stream-item">
             <div class="media-body">
               <h3 class="article-title mb-0 mt-0">
-                <a class="disabled" href="${json.papers.spinneret.projectpage}">
+                <a href="${json.papers.spinneret.projectpage}">
                 ${json.papers.spinneret.title}
                 </a>
               </h3>
@@ -156,7 +183,7 @@ class Left extends HTMLElement {
               </div>
             </div>
             <div class="ml-3">
-              <a class="disabled" href="${json.papers.spinneret.projectpage}">
+              <a href="${json.papers.spinneret.projectpage}">
                 <img src="${json.papers.spinneret.icon}" alt="">
               </a>
             </div>
@@ -167,7 +194,7 @@ class Left extends HTMLElement {
           <div class="media stream-item">
             <div class="media-body">
               <h3 class="article-title mb-0 mt-0">
-                <a class="disabled" href="${json.papers.diypaper.projectpage}">${json.papers.diypaper.title}</a>
+                <a href="${json.papers.diypaper.projectpage}">${json.papers.diypaper.title}</a>
               </h3>
               <div class="article-style">${json.papers.diypaper.sentence}</div>
               <div class="stream-meta article-metadata">
@@ -188,7 +215,7 @@ class Left extends HTMLElement {
               </div>
             </div>
             <div class="ml-3">
-              <a class="disabled" href="${json.papers.diypaper.projectpage}">
+              <a href="${json.papers.diypaper.projectpage}">
                 <img src="${json.papers.diypaper.icon}" alt="">
               </a>
             </div>
@@ -196,7 +223,7 @@ class Left extends HTMLElement {
           <div class="media stream-item">
             <div class="media-body">
               <h3 class="article-title mb-0 mt-0">
-                <a class="disabled" href="${json.papers.secondskin.projectpage}">${json.papers.secondskin.title}</a>
+                <a href="${json.papers.secondskin.projectpage}">${json.papers.secondskin.title}</a>
               </h3>
               <div class="article-style">${json.papers.secondskin.sentence}</div>
               <div class="stream-meta article-metadata">
@@ -213,7 +240,7 @@ class Left extends HTMLElement {
               </div>
             </div>
             <div class="ml-3">
-              <a class="disabled" href="${json.papers.secondskin.projectpage}">
+              <a href="${json.papers.secondskin.projectpage}">
                 <img src="${json.papers.secondskin.icon}" alt="">
               </a>
             </div>
@@ -221,14 +248,15 @@ class Left extends HTMLElement {
           <div class="media stream-item">
             <div class="media-body">
               <h3 class="article-title mb-0 mt-0">
-                <a class="disabled" href="${json.papers.disease.projectpage}">${json.papers.disease.title}</a>
+                <a href="${json.papers.disease.projectpage}">${json.papers.disease.title}</a>
               </h3>
               <div class="article-style">${json.papers.disease.sentence}</div>
               <div class="stream-meta article-metadata">
                 <div>
                   <span>Keshav Dasu</span>,
                   <span><strong>Sandra Bae</strong></span>,
-                  <span><a href="${json.people.tfujiwara}" target="_blank">Takanori Fujiwara</a></span>,   <span><a href="${json.people.klma}" target="_blank" target="_blank">Kwan-Liu Ma</a></span>
+                  <span><a href="${json.people.tfujiwara}" target="_blank">Takanori Fujiwara</a></span>,
+                  <span><a href="${json.people.klma}" target="_blank" target="_blank">Kwan-Liu Ma</a></span>
                 </div>
                 <div class="venue">${json.papers.disease.venue}</div>
               </div>
@@ -238,7 +266,7 @@ class Left extends HTMLElement {
               </div>
             </div>
             <div class="ml-3">
-              <a class="disabled" href="${json.papers.disease.projectpage}">
+              <a href="${json.papers.disease.projectpage}">
                 <img src="${json.papers.disease.icon}" alt="">
               </a>
             </div>

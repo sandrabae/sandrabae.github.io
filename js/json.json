@@ -3,7 +3,7 @@
     "gscholar": "https://scholar.google.com/citations?user=MhRbJLEAAAAJ&hl=en",
     "twitter": "https://twitter.com/sandrabae_sb",
     "email": "mailto:sandra.bae@colorado.edu",
-    "cv": "./materials/sb_cv_sept_2021.pdf"
+    "cv": "../materials/sb_cv_sept_2021.pdf"
   },
   "people": {
     "edo": "https://www.colorado.edu/atlas/ellen-yi-luen-do",
@@ -25,33 +25,46 @@
     "ryang": "https://ruhanyang.com/",
     "mwest": "https://www.ettawest.com/'",
     "pgyory": "https://petroochio.github.io/#/",
-    "tfujiwara": "https://takanori-fujiwara.github.io/"
+    "tfujiwara": "https://takanori-fujiwara.github.io/",
+    "shuron": "https://www.telecom-paris.fr/samuel-huron?l=en"
   },
   "papers": {
+    "dataphys": {
+      "title": "Making Data Tangible: A Cross-Disciplinary Design Space for Data Physicalization",
+      "sentence": "A design space that analyzes the interrelationship of key factors (context, structure, interactions) when designing a physicalization.",
+      "venue": "ACM Conference on Human Factors in Computing Systems (CHI)",
+      "year": "2021",
+      "projectpage": "../projects/data-phys-design.html",
+      "icon": "../img/main/dataphys.jpg",
+      "pdf": "#"
+    },
     "dustdevil": {
       "title": "Maximizing Dust Devil Follow-Up Observations on Mars Using Cubesats and On-board Scheduling",
       "sentence": "A mission of constellation of low orbiting Mars cube sats to maximize the number of dust devil follow-up observations through real-time, on-board scheduling.",
       "venue": "Proceedings of 31st AAS/AIAA Space Flight Mechanics Meeting",
-      "projectpage": "#",
-      "icon": "./img/main/dust-devil.jpg",
-      "pdf": "./materials/aas-gnc_mosaic_mars.pdf"
+      "year": "2020",
+      "projectpage": "../projects/dust-devil.html",
+      "icon": "../img/main/dust-devil.jpg",
+      "pdf": "../materials/aas-gnc_mosaic_mars.pdf"
     },
     "smartcity": {
       "title": "User Interfaces for Smart Cities",
       "sentence": "An overview of how interfaces play a role in smart cities.",
       "venue": "In the Springer Handbook of Smart Cities.",
-      "projectpage": "#",
+      "year": "2020",
+      "projectpage": "../projects/smart-city.html",
       "icon": "#",
-      "pdf": "./materials/springer_smartcity.pdf",
+      "pdf": "../materials/springer_smartcity.pdf",
       "doi": "https://link.springer.com/referenceworkentry/10.1007%2F978-3-030-15145-4_94-1"
     },
     "mosaic":{
-      "title": "A Visual Analytics Approach to Debugging Cooperative, Autonomous Multi-Robot Systems' Worldviews",
+      "title": "MOSAIC Viewer: A Visual Analytics Approach to Debugging Cooperative, Autonomous Multi-Robot Systems' Worldviews",
       "sentence": "A visual analytics tool that helps operators detect and conduct a root cause analysis of robots’ desynchronized worldviews.",
-      "venue": "IEEE Visual Analytics Science and Technology (VAST) 2020",
-      "projectpage": "#",
-      "icon": "./img/main/mosaic_viewer_twitter.gif",
-      "pdf": "./materials/vis20_mosaic.pdf",
+      "venue": "Proceedings of IEEE Visual Analytics Science and Technology (VAST) 2020",
+      "year": "2020",
+      "projectpage": "../projects/mosaic.html",
+      "icon": "../img/main/mosaic_viewer_twitter.gif",
+      "pdf": "../materials/vis20_mosaic.pdf",
       "doi": "https://ieeexplore.ieee.org/abstract/document/9308630",
       "presentation": "https://www.youtube.com/watch?v=h1isZznN1oI&t=4401s&ab_channel=IEEEVisualizationConference",
       "preview": "https://www.youtube.com/watch?v=eIQdcLde9F0&ab_channel=IEEEVisualizationConference"
@@ -59,10 +72,11 @@
     "spinneret":{
       "title": "Spinneret: Aiding Creative Ideation through Non-Obvious Concept Associations",
       "sentence": "A functional approach to aid mind mapping by providing suggestions based on a knowledge graph.",
-      "venue": "ACM CHI 2020",
-      "icon": "./img/main/spinneret.jpg",
-      "projectpage": "#",
-      "pdf": "./materials/chi20_spinneret.pdf",
+      "venue": "ACM Conference on Human Factors in Computing Systems (CHI)",
+      "year": "2020",
+      "icon": "../img/main/spinneret.jpg",
+      "projectpage": "../projects/spinneret.html",
+      "pdf": "../materials/chi20_spinneret.pdf",
       "doi": "https://dl.acm.org/doi/abs/10.1145/3313831.3376746",
       "presentation": "https://www.youtube.com/watch?v=tETWdTikeOc&ab_channel=ACMSIGCHI",
       "preview": "https://www.youtube.com/watch?v=g005rIKDl54&ab_channel=ACMSIGCHI"
@@ -71,28 +85,33 @@
       "title": "Touching Information with DIY Paper Charts & AR Markers",
       "sentence": "Exploration of how informal learning through creation and play can help increase data literacy and engagement.",
       "venue": "ACM IDC 2021",
-      "projectpage": "#",
-      "icon": "./img/main/idc21.jpg",
-      "pdf": "./materials/idc21_diy.pdf",
+      "year": "2021",
+      "projectpage": "../projects/diy-paper.html",
+      "icon": "../img/main/idc21.jpg",
+      "pdf": "../materials/idc21_diy.pdf",
       "doi": "https://dl.acm.org/doi/abs/10.1145/3459990.3465191",
-      "preview": "https://drive.google.com/file/d/1h2oBZk2OWVnz8D7CWl4LKAtHZqXHSW0v/view?usp=sharing"
+      "preview": "https://vimeo.com/644446615?embedded=true&source=video_title&owner=45814582"
     },
     "secondskin":{
       "title": "Cyborg Crafts: Second SKIN (Soft Keen INteraction)",
       "sentence": "A handmade collection of four modular soft wearable sensors with a temperature-dependent dynamic display.",
       "venue": "ACM TEI 2021 Student Design Competition (Craft Award)",
-      "projectpage": "#",
-      "icon": "./img/main/second-skin.jpg",
-      "pdf": "./materials/tei21-second-skin.pdf",
+      "year": "2021",
+      "award": "Award 🏅: <b>Craft Award</b> for Student Design Competition",
+      "projectpage": "../projects/second-skin.html",
+      "icon": "../img/main/second-skin.jpg",
+      "pdf": "../materials/tei21-second-skin.pdf",
       "doi": "https://dl.acm.org/doi/abs/10.1145/3430524.3444705"
     },
     "disease":{
       "title": "Learning About Disease Associations in Taiwan",
       "sentence": "A storytelling visualization that uses a metaphor to illustrate the co-occurrences of diseases.",
       "venue": "IEEE PacificVis 2018 Visual Storytelling Contest (Honorable Mention)",
-      "projectpage": "#",
-      "icon": "./img/main/bacterial.jpg",
-      "pdf": "./materials/pvis18_disease.pdf",
+      "year": "2018",
+      "award": "Award 🏅: <b>Honorable Mention</b> for Visual Storytelling Contest",
+      "projectpage": "../projects/disease-associations.html",
+      "icon": "../img/main/bacterial.jpg",
+      "pdf": "../materials/pvis18_disease.pdf",
       "demo": "https://k-dasu.github.io/"
     }
   }
