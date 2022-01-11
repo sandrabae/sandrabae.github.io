@@ -49,6 +49,11 @@
       "active": false,
       "values": [
         {
+          "title": "Reflect",
+          "value": "Reflect",
+          "checked": false
+        },
+        {
           "title": "Analyze",
           "value": "Analyze",
           "checked": false
@@ -59,18 +64,18 @@
           "checked": false
         },
         {
-          "title": "Enjoy",
-          "value": "Enjoy",
-          "checked": false
-        },
-        {
           "title": "Express",
           "value": "Express",
           "checked": false
         },
         {
-          "title": "Reflect",
-          "value": "Reflect",
+          "title": "Collaborate",
+          "value": "Collaborate",
+          "checked": false
+        },
+        {
+          "title": "Enjoy",
+          "value": "Enjoy",
           "checked": false
         },
         {
@@ -90,8 +95,8 @@
       "active": false,
       "values": [
         {
-          "title": "Children",
-          "value": "Children",
+          "title": "Gen. Pub.",
+          "value": "General Public",
           "checked": false
         },
         {
@@ -100,18 +105,8 @@
           "checked": false
         },
         {
-          "title": "Family",
-          "value": "Family",
-          "checked": false
-        },
-        {
-          "title": "Gen. Pub.",
-          "value": "General Public",
-          "checked": false
-        },
-        {
-          "title": "Other",
-          "value": "Other",
+          "title": "Research.",
+          "value": "Researchers",
           "checked": false
         },
         {
@@ -120,8 +115,18 @@
           "checked": false
         },
         {
-          "title": "Research.",
-          "value": "Researchers",
+          "title": "Children",
+          "value": "Children",
+          "checked": false
+        },
+        {
+          "title": "Family",
+          "value": "Family",
+          "checked": false
+        },
+        {
+          "title": "Other",
+          "value": "Other",
           "checked": false
         },
         {
@@ -141,18 +146,18 @@
       "active": false,
       "values": [
         {
-          "title": "Body",
-          "value": "Body",
-          "checked": false
-        },
-        {
           "title": "Home",
           "value": "Home",
           "checked": false
         },
         {
-          "title": "Outdoors",
-          "value": "Outdoors",
+          "title": "Workspace",
+          "value": "Workspace",
+          "checked": false
+        },
+        {
+          "title": "Body",
+          "value": "Body",
           "checked": false
         },
         {
@@ -166,18 +171,13 @@
           "checked": false
         },
         {
-          "title": "Unclear<br>Loc.",
-          "value": "Unclear Location",
+          "title": "Outdoors",
+          "value": "Outdoors",
           "checked": false
         },
         {
           "title": "Unspec.<br>Loc.",
           "value": "Unspecified Location",
-          "checked": false
-        },
-        {
-          "title": "Workspace",
-          "value": "Workspace",
           "checked": false
         }
       ],
@@ -192,8 +192,13 @@
       "active": false,
       "values": [
         {
-          "title": "Bio. & Med.",
-          "value": "Biological&medical",
+          "title": "Gen. Stats",
+          "value": "General Statistics",
+          "checked": false
+        },
+        {
+          "title": "Personal",
+          "value": "Personal",
           "checked": false
         },
         {
@@ -202,13 +207,13 @@
           "checked": false
         },
         {
-          "title": "Fitness<br>& Wellness",
-          "value": "Fitness&Wellness",
+          "title": "Bio. & Med.",
+          "value": "Biological and medical",
           "checked": false
         },
         {
-          "title": "Gen. Stats",
-          "value": "General Statistics",
+          "title": "Fitness<br>& Wellness",
+          "value": "Fitness&Wellness",
           "checked": false
         },
         {
@@ -219,11 +224,6 @@
         {
           "title": "Image/video",
           "value": "Image/video",
-          "checked": false
-        },
-        {
-          "title": "Personal",
-          "value": "Personal",
           "checked": false
         }
       ],
@@ -264,13 +264,13 @@
       "active": false,
       "values": [
         {
-          "title": "Many",
-          "value": "Many",
+          "title": "One",
+          "value": "One",
           "checked": false
         },
         {
-          "title": "One",
-          "value": "One",
+          "title": "Many",
+          "value": "Many",
           "checked": false
         }
       ],
@@ -290,8 +290,8 @@
           "checked": false
         },
         {
-          "title": "Un-Bounded",
-          "value": "Un-Bounded",
+          "title": "UnBounded",
+          "value": "Unbounded",
           "checked": false
         }
       ],
@@ -327,6 +327,11 @@
       "active": false,
       "values": [
         {
+          "title": "Position",
+          "value": "Position",
+          "checked": false
+        },
+        {
           "title": "Color",
           "value": "Color",
           "checked": false
@@ -342,21 +347,6 @@
           "checked": false
         },
         {
-          "title": "Position",
-          "value": "Position",
-          "checked": false
-        },
-        {
-          "title": "Texture",
-          "value": "Texture",
-          "checked": false
-        },
-        {
-          "title": "Vibro",
-          "value": "Vibro",
-          "checked": false
-        },
-        {
           "title": "Vibrotact.",
           "value": "Vibrotactile",
           "checked": false
@@ -364,6 +354,11 @@
         {
           "title": "Volume",
           "value": "Volume",
+          "checked": false
+        },
+        {
+          "title": "Texture",
+          "value": "Texture",
           "checked": false
         }
       ],
@@ -378,8 +373,33 @@
       "active": false,
       "values": [
         {
-          "title": "Act.-<br>Emb.",
-          "value": "Activity-Embedded",
+          "title": "Shp.-chan.<br>Dis.",
+          "value": "Shape-Changing Display",
+          "checked": false
+        },
+        {
+          "title": "Swarm<br>Robo.",
+          "value": "Swarm Robotics",
+          "checked": false
+        },
+        {
+          "title": "Fluidic Disp.",
+          "value": "Fluidic Display",
+          "checked": false
+        },
+        {
+          "title": "Voxel<br>Prints",
+          "value": "Voxel Prints",
+          "checked": false
+        },
+        {
+          "title": "Light Displ.",
+          "value": "Light Display",
+          "checked": false
+        },
+        {
+          "title": "TUI",
+          "value": "TUI",
           "checked": false
         },
         {
@@ -393,43 +413,18 @@
           "checked": false
         },
         {
-          "title": "Env.-<br>Emb.",
+          "title": "Activity",
+          "value": "Activity-Embedded",
+          "checked": false
+        },
+        {
+          "title": "Env.",
           "value": "Environmentally-Embedded",
           "checked": false
         },
         {
-          "title": "Fluidic Disp.",
-          "value": "Fluidic Display",
-          "checked": false
-        },
-        {
-          "title": "Light",
-          "value": "Light",
-          "checked": false
-        },
-        {
-          "title": "Person.<br>-Emb.",
+          "title": "Person",
           "value": "Personally-Embedded",
-          "checked": false
-        },
-        {
-          "title": "Shp.-chan. Dis.",
-          "value": "Shape-Changing Display",
-          "checked": false
-        },
-        {
-          "title": "Swarm<br>Robo.",
-          "value": "Swarm Robotics",
-          "checked": false
-        },
-        {
-          "title": "TUI",
-          "value": "TUI",
-          "checked": false
-        },
-        {
-          "title": "Voxel<br>Prints",
-          "value": "Voxel Prints",
           "checked": false
         }
       ],
@@ -444,33 +439,23 @@
       "active": false,
       "values": [
         {
-          "title": "Tactile Aural",
-          "value": "Tactile Aural",
-          "checked": false
-        },
-        {
           "title": "Visual",
           "value": "Visual",
           "checked": false
         },
         {
-          "title": "Vis. Aural",
-          "value": "Visual Aural",
+          "title": "Tactile",
+          "value": "Tactile",
           "checked": false
         },
         {
-          "title": "Vis. Tactile",
-          "value": "Visual Tactile",
+          "title": "Aural",
+          "value": "Aural",
           "checked": false
         },
         {
-          "title": "Vis. Tact. Aural",
-          "value": "Visual Tactile Aural",
-          "checked": false
-        },
-        {
-          "title": "Vis. Taste",
-          "value": "Visual Taste",
+          "title": "Taste",
+          "value": "Taste",
           "checked": false
         }
       ],
@@ -490,33 +475,13 @@
           "checked": false
         },
         {
-          "title": "Direct GUI",
-          "value": "Direct GUI",
-          "checked": false
-        },
-        {
-          "title": "Direct<br>Sensed",
-          "value": "Direct Sensed",
-          "checked": false
-        },
-        {
-          "title": "Direct<br>Sensed GUI",
-          "value": "Direct Sensed GUI",
+          "title": "Sensed",
+          "value": "Sensed",
           "checked": false
         },
         {
           "title": "GUI",
           "value": "GUI",
-          "checked": false
-        },
-        {
-          "title": "GUI Sensed",
-          "value": "GUI Sensed",
-          "checked": false
-        },
-        {
-          "title": "Sensed",
-          "value": "Sensed",
           "checked": false
         },
         {
@@ -543,6 +508,11 @@
         {
           "title": "Assemb.",
           "value": "Assemble",
+          "checked": false
+        },
+        {
+          "title": "Annot.",
+          "value": "Annotate",
           "checked": false
         },
         {

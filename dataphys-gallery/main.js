@@ -4,7 +4,7 @@ var galleryVis, fM, formM;
 var defaultConfig = {};
 // read data
 Promise.all([
-  d3.json("./data/dataset.json"),
+  d3.json("./data/dataset2.json"),
   d3.json("./data/filterConfig.json")
 ]).then(function(files) {
   data = files[0];
@@ -29,6 +29,7 @@ function filterNodes() {
   links = originalData_links;
 
   nodes = nodes.filter(function(d) {
+    // console.log(d);
     var decision = true;
     fM.filters
       .filter(function(d) {
@@ -46,8 +47,19 @@ function filterNodes() {
               decision = true;
             break;
           default:
-            if (!activeFilter.selectedValues.includes(d[activeFilter.key]))
-              decision = false;
+            // determine if object is an array
+            if (Array.isArray(d[activeFilter.key])) {
+              let arr = d[activeFilter.key];
+              let decisionArray = [];
+
+              //see if activeFilter element exists in any of the array
+              const isInsideArray = (currentValue) => decisionArray.push(activeFilter.selectedValues.indexOf(currentValue) > -1)
+              arr.forEach(isInsideArray);
+              decision = decisionArray.indexOf(true) > -1;
+            } else {
+              if (!activeFilter.selectedValues.includes(d[activeFilter.key]))
+                decision = false;
+            }
         }
       });
 
