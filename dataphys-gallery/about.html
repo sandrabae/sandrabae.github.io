@@ -1,42 +1,10 @@
-Skip to content
-Why GitHub?
-Team
-Enterprise
-Explore
-Marketplace
-Pricing
-Search
-Sign in
-Sign up
-locomotionvault
-/
-locomotionvault.github.io
-Public
-Code
-Issues
-15
-Pull requests
-Actions
-Projects
-Wiki
-Security
-Insights
-locomotionvault.github.io/about.html
-@maxdiluca
-maxdiluca Update about.html
-Latest commit fab1931 on May 11, 2021
-History
-3 contributors
-@margonzalezfranco@maxdiluca@locomotionvault
-168 lines (133 sloc) 8.68 KB
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-WZLS0MLDV2"></script>
-  <script>
+  <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-WZLS0MLDV2"></script> -->
+  <!-- <script>
     window.dataLayer = window.dataLayer || [];
 
     function gtag() {
@@ -44,7 +12,7 @@ History
     }
     gtag('js', new Date());
     gtag('config', 'G-WZLS0MLDV2');
-  </script>
+  </script> -->
 
   <!--       <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.5/dist/css/uikit.min.css" />
@@ -70,19 +38,18 @@ History
 <body>
   <header>
     <div id="logo-area" uk-grid>
-      <div class="uk-width-3-5">
-        <div><a href="https://locomotionvault.github.io/index.html" class="uk-logo">Locomotion Vault</a></div>
-        <div id="citation">Massimiliano Di Luca, Hasti Seifi, Simon Egan, Mar Gonzalez-Franco. "Locomotion Vault: the Extra Mile in Analyzing VR Locomotion Techniques." In Proceedings of the 2021 CHI Conference on Human Factors in Computing Systems,
-          pp. 1-10. 2021. (<a href="https://www.microsoft.com/en-us/research/publication/locomotion-vault-the-extra-mile-in-analyzing-vr-locomotion-techniques/" target="_blank">pdf</a>)</div>
+      <div class="uk-width-4-5">
+        <div><a href="./index.html" class="uk-logo">Making Data Tangible: A Cross-disciplinary Design Space for Data Physicalization</a></div>
+        <div id="citation">Sandra Bae, Clement Zheng, Mary Etta West, Ellen Yi-Leun Do, Samuel Huron, Danielle Szafir. In Proceedings of the 2022 CHI Conference on Human Factors in Computing Systems,
+          pp. 1-10. 2021. (<a href="http://dx.doi.org/10.1145/3411764.3445319">DOI: 10.1145/3411764.3445319</a>, <a href="https://www.microsoft.com/en-us/research/publication/locomotion-vault-the-extra-mile-in-analyzing-vr-locomotion-techniques/"
+            target="_blank">pdf</a>)</div>
       </div>
-      <div class="uk-width-2-5">
+      <div class="uk-width-1-5">
         <nav id="myleftmenu" class="uk-navbar-container" uk-navbar>
           <div class="uk-navbar-right">
             <ul class="uk-navbar-nav">
-              <li><a href="https://forms.gle/y5xMF33LxKvBByQFA" target="_blank">Enter a new technique</a></li>
-              <li><a href="https://github.com/locomotionvault/locomotionvault.github.io/issues" target="_blank">Suggest a change</a></li>
-              <li><a href="https://locomotionvault.github.io/workshopieeevr.html" target="_blank">IEEE VR Workshop</a></li>
-              <li class="uk-active"><a href="https://locomotionvault.github.io/">Tool</a></li>
+              <li><a href="#" target="_blank">Project Page</a></li>
+              <li><a href="./about.html">About</a></li>
             </ul>
           </div>
         </nav>
@@ -90,157 +57,39 @@ History
   </header>
   <div id="aboutcontent" class="uk-container">
 
-    <h1> Inception: </h1>
+    <h3>INTRODUCTION</h3>
+    <p>Designing a data physicalization requires a myriad of different considerations. Despite the cross-disciplinary nature of these considerations, research currently lacks a synthesis across the differ- ent communities data physicalization sits
+      upon, including their approaches, theories, and even terminologies. To bridge these communities synergistically, we present a design space that describes and analyzes physicalizations according to three facets: context (end-user
+      considerations), structure (the physical structure of the artifact), and interactions (interactions with both the artifact and data). We construct this design space through a systematic review of 47 physicalizations and analyze the
+      interrelationships of key factors when designing a physicalization. This design space cross- pollinates knowledge from relevant HCI communities, providing a cohesive overview of what designers should consider when creating a data
+      physicalization while suggesting new design possibilities. We analyze the design decisions present in current physicalizations, discuss emerging trends, and identify underlying open challenges.</p>
 
-    <p></p>
-    <p>In 2020, Max and Mar started an effort to tackle some of the knowlege gaps that hinders VR adoption. With their background in perception, they quickly identified Locomotion as a key aspect that was unsolved and relatively underserved.
-      <br /><br />
-      To overcome that gap, they wanted to better characterize exisiting locomotion techniques and create something that the community could use. In light of that, Max started to document the existing methods and taxonomies from academia and game
-      industry. As the literature search and database grew, they realized this wasn't a classical literature review project, but it would be best to create a living database. At about 20-30 techniques, they asked Hasti to join the effort. Her work on
-      <a href="https://haptipedia.org/" target="_blank">Haptipedia</a> and other interactive databases seemed critical to the advancement of the project. Meanwhile, Max continued exploring existing taxonomies, classification attributes, and
-      techniques. At one point, they asked Simon to join as a student researcher to further document the techniques and to try many of them on games.
-      <br /><br />
-      This is how the Locomotion Vault was created. We invite you to explore the database in depth using the <a href="https://locomotionvault.github.io/" target="_blank">web interface</a> and contribute to make it even better by using the links above
-      or by modifying the <a href="https://github.com/locomotionvault/locomotionvault.github.io">Github repository</a>.
-
-
-      <br /><br />
-      For citing this work, please use: Massimiliano Di Luca, Hasti Seifi, Simon Egan, Mar Gonzalez-Franco. "Locomotion Vault: the Extra Mile in Analyzing VR Locomotion Techniques." In Proceedings of the 2021 CHI Conference on Human Factors in
-      Computing Systems, pp. 1-10. 2021. (<a href="https://www.microsoft.com/en-us/research/publication/locomotion-vault-the-extra-mile-in-analyzing-vr-locomotion-techniques/" target="_blank">pdf</a>)</p>
+    <p>This web gallery is a supplement to the survey results (figure down below) discussed in the <a href="" #">paper</a>.</p>
 
     <div class="teaser">
-      <img src="./Gifs/TeaserFull.jpg"></img>
+      <figure>
+        <img class="center" style="margin-top: 30px; width: 50%; height: auto;" src="./images/codes_02.jpg"
+          alt="Table matrix with 47 rows and three main columns: Context, Structure, Interactions. For each row, each column is colored in if it  fulfills the coding critiera."></img>
+      </figure>
     </div>
-    <h1> People: </h1>
-    <table>
-      <tr>
-        <td width="180px"><img src="./Gifs/margonzalezfranco.jpeg" alt="Smiley" class="feat" />
-          <p>Mar Gonzalez-Franco<br /><a href="https://www.microsoft.com/en-us/research/people/margon/" target="_blank">Microsoft Research</a> <br />margon@microsoft.com <br /><a href="http://twitter.com/twi_mar" target="_blank">@twi_mar</a></p>
-        </td>
 
-        <td width="180px"><img src="./Gifs/hastiseifi2.jpeg" alt="Smiley" class="feat" />
-          <p>Hasti Seifi<br />University of Copenhagen <br />
-            hs@di.ku.dk <br /><a href="http://twitter.com/hasti_seifi" target="_blank">@hasti_seifi</a></p>
-        </td>
+    <h3>HOW TO CITE</h3>
+    <p>S.S. Bae, C. Zheng, M.E. West, E. Do, S. Huron, and D. Szafir."Making Data Tangible: A Cross-disciplinary Design Space for Data Physicalization". In: Proceedings of the 2022 CHI Conference on Human Factors in Computing Systems. New Orleans,
+      Louisana, 2022.</p>
 
-        <td width="180px"><img src="./Gifs/maxdiluca.jpeg" alt="Smiley" class="feat" />
-          <p>Massimiliano Di Luca<br /> University of Birmingham <br />m.diluca@bham.ac.uk <br /><a href="http://twitter.com/maxdiluca" target="_blank">@maxdiluca</a></p>
-        </td>
-
-      </tr>
-    </table>
+    <h3>SUPPLEMENTAL MATERIALS</h3>
+    <p class="no-margin">Codebook Definitions <a href="./materials/definitions.pdf">[download]</a></p>
+    <p class="no-margin">Coding Sheet <a href="./materials/codesheet.xlsx">[download]</a></p>
 
 
 
-    <h1> Activities: </h1>
-
-    <table>
-      <tr>
-        <td width="180px"><img src="img/chi.png" alt="Smiley" class="feat" /></td>
-        <td>
-          <p><b>May 8th-13th 2021</b> <a href="https://chi2021.acm.org/" target="_blank">ACM CHI 2021</a>. Max di Luca will present the Locomotion Vault <a
-              href="https://www.microsoft.com/en-us/research/publication/locomotion-vault-the-extra-mile-in-analyzing-vr-locomotion-techniques/" target="_blank">paper</a> at ACM CHI 2021.</p>
-        </td>
-      </tr>
-    </table>
-
-    <p></p>
-    <table>
-      <tr>
-        <td width="180px"><img src="img/ieeevr.JPG" alt="Smiley" class="feat" /></td>
-        <td>
-          <p><b>April 2nd 2021</b> IEEE VR 2021 workshop <a href="https://locomotionvault.github.io/workshopieeevr" target="_blank">Finding a Way Forward in VR Locomotion</a>. We are organizing a workshop on April 2, 17:00-21:00 CEST to join the
-            community of Locomotion and discuss ways forward.</p>
-        </td>
-      </tr>
-    </table>
-
-
-
-    <p></p>
-    <table>
-      <tr>
-        <td width="180px"><img src="img/mozillafest.JPG" alt="Smiley" class="feat" /></td>
-        <td>
-          <p><b>March 8th 2021</b><a href="https://pretalx.com/mozfest-2021/talk/MJWAMG/" target="_blank"> Mozilla Fest</a>: Mar Gonzalez participated on a Panel on Designing Accessible VR Experiences to explain Locomotion Vault. </p>
-        </td>
-      </tr>
-    </table>
-
-
-
-
-
-
-    <h1> Recognition: </h1>
-
-    <table>
-      <tr>
-        <td width="180px"><img src="img/xraccess.JPG" alt="Smiley" class="feat" /></td>
-        <td>
-          <p><a href="https://xraccess.org/resources/" target="_blank">XR Access</a>: Featured as a resource for accessibility in XR. XR Access is a community committed to making virtual, augmented, and mixed reality (XR) accessible to people with
-            disabilities </p>
-        </td>
-      </tr>
-    </table>
-
-    <p></p>
-    <table>
-      <tr>
-        <td width="180px"><img src="img/mozillaHubs.JPG" alt="Smiley" class="feat" /></td>
-        <td>
-          <p><a href="https://hubs.mozilla.com/MvPSJJQ/mozfest-vr-accessibility" target="_blank">Mozilla Hubs 3D</a>: A selection of locomotion techniques from Locomotion Vault were featured on a Hubs virtual tour on "Accessible VR". </p>
-        </td>
-      </tr>
-    </table>
-
-    <p></p>
-    <table>
-      <tr>
-        <td width="180px"><img src="img/oculusdevs.JPG" alt="Smiley" class="feat" /></td>
-        <td>
-          <p><a href="https://developer.oculus.com/learn/artificial-locomotion/" target="_blank">Oculus Developers</a>: Featured as a resource for developing locomotion in VR. "For more inspiration, check out the VR Locomotion Vault which maintains a
-            list of VR locomotion techniques and related information."</p>
-        </td>
-      </tr>
-    </table>
-
-    <p></p>
-    <table>
-      <tr>
-        <td width="180px"><img src="img/ispr.JPG" alt="Smiley" class="feat" /></td>
-        <td>
-          <p><a href="https://ispr.info/2021/01/11/locomotion-vault-compiles-and-classifies-all-known-vr-locomotion-methods/" target="_blank">ISPR</a>: The main society for presence research: "Some amazing researchers have collected and classified
-            all the known VR locomotion methods, for a total of more than 100!" </p>
-        </td>
-      </tr>
-    </table>
-
-
-
-    <h2> Other venues: </h2>
-    <table>
-      <tr>
-        <td> <img src="img/xrbootcamp.JPG" alt="Smiley" class="other" /> </td>
-        <td><img src="img/goldsmith.svg" alt="Smiley" class="other" /></td>
-      </tr>
-    </table>
-
+    <h3>NOTES</h3>
+    <p>The number of paper matches for certain data interactions (i.e., explore, abstract, and encode) will differ from Figure 1 in the paper and the website gallery. Certain physicalizations showcased multiple ways to express one
+      data interaction (e.g., Robographics by Guinness et al., 2019 had two distinct methods for <i>Abstract/Elaborate</i>), which is not accounted for in the website gallery. For more information, please refer to the coding sheet (Tab:
+      Interactions).</p>
+    <p>Template is modified the Locomotion Vault (Apache License, Version 2.0)</p>
   </div>
 
 </body>
 
 </html>
-© 2022 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Docs
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
-Loading complete
