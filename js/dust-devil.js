@@ -28,7 +28,7 @@ class Dust extends HTMLElement {
       </div>
       <div class="project-two-columns">
         <h3>${json.papers.dustdevil.year}</h3>
-        <p class="no-margin venue">Proceedings of 31st AAS/AIAA Space Flight Mechanics Meeting</p>
+        <p class="no-margin venue">${json.papers.dustdevil.venue}</p>
             <div class="btn-links">
             <a class="btn btn-outline-primary my-1 mr-1 btn-sm" href="${json.papers.dustdevil.pdf}" target="_blank" rel="noopener">PDF</a>
           </div>

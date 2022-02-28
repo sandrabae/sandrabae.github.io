@@ -64,7 +64,7 @@ p:only-child {
   margin-bottom: 0px;
 }
 
-ul, p {
+ul, ol, p {
   color: #333;
   /* margin: 1.4285714em 0em 1.4285714em 0em; */
   font-size: 1.05em;

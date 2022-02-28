@@ -5,6 +5,7 @@ class Right extends HTMLElement {
   connectedCallback() {
     this.innerHTML = `
     <h2>News</h2>
+    <b>01/25/22</b> Work with NASA JPL on Maximizing Dust Devil Observations has been accepted to Journal of Astronautical Sciences</br>
     <b>11/15/21</b> Our paper on design space for data physicalization has been accepted to ACM CHI 2022!</br>
     <b>09/03/21</b> Selected as the ARCS 2021 Graduate Fellow</br>
     <b>08/05/21</b> Received the 2021 Korean American Scholarship </br>

@@ -3,7 +3,7 @@
     "gscholar": "https://scholar.google.com/citations?user=MhRbJLEAAAAJ&hl=en",
     "twitter": "https://twitter.com/sandrabae_sb",
     "email": "mailto:sandra.bae@colorado.edu",
-    "cv": "../materials/sb_cv_sept_2021.pdf"
+    "cv": "../materials/sb_cv_jan_2022.pdf"
   },
   "people": {
     "edo": "https://www.colorado.edu/atlas/ellen-yi-luen-do",
@@ -33,16 +33,17 @@
       "title": "Making Data Tangible: A Cross-Disciplinary Design Space for Data Physicalization",
       "sentence": "A design space that analyzes the interrelationship of key factors (context, structure, interactions) when designing a physicalization.",
       "venue": "ACM Conference on Human Factors in Computing Systems (CHI)",
-      "year": "2021",
+      "year": "2022",
       "projectpage": "../projects/data-phys-design.html",
+      "gallery": "../dataphys-gallery/index.html",
       "icon": "../img/main/dataphys.jpg",
-      "pdf": "#"
+      "pdf": "https://arxiv.org/abs/2202.10520"
     },
     "dustdevil": {
       "title": "Maximizing Dust Devil Follow-Up Observations on Mars Using Cubesats and On-board Scheduling",
       "sentence": "A mission of constellation of low orbiting Mars cube sats to maximize the number of dust devil follow-up observations through real-time, on-board scheduling.",
-      "venue": "Proceedings of 31st AAS/AIAA Space Flight Mechanics Meeting",
-      "year": "2020",
+      "venue": "Proceedings of 31st AAS/AIAA Space Flight Mechanics Meeting<br>Journal of Astronautical Sciences",
+      "year": "2021, 2022",
       "projectpage": "../projects/dust-devil.html",
       "icon": "../img/main/dust-devil.jpg",
       "pdf": "../materials/aas-gnc_mosaic_mars.pdf"

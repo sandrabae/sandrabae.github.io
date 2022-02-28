@@ -49,33 +49,6 @@ class Left extends HTMLElement {
           <div class="media stream-item">
             <div class="media-body">
               <h3 class="article-title mb-0 mt-0">
-                <a href="${json.papers.dataphys.projectpage}">${json.papers.dataphys.title}</a>
-              </h3>
-              <div class="article-style">${json.papers.dataphys.sentence}</div>
-              <div class="stream-meta article-metadata">
-                <div>
-                  <span><strong>Sandra Bae</strong></span>,
-                  <span><a href="${json.people.czheng}" target="_blank">Clement Zheng</a></span>,
-                  <span><a href="${json.people.mwest}" target="_blank">Mary Etta West</a></span>,
-                  <span><a href="${json.people.shuron}" target="_blank">Samuel Huron</a></span>,
-                  <span><a href="${json.people.edo}" target="_blank">Ellen Do</a></span>,
-                  <span><a href="${json.people.dszafir}"target="_blank">Danielle Szafir</a></span>
-                </div>
-                <div class="venue">${json.papers.dataphys.venue}</div>
-              </div>
-              <!-- <div class="btn-links">
-                <a class="btn btn-outline-primary my-1 mr-1 btn-sm" href="${json.papers.dataphys.pdf}" target="_blank" rel="noopener">PDF</a>
-              </div> -->
-            </div>
-            <div class="ml-3">
-              <a href="${json.papers.dataphys.projectpage}">
-                <img src="${json.papers.dataphys.icon}" alt="">
-              </a>
-            </div>
-            </div>
-          <div class="media stream-item">
-            <div class="media-body">
-              <h3 class="article-title mb-0 mt-0">
                 <a href="${json.papers.dustdevil.projectpage}">${json.papers.dustdevil.title}</a>
               </h3>
               <div class="article-style">${json.papers.dustdevil.sentence}</div>
@@ -101,6 +74,33 @@ class Left extends HTMLElement {
               </a>
             </div>
           </div>
+          <div class="media stream-item">
+            <div class="media-body">
+              <h3 class="article-title mb-0 mt-0">
+                <a href="${json.papers.dataphys.projectpage}">${json.papers.dataphys.title}</a>
+              </h3>
+              <div class="article-style">${json.papers.dataphys.sentence}</div>
+              <div class="stream-meta article-metadata">
+                <div>
+                  <span><strong>Sandra Bae</strong></span>,
+                  <span><a href="${json.people.czheng}" target="_blank">Clement Zheng</a></span>,
+                  <span><a href="${json.people.mwest}" target="_blank">Mary Etta West</a></span>,
+                  <span><a href="${json.people.shuron}" target="_blank">Samuel Huron</a></span>,
+                  <span><a href="${json.people.edo}" target="_blank">Ellen Do</a></span>,
+                  <span><a href="${json.people.dszafir}"target="_blank">Danielle Szafir</a></span>
+                </div>
+                <div class="venue">${json.papers.dataphys.venue}</div>
+              </div>
+              <div class="btn-links">
+                <a class="btn btn-outline-primary my-1 mr-1 btn-sm" href="${json.papers.dataphys.pdf}" target="_blank" rel="noopener">PDF</a>
+              </div>
+            </div>
+            <div class="ml-3">
+              <a href="${json.papers.dataphys.projectpage}">
+                <img src="${json.papers.dataphys.icon}" alt="">
+              </a>
+            </div>
+            </div>
           <div class="media stream-item">
             <div class="media-body">
               <h3 class="article-title mb-0 mt-0">
