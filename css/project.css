@@ -15,6 +15,10 @@
   padding-bottom: 80px;
 }
 
+.no-banner {
+  top: 8% !important;
+}
+
 main h3 {
   font-weight: 600;
   margin: 0;

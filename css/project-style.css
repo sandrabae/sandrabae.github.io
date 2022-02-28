@@ -269,7 +269,7 @@ hr {
 
 .single {
   justify-content: left !important;
-  /* top: 10%; */
+  /* top: 8% !important; */
 }
 
 #main .carousel {
