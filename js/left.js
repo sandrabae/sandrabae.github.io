@@ -93,6 +93,8 @@ class Left extends HTMLElement {
               </div>
               <div class="btn-links">
                 <a class="btn btn-outline-primary my-1 mr-1 btn-sm" href="${json.papers.dataphys.pdf}" target="_blank" rel="noopener">PDF</a>
+                  <a class="btn btn-outline-primary my-1 mr-1 btn-sm" href="${json.papers.dataphys.doi}" target="_blank" rel="noopener">DOI</a>
+                  <a class="btn btn-outline-primary my-1 mr-1 btn-sm" href="${json.papers.dataphys.gallery}" target="_blank" rel="noopener">Project Gallery</a>
               </div>
             </div>
             <div class="ml-3">

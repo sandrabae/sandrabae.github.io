@@ -37,7 +37,8 @@
       "projectpage": "../projects/data-phys-design.html",
       "gallery": "../dataphys-gallery/index.html",
       "icon": "../img/main/dataphys.jpg",
-      "pdf": "https://arxiv.org/abs/2202.10520"
+      "pdf": "https://arxiv.org/abs/2202.10520",
+      "doi": "https://dl.acm.org/doi/10.1145/3491102.3501939"
     },
     "dustdevil": {
       "title": "Maximizing Dust Devil Follow-Up Observations on Mars Using Cubesats and On-board Scheduling",
