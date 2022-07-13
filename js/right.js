@@ -5,6 +5,9 @@ class Right extends HTMLElement {
   connectedCallback() {
     this.innerHTML = `
     <h2>News</h2>
+    <b>06/17/22</b> Traveling to ACM C&C22 (Venice) to present GSS submission</br>
+    <b>05/01/22</b> Traveling to ACM CHI22 (NOLA) to present</br>
+    <b>02/14/22</b> Received the David T. Spalding Graduate Teaching Award 2022</br>
     <b>01/25/22</b> Work with NASA JPL on Maximizing Dust Devil Observations has been accepted to Journal of Astronautical Sciences</br>
     <b>11/15/21</b> Our paper on design space for data physicalization has been accepted to ACM CHI 2022!</br>
     <b>09/03/21</b> Selected as the ARCS 2021 Graduate Fellow</br>
