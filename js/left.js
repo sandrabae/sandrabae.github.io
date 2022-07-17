@@ -49,6 +49,34 @@ class Left extends HTMLElement {
           <div class="media stream-item">
             <div class="media-body">
               <h3 class="article-title mb-0 mt-0">
+                <a href="${json.papers.eager.projectpage}">${json.papers.eager.title}</a>
+              </h3>
+              <div class="article-style">${json.papers.eager.sentence}</div>
+              <div class="stream-meta article-metadata">
+                <div>
+                  <span><strong>Sandra Bae</strong></span>
+                  <span><a href="${json.people.rvanukuru}" target="_blank">Rishi Vanukuru</a></span>,
+                  <span><a href="${json.people.ryang}" target="_blank">Ruhan Yang</a></span>,
+                  <span><a href="${json.people.pgyory}" target="_blank">Peter Gyory</a></span>,
+                  <span><a href="${json.people.rzhou}" target="_blank">Ran Zhou</a></span>,
+                  <span><a href="${json.people.edo}" target="_blank">Ellen Do</a></span>,
+                  <span><a href="${json.people.dszafir}"target="_blank">Danielle Szafir</a></span>
+                </div>
+                <div class="venue">${json.papers.eager.venue}</div>
+              </div>
+              <div class="btn-links">
+                <!-- <a class="btn btn-outline-primary my-1 mr-1 btn-sm" href="${json.papers.eager.pdf}" target="_blank" rel="noopener">PDF</a> -->
+              </div>
+            </div>
+            <div class="ml-3">
+              <a href="${json.papers.eager.projectpage}">
+                <img src="${json.papers.eager.icon}" alt="">
+              </a>
+            </div>
+          </div>
+          <div class="media stream-item">
+            <div class="media-body">
+              <h3 class="article-title mb-0 mt-0">
                 <a href="${json.papers.dustdevil.projectpage}">${json.papers.dustdevil.title}</a>
               </h3>
               <div class="article-style">${json.papers.dustdevil.sentence}</div>

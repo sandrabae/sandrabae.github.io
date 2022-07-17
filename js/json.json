@@ -26,9 +26,21 @@
     "mwest": "https://www.ettawest.com/'",
     "pgyory": "https://petroochio.github.io/#/",
     "tfujiwara": "https://takanori-fujiwara.github.io/",
-    "shuron": "https://www.telecom-paris.fr/samuel-huron?l=en"
+    "shuron": "https://www.telecom-paris.fr/samuel-huron?l=en",
+    "rzhou": "https://www.ranzhourobot.com/",
+    "rvanukuru": "https://rishivanukuru.com/"
   },
   "papers": {
+    "eager": {
+      "title": "Cultivating Visualization Literacy for Children Through Curiosity and Play",
+      "sentence": "Exploring how constructionist practices can help children accumulate playful learning experiences and personalize visualizations made out of everyday materials.",
+      "venue": "IEEE Transactions on Visualization and Computer Graphics (to appear in proc. IEEE VIS 2022)",
+      "year": "2022",
+      "projectpage": "#",
+      "icon": "../img/main/eager.jpg",
+      "pdf": "#",
+      "doi": "#"
+    },
     "dataphys": {
       "title": "Making Data Tangible: A Cross-Disciplinary Design Space for Data Physicalization",
       "sentence": "A design space that analyzes the interrelationship of key factors (context, structure, interactions) when designing a physicalization.",
