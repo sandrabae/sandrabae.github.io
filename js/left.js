@@ -16,7 +16,7 @@ class Left extends HTMLElement {
                 <tr></tr>
                 <tr>
                   <td class="cell-column align-top">
-                    <h2>Making computers and materials speak the same language</h2>
+                    <h2 id="logo-title">Making computers and materials speak the same language</h2>
                     <div class="paragraph-spacing">
                       <p style="padding-top:5px;">Hi I’m Sandra Bae: a data visualization researcher gone rogue. I dream of a future with as much of Materials Science as Computer Science. My current research interest focuses on pushing data beyond the flat screen and exploring how to materialize data.</p>
                       <p>I am currently a second-year Ph.D. student at the ATLAS Institute at CU Boulder, co-advised by <a href="${json.people.edo}">Ellen Do</a> in the ACME Lab and <a href="${json.people.dszafir}">Danielle Szafir</a> in the VisuaLab. I received a M.S. in Computer Science from UC Davis in 2020. Prior to that, I received my B.A. in Human-Computer Interaction from UC Davis in 2018.</p>

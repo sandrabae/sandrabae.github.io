@@ -567,6 +567,10 @@ hr {
     font-size: 1.15em;
   }
 
+  table {
+    margin-bottom: 1rem !important;
+  }
+
   .media.stream-item .article-title {
     font-size: 1.25em !important;
   }
@@ -577,6 +581,7 @@ hr {
 
   #main .social-media {
     font-size: 1.1em;
+    margin-bottom: 1em;
   }
 
   /* Site
@@ -696,6 +701,10 @@ hr {
 
   .left-column-mobile h2 {
     border-bottom: 1px solid #ddd;
+  }
+
+  #logo-title {
+    margin-top: 2em;
   }
 
   .btn.btn-sm, .btn-group-sm>.btn {
