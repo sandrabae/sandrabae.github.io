@@ -60,7 +60,8 @@
       "year": "2021, 2022",
       "projectpage": "../projects/dust-devil.html",
       "icon": "../img/main/dust-devil.jpg",
-      "pdf": "../materials/aas-gnc_mosaic_mars.pdf"
+      "pdf": "../materials/aas-gnc_mosaic_mars.pdf",
+      "doi": "https://link.springer.com/article/10.1007/s40295-022-00317-z"
     },
     "smartcity": {
       "title": "User Interfaces for Smart Cities",
