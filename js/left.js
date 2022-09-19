@@ -65,7 +65,7 @@ class Left extends HTMLElement {
                 <div class="venue">${json.papers.eager.venue}</div>
               </div>
               <div class="btn-links">
-                <!-- <a class="btn btn-outline-primary my-1 mr-1 btn-sm" href="${json.papers.eager.pdf}" target="_blank" rel="noopener">PDF</a> -->
+                <a class="btn btn-outline-primary my-1 mr-1 btn-sm" href="${json.papers.eager.pdf}" target="_blank" rel="noopener">PDF</a>
               </div>
             </div>
             <div class="ml-3">
