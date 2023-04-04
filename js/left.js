@@ -19,7 +19,7 @@ class Left extends HTMLElement {
                     <h2 id="logo-title">Making computers and materials speak the same language</h2>
                     <div class="paragraph-spacing">
                       <p style="padding-top:5px;">Hi I’m Sandra Bae: a data visualization researcher gone rogue. I dream of a future with as much of Materials Science as Computer Science. My current research interest focuses on pushing data beyond the flat screen and exploring how to materialize data.</p>
-                      <p>I am currently a third-year Ph.D. student at the ATLAS Institute at CU Boulder, co-advised by <a href="${json.people.edo}">Ellen Do</a> in the ACME Lab, <a href="${json.people.dszafir}">Danielle Szafir</a> in the VisuaLab, and <a href="${json.people.mrivera}">Michael Rivera</a> in the UtilityLab. I received a M.S. in Computer Science from UC Davis in 2020. Prior to that, I received my B.A. in Human-Computer Interaction from UC Davis in 2018.</p>
+                      <p>I am currently a thirds-year Ph.D. student at the ATLAS Institute at CU Boulder, co-advised by <a href="${json.people.edo}">Ellen Do</a> in the ACME Lab, <a href="${json.people.dszafir}">Danielle Szafir</a> in the VisuaLab, and <a href="${json.people.mrivera}">Michael Rivera</a> in the UtilityLab. I received a M.S. in Computer Science from UC Davis in 2020. Prior to that, I received my B.A. in Human-Computer Interaction from UC Davis in 2018.</p>
                   		<p>When not in the lab, you can probably find me under a barbell, on a rock, or in the mountains.</p>
                       <!-- </div> -->
                   	</div>
