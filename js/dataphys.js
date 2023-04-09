@@ -15,7 +15,7 @@ class DataPhys extends HTMLElement {
 
     <main id="main" class="single project no-banner">
       <!--Project Title-->
-      <div class="project-title">
+      <div class="project-title" style="width:100%">
        <div class="col-sm-6 col-xs-6 line" style="margin: 3% 0; border-bottom: 1px solid #BBBBBB;"></div>
         <h1 class="title">${json.papers.dataphys.title}</h1>
         <span><strong>Sandra Bae</strong></span>,

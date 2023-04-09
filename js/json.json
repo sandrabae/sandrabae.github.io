@@ -3,8 +3,8 @@
     "gscholar": "https://scholar.google.com/citations?user=MhRbJLEAAAAJ&hl=en",
     "twitter": "https://twitter.com/sandrabae_sb",
     "email": "mailto:sandra.bae@colorado.edu",
-    "cv": "../materials/sb_cv_aug_2022.pdf",
-    "cv2": "../materials/sb_cv_aug_2022.pdf"
+    "cv": "../materials/sb_cv.pdf",
+    "cv2": "../materials/sb_cv.pdf"
   },
   "people": {
     "mrivera": "https://utilityresearchlab.org/",
@@ -38,10 +38,12 @@
       "sentence": "Exploring how constructionist practices can help children accumulate playful learning experiences and personalize visualizations made out of everyday materials.",
       "venue": "IEEE Transactions on Visualization and Computer Graphics (to appear in proc. IEEE VIS 2022)",
       "year": "2022",
-      "projectpage": "#",
+      "projectpage": "../projects/diy-vis-literacy.html",
       "icon": "../img/main/eager.jpg",
-      "pdf": "#",
-      "doi": "#"
+      "pdf": "../materials/vis23_diy.pdf",
+      "doi": "https://doi.org/10.1109/TVCG.2022.3209442",
+      "presentation": "https://youtu.be/jTerh__vSMA?t=2219",
+      "instructable": "https://www.instructables.com/Data-Is-Yours-Toolkit-Assembly-Instructions/"
     },
     "dataphys": {
       "title": "Making Data Tangible: A Cross-Disciplinary Design Space for Data Physicalization",

@@ -501,9 +501,17 @@ hr {
   width: 500px;
 }
 
+.video{
+  padding-top: 1em;
+  padding-bottom: 1em;
+  margin: auto;
+  width: 80%;
+  height: 550px;
+}
+
 @media (min-width: 1921px) {
   main {
-    padding: 0px 15em;
+    padding: 0px 30em;
   }
 
   #main .left-column {
