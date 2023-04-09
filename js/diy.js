@@ -116,7 +116,7 @@ class Eager extends HTMLElement {
 
       <div class="imageRow">
         <div class="imageGridFull">
-          <p>To investigate how constructionist practices can foster children’s DVL, we conducted an exploratory study using our design probe in a series of workshops with children (Sect. 5.1) and interviews with educators (Sect. 5.2). Workshops can elicit rich qualitative insights for early stages of applied visualization research [35]. We followed guidelines by Kerzner et al. [35] and Terre des hommes [42] to design our workshop around the constraints of working with children in a limited timeframe while still evaluating the research objectives of the toolkit. Further study materials are available in supplemental materials.</p></p>
+          <p>To investigate how constructionist practices can foster children’s DVL, we conducted an exploratory study using our design probe in a series of workshops with children (Sect. 5.1) and interviews with educators (Sect. 5.2). Workshops can elicit rich qualitative insights for early stages of applied visualization research [35]. We followed guidelines by Kerzner et al. [35] and Terre des hommes [42] to design our workshop around the constraints of working with children in a limited timeframe while still evaluating the research objectives of the toolkit. Further study materials are available in supplemental materials.</p>
         </div>
       </div>
 
