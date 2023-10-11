@@ -5,6 +5,8 @@ class Right extends HTMLElement {
   connectedCallback() {
     this.innerHTML = `
     <h2>News</h2>
+    <b>08/26/23</b> Accepted to the 2023 Rising Stars in EECS (GeorgiaTech) </br>
+    <b>08/22/23</b> Submission to IEEE VIS2023 received a Best Paper Honorable Mention</br>
     <b>07/15/22</b> A submission to IEEE VIS2022 has been offically accepted! </br>
     <b>06/17/22</b> Traveling to ACM C&C22 (Venice) to present GSS submission</br>
     <b>05/01/22</b> Traveling to ACM CHI22 (NOLA) to present</br>

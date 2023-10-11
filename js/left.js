@@ -18,9 +18,9 @@ class Left extends HTMLElement {
                   <td class="cell-column align-top">
                     <h2 id="logo-title">Making computers and materials speak the same language</h2>
                     <div class="paragraph-spacing">
-                      <p style="padding-top:5px;">Hi I’m Sandra Bae: a data visualization researcher gone rogue. I dream of a future with as much of Materials Science as Computer Science. My current research interest focuses on pushing data beyond the flat screen and exploring how to materialize data.</p>
-                      <p>I am currently a third-year Ph.D. student at the ATLAS Institute at CU Boulder, co-advised by <a href="${json.people.edo}">Ellen Do</a> in the ACME Lab, <a href="${json.people.dszafir}">Danielle Szafir</a> in the VisuaLab, and <a href="${json.people.mrivera}">Michael Rivera</a> in the UtilityLab. I received a M.S. in Computer Science from UC Davis in 2020. Prior to that, I received my B.A. in Human-Computer Interaction from UC Davis in 2018.</p>
-                  		<p>When not in the lab, you can probably find me under a barbell, on a rock, or in the mountains.</p>
+                      <p style="padding-top:5px;">Hi I'm Sandra Bae. My current research interest focuses on pushing data beyond the flat screen and exploring how to materialize data. I explore how data physicalizations can aid in analytics and data-sensemaking.</p>
+                      <p>I am currently a fourth-year Ph.D. student at the ATLAS Institute at CU Boulder, co-advised by <a href="${json.people.edo}">Ellen Do</a> in the ACME Lab, <a href="${json.people.dszafir}">Danielle Szafir</a> in the VisuaLab, and <a href="${json.people.mrivera}">Michael Rivera</a> in the UtilityLab. I received a M.S. in Computer Science from UC Davis in 2020. Prior to that, I received my B.A. in Human-Computer Interaction from UC Davis in 2018.</p>
+                  		<p>When not in the lab, you can probably find my nose in a good book, on a rock, or in the mountains.</p>
                       <!-- </div> -->
                   	</div>
                     </div>
@@ -44,8 +44,42 @@ class Left extends HTMLElement {
               <!-- <a href="https://medium.com/@sandrabae" target="_blank">
                 <i class="fab fa-medium fa-fw"></i>sandrabae</a></div> -->
         </div>
+
+
         <div class="publications column-header">
           <h2>Publications</h2>
+
+          <div class="media stream-item">
+          <div class="media-body">
+            <h3 class="article-title mb-0 mt-0">
+              <a href="${json.papers.sensingnetwork.projectpage}">${json.papers.sensingnetwork.title}</a>
+            </h3>
+            <div class="article-style">${json.papers.sensingnetwork.sentence}</div>
+            <div class="stream-meta article-metadata">
+              <div>
+                <span><strong>Sandra Bae</strong></span>
+                <span><a href="${json.people.tfujiwara}" target="_blank">Takanori Fujiwara</a></span>,
+                <span><a href="${json.people.aynnerman}" target="_blank">Anders Ynnerman</a></span>,
+                <span><a href="${json.people.edo}" target="_blank">Ellen Do</a></span>,
+                <span><a href="${json.people.mrivera}" target="_blank">Michael Rivera</a></span>,
+                <span><a href="${json.people.dszafir}"target="_blank">Danielle Szafir</a></span>
+              </div>
+              <div class="venue">${json.papers.sensingnetwork.venue}</div>
+            </div>
+            <div class="btn-links">
+              <a class="btn btn-outline-primary my-1 mr-1 btn-sm" href="${json.papers.sensingnetwork.pdf}" target="_blank" rel="noopener">PDF</a>
+              <a class="btn btn-outline-primary my-1 mr-1 btn-sm" href="${json.papers.sensingnetwork.projectpage}" target="_blank" rel="noopener">Project Page</a>
+              <a class="btn btn-outline-primary my-1 mr-1 btn-sm" href="${json.papers.sensingnetwork.code}" target="_blank" rel="noopener">Code</a>
+              <a class="btn btn-outline-primary my-1 mr-1 btn-sm" href="${json.papers.sensingnetwork.trailer}" target="_blank" rel="noopener">Trailer</a>
+            </div>
+          </div>
+          <div class="ml-3">
+            <a href="${json.papers.sensingnetwork.projectpage}">
+              <img src="${json.papers.sensingnetwork.icon}" alt="">
+            </a>
+          </div>
+        </div> 
+
           <div class="media stream-item">
             <div class="media-body">
               <h3 class="article-title mb-0 mt-0">
@@ -77,6 +111,8 @@ class Left extends HTMLElement {
               </a>
             </div>
           </div>
+
+
           <div class="media stream-item">
             <div class="media-body">
               <h3 class="article-title mb-0 mt-0">

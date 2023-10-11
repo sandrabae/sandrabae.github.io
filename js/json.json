@@ -30,9 +30,22 @@
     "tfujiwara": "https://takanori-fujiwara.github.io/",
     "shuron": "https://www.telecom-paris.fr/samuel-huron?l=en",
     "rzhou": "https://www.ranzhourobot.com/",
-    "rvanukuru": "https://rishivanukuru.com/"
+    "rvanukuru": "https://rishivanukuru.com/",
+    "aynnerman": "https://liu.se/en/employee/andyn27"
   },
   "papers": {
+    "sensingnetwork":{
+      "title": "A Computational Design Pipeline to Fabricate Sensing Network Physicalizations",
+      "sentence": "3D printing network physicalizations with integrated sensing capabilities",
+      "venue": "IEEE Transactions on Visualization and Computer Graphics (to appear in proc. IEEE VIS 2023)<br><b>Best Paper Honorable Mention 🏆</b>",
+      "year": "2023",
+      "projectpage": "../sensing-network/index.html",
+      "icon": "../img/main/2023_sensing_network.png",
+      "pdf": "https://arxiv.org/abs/2308.04714",
+      "code": "https://github.com/takanori-fujiwara/sensing-network",
+      "trailer": "https://www.youtube.com/watch?v=-LPL8gnXTtI",
+      "doi": "https://dl.acm.org/doi/10.1145/3491102.3501939"
+    },
     "eager": {
       "title": "Cultivating Visualization Literacy for Children Through Curiosity and Play",
       "sentence": "Exploring how constructionist practices can help children accumulate playful learning experiences and personalize visualizations made out of everyday materials.",
