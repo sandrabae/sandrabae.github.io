@@ -7,9 +7,9 @@ class Right extends HTMLElement {
     <h2>News</h2>
     <b>07/02/24</b> Attended ACM SCF's Summer School and conference</br>
     <b>06/15/24</b> One short paper accepted to IEEE VIS 2024</br>
-    <b>05/08/23</b> Advanced to PhD Candidacy </br>
+    <b>05/08/24</b> Advanced to PhD Candidacy </br>
     <b>08/26/23</b> Accepted to the 2023 Rising Stars in EECS (GeorgiaTech) </br>
-    <b>08/22/23</b> Submission to IEEE VIS2023 received a Best Paper Honorable Mention</br>
+    <b>08/22/23</b> Submission to IEEE VIS 2023 received a Best Paper Honorable Mention</br>
     <b>07/15/22</b> A submission to IEEE VIS2022 has been offically accepted! </br>
     <b>06/17/22</b> Traveling to ACM C&C22 (Venice) to present GSS submission</br>
     <b>05/01/22</b> Traveling to ACM CHI22 (NOLA) to present</br>
