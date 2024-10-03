@@ -1,5 +1,5 @@
 {
-  "bae":{
+  "bae": {
     "gscholar": "https://scholar.google.com/citations?user=MhRbJLEAAAAJ&hl=en",
     "twitter": "https://twitter.com/sandrabae_sb",
     "email": "mailto:sandra.bae@colorado.edu",
@@ -31,10 +31,21 @@
     "shuron": "https://www.telecom-paris.fr/samuel-huron?l=en",
     "rzhou": "https://www.ranzhourobot.com/",
     "rvanukuru": "https://rishivanukuru.com/",
-    "aynnerman": "https://liu.se/en/employee/andyn27"
+    "aynnerman": "https://liu.se/en/employee/andyn27",
+    "jwirfsbrock": "https://jwirfs-brock.github.io/JWB_website/",
+    "rsorensongraff": "https://rhys-sg.github.io/"
   },
   "papers": {
-    "sensingnetwork":{
+    "annotation": {
+      "title": "Integrating Annotations for Sonifications and Physicalizations",
+      "sentence": "Exploring how annotations can be more tightly integrated into the design process of creating sonifications and physicalization",
+      "venue": "IEEE VIS 2024",
+      "year": "2024",
+      "icon": "../img/main/annotation.jpg",
+      "pdf": "https://arxiv.org/abs/2408.04574",
+      "trailer": "https://youtu.be/eAGwGnYYQ7s"
+    },
+    "sensingnetwork": {
       "title": "A Computational Design Pipeline to Fabricate Sensing Network Physicalizations",
       "sentence": "3D printing network physicalizations with integrated sensing capabilities",
       "venue": "IEEE Transactions on Visualization and Computer Graphics (to appear in proc. IEEE VIS 2023)<br><b>Best Paper Honorable Mention 🏆</b>",
@@ -88,7 +99,7 @@
       "pdf": "../materials/springer_smartcity.pdf",
       "doi": "https://link.springer.com/referenceworkentry/10.1007%2F978-3-030-15145-4_94-1"
     },
-    "mosaic":{
+    "mosaic": {
       "title": "MOSAIC Viewer: A Visual Analytics Approach to Debugging Cooperative, Autonomous Multi-Robot Systems' Worldviews",
       "sentence": "A visual analytics tool that helps operators detect and conduct a root cause analysis of robots’ desynchronized worldviews.",
       "venue": "Proceedings of IEEE Visual Analytics Science and Technology (VAST) 2020",
@@ -100,7 +111,7 @@
       "presentation": "https://www.youtube.com/watch?v=h1isZznN1oI&t=4401s&ab_channel=IEEEVisualizationConference",
       "preview": "https://www.youtube.com/watch?v=eIQdcLde9F0&ab_channel=IEEEVisualizationConference"
     },
-    "spinneret":{
+    "spinneret": {
       "title": "Spinneret: Aiding Creative Ideation through Non-Obvious Concept Associations",
       "sentence": "A functional approach to aid mind mapping by providing suggestions based on a knowledge graph.",
       "venue": "ACM Conference on Human Factors in Computing Systems (CHI)",
@@ -112,7 +123,7 @@
       "presentation": "https://www.youtube.com/watch?v=tETWdTikeOc&ab_channel=ACMSIGCHI",
       "preview": "https://www.youtube.com/watch?v=g005rIKDl54&ab_channel=ACMSIGCHI"
     },
-    "diypaper":{
+    "diypaper": {
       "title": "Touching Information with DIY Paper Charts & AR Markers",
       "sentence": "Exploration of how informal learning through creation and play can help increase data literacy and engagement.",
       "venue": "ACM IDC 2021",
@@ -123,7 +134,7 @@
       "doi": "https://dl.acm.org/doi/abs/10.1145/3459990.3465191",
       "preview": "https://vimeo.com/644446615?embedded=true&source=video_title&owner=45814582"
     },
-    "secondskin":{
+    "secondskin": {
       "title": "Cyborg Crafts: Second SKIN (Soft Keen INteraction)",
       "sentence": "A handmade collection of four modular soft wearable sensors with a temperature-dependent dynamic display.",
       "venue": "ACM TEI 2021 Student Design Competition (Craft Award)",
@@ -134,7 +145,7 @@
       "pdf": "../materials/tei21-second-skin.pdf",
       "doi": "https://dl.acm.org/doi/abs/10.1145/3430524.3444705"
     },
-    "disease":{
+    "disease": {
       "title": "Learning About Disease Associations in Taiwan",
       "sentence": "A storytelling visualization that uses a metaphor to illustrate the co-occurrences of diseases.",
       "venue": "IEEE PacificVis 2018 Visual Storytelling Contest (Honorable Mention)",

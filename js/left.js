@@ -18,9 +18,12 @@ class Left extends HTMLElement {
                   <td class="cell-column align-top">
                     <h2 id="logo-title">Making computers and materials speak the same language</h2>
                     <div class="paragraph-spacing">
-                      <p style="padding-top:5px;">Hi I'm Sandra Bae. My current research interest focuses on pushing data beyond the flat screen and exploring how to materialize data. I develop systematic toolkits on how data physicalizations can aid in analytics and data-sensemaking.</p>
+                      <p style="padding-top:5px;">Hi I'm Sandra Bae. I advance data visual analytics by using data representations that are beyond 2D. Using theoretical and experimental approaches, my research addresses fundamental and applied challenges in data visualization, particularly for spatial and multi-dimensional datasets.</p>
+
                       <p>I am a final year PhD candidate at the ATLAS Institute at CU Boulder, co-advised by <a href="${json.people.edo}">Ellen Do</a> in the ACME Lab, <a href="${json.people.dszafir}">Danielle Szafir</a> in the VisuaLab, and <a href="${json.people.mrivera}">Michael Rivera</a> in the UtilityLab. I received a M.S. in Computer Science from UC Davis in 2020. Prior to that, I received my B.A. in Human-Computer Interaction from UC Davis in 2018.</p>
                   		<p>When I'm not in the lab, you can probably find my nose in a good book, my hands on a rock, or my feet in the mountains.</p>
+                      <p style="padding-top:5px; padding-bottom:10px;">
+                      <b>I'm on the job market! I'm looking for tenure-track faculty and industry research scientist positions starting fall 2025.</b></p>
                       <!-- </div> -->
                   	</div>
                     </div>
@@ -48,6 +51,32 @@ class Left extends HTMLElement {
 
         <div class="publications column-header">
           <h2>Publications</h2>
+
+          <div class="media stream-item">
+          <div class="media-body">
+            <h3 class="article-title mb-0 mt-0">
+              <a href="${json.papers.annotation.projectpage}">${json.papers.annotation.title}</a>
+            </h3>
+            <div class="article-style">${json.papers.annotation.sentence}</div>
+            <div class="stream-meta article-metadata">
+              <div>
+                <span><a href="${json.people.rsorensongraff}" target="_blank">Rhys Sorenson-Graff</a></span>,
+                <span><strong>Sandra Bae</strong></span>
+                <span><a href="${json.people.jwirfsbrock}" target="_blank">Jordan Wirfs-Brock</a></span>,
+              </div>
+              <div class="venue">${json.papers.annotation.venue}</div>
+            </div>
+            <div class="btn-links">
+              <a class="btn btn-outline-primary my-1 mr-1 btn-sm" href="${json.papers.annotation.pdf}" target="_blank" rel="noopener">PDF</a>
+              <a class="btn btn-outline-primary my-1 mr-1 btn-sm" href="${json.papers.annotation.trailer}" target="_blank" rel="noopener">Trailer</a>
+            </div>
+          </div>
+          <div class="ml-3">
+            <a href="#">
+              <img src="${json.papers.annotation.icon}" alt="">
+            </a>
+          </div>
+        </div> 
 
           <div class="media stream-item">
           <div class="media-body">
