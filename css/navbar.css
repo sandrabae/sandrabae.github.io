@@ -67,6 +67,10 @@ a#logo {
   font-size: 1.1em;
 }
 
+.padding {
+  padding-top: 25% !important;
+}
+
 /* .nav-links a:nth-child(2) {
   padding-right: 0px;
 } */
