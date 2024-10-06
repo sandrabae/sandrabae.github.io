@@ -1,9 +1,9 @@
 class Nav extends HTMLElement {
-  constructor() {
-    super();
-  }
-  connectedCallback() {
-    this.innerHTML = `
+	constructor() {
+		super();
+	}
+	connectedCallback() {
+		this.innerHTML = `
     <!--Desktop NavBar-->
   	<div class="topnav" id="myTopnav"> <!--took our class in-line-div-->
   		<div id="nav-main" class="nav-links">
@@ -15,8 +15,9 @@ class Nav extends HTMLElement {
   			</a>
         </div>
         <div class="right-column">
+		<a href="musings.html">Musings</a>
         <a href="teaching.html">Teaching</a>
-  			<a href="wanderlust.html">Wanderlust</a>
+  		<a href="wanderlust.html">Wanderlust</a>
   		</div>
       </div>
   	</div>
@@ -68,13 +69,18 @@ class Nav extends HTMLElement {
   								<h1 class="mobile-links">Teaching</h1>
   							</li>
   						</a>
+						<a class="smoothTransition" href="musings.html">
+  							<li>
+  								<h1 class="mobile-links">Musings</h1>
+  							</li>
+  						</a>
   					</ul>
   				</div>
   			</div>
   		</div>
   	</nav>
   `;
-  }
+	}
 }
 
 customElements.define('nav-component', Nav);

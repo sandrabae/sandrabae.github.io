@@ -9,6 +9,7 @@ class Teaching extends HTMLElement {
 
     <h4>CU Boulder</h4>
     <ul class="no-bullets">
+      <li>ATLS 3300: Object (Spring 2022)</li>
       <li>ATLS 3300: Object (Spring 2021)</li>
     </ul>
 
@@ -17,6 +18,11 @@ class Teaching extends HTMLElement {
       <li>ECS 162: Web Programming (Spring 2020)</li>
       <li>ECS 164: Intro to Human-Computer Interaction (Winter 2019, Winter 2020)</li>
       <li>ECS 163: Information Visualization (Summer 2018)</li>
+    </ul>
+
+     <h4>Misc.</h4>
+    <ul class="no-bullets">
+      <li>Web Development for <a href="https://bravebehindbars.org/"> Brave Behind Bars</a> (Summer 2024)</li>
     </ul>
     <br>
     <p>More information on these courses can be found at the Dept website.</p>
