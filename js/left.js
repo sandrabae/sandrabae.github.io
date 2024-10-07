@@ -132,6 +132,7 @@ class Left extends HTMLElement {
                 <a class="btn btn-outline-primary my-1 mr-1 btn-sm" href="${json.papers.eager.doi}" target="_blank" rel="noopener">DOI</a>
                 <a class="btn btn-outline-primary my-1 mr-1 btn-sm" href="${json.papers.eager.presentation}" target="_blank" rel="noopener">Presentation</a>
                 <a class="btn btn-outline-primary my-1 mr-1 btn-sm" href="${json.papers.eager.instructable}" target="_blank" rel="noopener">Instructable</a>
+                 <a class="btn btn-outline-primary my-1 mr-1 btn-sm" href="${json.papers.eager.trailer}" target="_blank" rel="noopener">Trailer</a>
               </div>
             </div>
             <div class="ml-3">
