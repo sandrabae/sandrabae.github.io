@@ -16,14 +16,13 @@ class Left extends HTMLElement {
                 <tr></tr>
                 <tr>
                   <td class="cell-column align-top">
-                    <h2 id="logo-title">Making computers and materials speak the same language</h2>
+                    <h2 id="logo-title">Pushing data beyond the flat screen</h2>
                     <div class="paragraph-spacing">
                       <p style="padding-top:5px;">Hi I'm Sandra Bae. I advance data visual analytics by using data representations that are beyond 2D. Using theoretical and experimental approaches, my research addresses fundamental and applied challenges in data visualization, particularly for spatial and multi-dimensional datasets.</p>
 
-                      <p>I am a final year PhD candidate at the ATLAS Institute at CU Boulder, co-advised by <a href="${json.people.edo}">Ellen Do</a> in the ACME Lab, <a href="${json.people.dszafir}">Danielle Szafir</a> in the VisuaLab, and <a href="${json.people.mrivera}">Michael Rivera</a> in the UtilityLab. I received a M.S. in Computer Science from UC Davis in 2020. Prior to that, I received my B.A. in Human-Computer Interaction from UC Davis in 2018.</p>
+                      <p>I am an Assistant Professor in Computer Science at the University of Arizona. 
+                      I earned my Ph.D from the ATLAS Institute at the University of Colorado, Boulder (2025), where I was advised by Profs. <a href="${json.people.edo}">Ellen Do</a>, <a href="${json.people.dszafir}">Danielle Albers Szafir</a>, and <a href="${json.people.mrivera}">Michael L. Rivera</a>. I completed my M.S. in Computer Science (2020) as a NASA JPL Master's Thesis Educational Fellow and my B.A. in Human-Computer Interaction (2018), both from the University of California, Davis. My broader research interests include human-computer interaction, data visualization, computational geometry & fabrication, optimization, and tangible Interactions.</p>
                   		<p>When I'm not in the lab, you can probably find my nose in a good book, my hands on a rock, or my feet in the mountains.</p>
-                      <p style="padding-top:5px; padding-bottom:10px;">
-                      <b>I'm on the job market! I'm looking for tenure-track faculty and industry research scientist positions starting fall 2025.</b></p>
                       <!-- </div> -->
                   	</div>
                     </div>
