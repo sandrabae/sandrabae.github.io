@@ -6,7 +6,7 @@ class Right extends HTMLElement {
     this.innerHTML = `
     <h2>News</h2>
     <b>08/18/25</b> Started as a tenure-track professor at University of Arizona</br>
-    <b>03/14/25</b> Defended my PhD! Passed my defense today! Thank you to my advisors, committee, labmates, and friends.</br>
+    <b>03/14/25</b> Defended my PhD! Thank you to my advisors, committee, labmates, and friends.</br>
     <b>03/10/25</b> Visited and presented at Tufts CS. Thanks Prof. Remco Chang for hosting me!</br>
     <b>03/03/25</b> Visited and presented at WashU CSE. Thanks Prof. Alvitta Ottley for hosting me!</br>
     <b>02/20/25</b> Visited and presented at WPI CS. Thanks Prof. Craig Shue for hosting me!</br>
