@@ -109,6 +109,33 @@ class Left extends HTMLElement {
           </div>
         </div> 
 
+                <div class="media stream-item">
+          <div class="media-body">
+            <h3 class="article-title mb-0 mt-0">
+              ${json.papers.m2d2.title}
+            </h3>
+            <div class="article-style">${json.papers.m2d2.sentence}</div>
+            <div class="stream-meta article-metadata">
+              <div>
+                <span><a href="${json.people.xwen}" target="_blank">Xin Wen</a></span>,
+                  <span><strong>Sandra Bae*</strong></span>,
+                <span><a href="${json.people.mrivera}" target="_blank">Michael L. Rivera</a></span>
+              </div>
+              <div class="venue">${json.papers.m2d2.venue}</div>
+            </div>
+            <div class="btn-links">
+              <a class="btn btn-outline-primary my-1 mr-1 btn-sm" href="${json.papers.m2d2.doi}" target="_blank" rel="noopener">DOI</a>
+              <a class="btn btn-outline-primary my-1 mr-1 btn-sm" href="${json.papers.m2d2.trailer}" target="_blank" rel="noopener">Trailer</a>
+            </div>
+          </div>
+          <div class="ml-3">
+            <a href="#">
+              <img src="${json.papers.m2d2.icon}" alt="">
+            </a>
+          </div>
+        </div> 
+
+
 
         <div class="media stream-item">
           <div class="media-body">

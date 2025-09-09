@@ -43,9 +43,19 @@
     "cbearfield": "https://cyxiong.com/",
     "kcave": "https://people.umass.edu/kcave/",
     "prosen": "https://cspaul.com/",
-    "cgorg": "https://www.linkedin.com/in/carsten-g%C3%B6rg-31020351/"
+    "cgorg": "https://www.linkedin.com/in/carsten-g%C3%B6rg-31020351/",
+    "xwen": "https://xinwen-xw.github.io/"
   },
   "papers": {
+    "m2d2": {
+      "title": "Enabling Recycling of Multi-Material 3D Printed Objects through Computational Design and Disassembly by Dissolution",
+      "sentence": "A 3D printing process using dissolvable interfaces that preserve the object's function",
+      "venue": "ACM Conference on Human Factors in Computing Systems (CHI) 2025<br><b>Best Paper Award (Top 1%) 🏆</b><br><b> Innovation Award, Student Ideas Showcase, 2025 CU Boulder Campus Sustainability Summit</b>",
+      "year": "2025",
+      "icon": "https://utilityresearchlab.org/assets/research/recycling-mm3dp/img/lizard-dissolved-process.gif",
+      "trailer": "https://www.youtube.com/watch?v=akN1_7oDHr8&ab_channel=UtilityResearchLab",
+      "doi": "https://dl.acm.org/doi/10.1145/3706598.3714080"
+    },
     "visualperception": {
       "title": "Bridging Network Science and Vision Science: Mapping Perceptual Mechanisms to Network Visualization Tasks",
       "sentence": "Mapping five key perceptual mechanisms used in node-link diagrams and adjacency matrices",
@@ -89,7 +99,7 @@
     "sensingnetwork": {
       "title": "A Computational Design Pipeline to Fabricate Sensing Network Physicalizations",
       "sentence": "3D printing network physicalizations with integrated sensing capabilities",
-      "venue": "IEEE Transactions on Visualization and Computer Graphics (to appear in proc. IEEE VIS 2023)<br><b>Best Paper Honorable Mention 🏆</b>",
+      "venue": "IEEE Transactions on Visualization and Computer Graphics (to appear in proc. IEEE VIS 2023)<br><b>Best Paper Honorable Mention (Top 3%) 🏆</b><br><b>Most Useful Project, Rocky Mountain RepRap Festival 2023</b>",
       "year": "2023",
       "projectpage": "../sensing-network/index.html",
       "icon": "../img/main/2023_sensing_network.png",
