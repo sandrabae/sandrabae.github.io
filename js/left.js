@@ -39,6 +39,9 @@ class Left extends HTMLElement {
               <!--Email-->
               <a href="${json.bae.email}" target="_blank">
                 <i class="far fa-envelope fa-fw"></i>Email</a>
+               <!--LinkedIn-->
+               <a href="${json.bae.linkedin}" target="_blank">
+                <i class="fa-brands fa-linkedin-in"></i>LinkedIn</a>
               <!--Twitter-->
               <a href="${json.bae.twitter}" target="_blank">
                 <i class="fab fa-twitter fa-fw"></i>sandrabae_sb</a>
@@ -51,17 +54,128 @@ class Left extends HTMLElement {
         <div class="publications column-header">
           <h2>Publications</h2>
 
+                <div class="media stream-item">
+          <div class="media-body">
+            <h3 class="article-title mb-0 mt-0">
+              ${json.papers.freeforminterface.title}
+            </h3>
+            <div class="article-style">${json.papers.freeforminterface.sentence}</div>
+            <div class="stream-meta article-metadata">
+              <div>
+               <span><strong>Sandra Bae*</strong></span>,
+                <span><a href="${json.people.tfujiwara}" target="_blank">Takanori Fujiwara*</a></span>,
+                <span><a href="${json.people.dszafir}" target="_blank">Danielle Albers Szafir</a></span>
+                <span><a href="${json.people.edo}" target="_blank">Ellen Yi-Luen Do</a></span>
+                <span><a href="${json.people.mrivera}" target="_blank">Michael L. Rivera</a></span>
+                (<sup>*</sup>equally contributed)
+              </div>
+              <div class="venue">${json.papers.freeforminterface.venue}</div>
+            </div>
+            <div class="btn-links">
+      
+            </div>
+          </div>
+          <div class="ml-3">
+            <a href="#">
+              <img src="${json.papers.freeforminterface.icon}" alt="">
+            </a>
+          </div>
+        </div> 
+
+                <div class="media stream-item">
+          <div class="media-body">
+            <h3 class="article-title mb-0 mt-0">
+              ${json.papers.gentact.title}
+            </h3>
+            <div class="article-style">${json.papers.gentact.sentence}</div>
+            <div class="stream-meta article-metadata">
+              <div>
+                <span><a href="${json.people.ckohlbrenner}" target="_blank">Carson Kohlbrenner</a></span>,
+                <span><a href="${json.people.cescobedo}" target="_blank">Caleb Escobedo</a></span>,
+                <span><strong>Sandra Bae</strong></span>,
+                <span><a href="${json.people.adickhans}" target="_blank">Alex Dickhans</a></span>,
+                <span><a href="${json.people.aroncone}" target="_blank">Alessandro Roncone</a></span> 
+              </div>
+              <div class="venue">${json.papers.gentact.venue}</div>
+            </div>
+            <div class="btn-links">
+              <a class="btn btn-outline-primary my-1 mr-1 btn-sm" href="${json.papers.gentact.pdf}" target="_blank" rel="noopener">PDF</a>
+            </div>
+          </div>
+          <div class="ml-3">
+            <a href="#">
+              <img src="${json.papers.gentact.icon}" alt="">
+            </a>
+          </div>
+        </div> 
+
+
+        <div class="media stream-item">
+          <div class="media-body">
+            <h3 class="article-title mb-0 mt-0">
+              ${json.papers.scatterplotvisualcomplexity.title}
+            </h3>
+            <div class="article-style">${json.papers.scatterplotvisualcomplexity.sentence}</div>
+            <div class="stream-meta article-metadata">
+              <div>
+               <span><strong>Sandra Bae*</strong></span>,
+                <span><a href="${json.people.tfujiwara}" target="_blank">Takanori Fujiwara*</a></span>,
+                <span><a href="${json.people.ctseng}" target="_blank">Chin Tseng*</a></span>,
+                <span><a href="${json.people.dszafir}" target="_blank">Danielle Albers Szafir</a></span> (<sup>*</sup>equally contributed)
+              </div>
+              <div class="venue">${json.papers.scatterplotvisualcomplexity.venue}</div>
+            </div>
+            <div class="btn-links">
+              <a class="btn btn-outline-primary my-1 mr-1 btn-sm" href="${json.papers.scatterplotvisualcomplexity.doi}" target="_blank" rel="noopener">DOI</a>
+            </div>
+          </div>
+          <div class="ml-3">
+            <a href="#">
+              <img src="${json.papers.scatterplotvisualcomplexity.icon}" alt="">
+            </a>
+          </div>
+        </div> 
+
+
           <div class="media stream-item">
           <div class="media-body">
             <h3 class="article-title mb-0 mt-0">
-              <a href="${json.papers.annotation.projectpage}">${json.papers.annotation.title}</a>
+              ${json.papers.visualperception.title}
+            </h3>
+            <div class="article-style">${json.papers.visualperception.sentence}</div>
+            <div class="stream-meta article-metadata">
+              <div>
+                <span><strong>Sandra Bae</strong></span>,
+                <span><a href="${json.people.kcave}" target="_blank">Kyle Cave</a></span>,
+                <span><a href="${json.people.cgorg}" target="_blank">Carsten Görg</a></span>,
+                <span><a href="${json.people.prosen}" target="_blank">Paul Rosen</a></span>,
+                <span><a href="${json.people.dszafir}" target="_blank">Danielle Albers Szafir</a></span>,
+                <span><a href="${json.people.cbearfield}" target="_blank">Cindy Xiong Bearfield</a></span>,
+              </div>
+              <div class="venue">${json.papers.visualperception.venue}</div>
+            </div>
+            <div class="btn-links">
+              <a class="btn btn-outline-primary my-1 mr-1 btn-sm" href="${json.papers.visualperception.doi}" target="_blank" rel="noopener">DOI</a>
+            </div>
+          </div>
+          <div class="ml-3">
+            <a href="#">
+              <img src="${json.papers.visualperception.icon}" alt="">
+            </a>
+          </div>
+        </div> 
+
+          <div class="media stream-item">
+          <div class="media-body">
+            <h3 class="article-title mb-0 mt-0">
+             ${json.papers.annotation.title}
             </h3>
             <div class="article-style">${json.papers.annotation.sentence}</div>
             <div class="stream-meta article-metadata">
               <div>
                 <span><a href="${json.people.rsorensongraff}" target="_blank">Rhys Sorenson-Graff</a></span>,
-                <span><strong>Sandra Bae</strong></span>
-                <span><a href="${json.people.jwirfsbrock}" target="_blank">Jordan Wirfs-Brock</a></span>,
+                <span><strong>Sandra Bae</strong></span>,
+                <span><a href="${json.people.jwirfsbrock}" target="_blank">Jordan Wirfs-Brock</a></span>
               </div>
               <div class="venue">${json.papers.annotation.venue}</div>
             </div>
@@ -85,12 +199,12 @@ class Left extends HTMLElement {
             <div class="article-style">${json.papers.sensingnetwork.sentence}</div>
             <div class="stream-meta article-metadata">
               <div>
-                <span><strong>Sandra Bae</strong></span>
+                <span><strong>Sandra Bae</strong></span>,
                 <span><a href="${json.people.tfujiwara}" target="_blank">Takanori Fujiwara</a></span>,
                 <span><a href="${json.people.aynnerman}" target="_blank">Anders Ynnerman</a></span>,
                 <span><a href="${json.people.edo}" target="_blank">Ellen Do</a></span>,
                 <span><a href="${json.people.mrivera}" target="_blank">Michael Rivera</a></span>,
-                <span><a href="${json.people.dszafir}"target="_blank">Danielle Szafir</a></span>
+                <span><a href="${json.people.dszafir}"target="_blank">Danielle Albers Szafir</a></span>
               </div>
               <div class="venue">${json.papers.sensingnetwork.venue}</div>
             </div>
@@ -116,13 +230,13 @@ class Left extends HTMLElement {
               <div class="article-style">${json.papers.eager.sentence}</div>
               <div class="stream-meta article-metadata">
                 <div>
-                  <span><strong>Sandra Bae</strong></span>
+                  <span><strong>Sandra Bae</strong></span>,
                   <span><a href="${json.people.rvanukuru}" target="_blank">Rishi Vanukuru</a></span>,
                   <span><a href="${json.people.ryang}" target="_blank">Ruhan Yang</a></span>,
                   <span><a href="${json.people.pgyory}" target="_blank">Peter Gyory</a></span>,
                   <span><a href="${json.people.rzhou}" target="_blank">Ran Zhou</a></span>,
                   <span><a href="${json.people.edo}" target="_blank">Ellen Do</a></span>,
-                  <span><a href="${json.people.dszafir}"target="_blank">Danielle Szafir</a></span>
+                  <span><a href="${json.people.dszafir}"target="_blank">Danielle Albers Szafir</a></span>
                 </div>
                 <div class="venue">${json.papers.eager.venue}</div>
               </div>
@@ -184,7 +298,7 @@ class Left extends HTMLElement {
                   <span><a href="${json.people.mwest}" target="_blank">Mary Etta West</a></span>,
                   <span><a href="${json.people.shuron}" target="_blank">Samuel Huron</a></span>,
                   <span><a href="${json.people.edo}" target="_blank">Ellen Do</a></span>,
-                  <span><a href="${json.people.dszafir}"target="_blank">Danielle Szafir</a></span>
+                  <span><a href="${json.people.dszafir}"target="_blank">Danielle Albers Szafir</a></span>
                 </div>
                 <div class="venue">${json.papers.dataphys.venue}</div>
               </div>
@@ -302,7 +416,7 @@ class Left extends HTMLElement {
                   <span><a href="${json.people.ryang}" target="_blank">Ruhan Yang</a></span>,
                   <span><a href="${json.people.pgyory}" target="_blank">Peter Gyory</a></span>,
                   <span><a href="${json.people.juhr}" target="_blank">Julia Uhr</a></span>,
-                  <span><a href="${json.people.dzafir}" target="_blank">Danielle Szafir</a></span>,
+                  <span><a href="${json.people.dzafir}" target="_blank">Danielle Albers Szafir</a></span>,
                   <span><a href="${json.people.edo}" target="_blank">Ellen Do</a></span>
                 </div>
                 <div class="venue">${json.papers.diypaper.venue}</div>

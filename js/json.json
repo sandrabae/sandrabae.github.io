@@ -2,7 +2,8 @@
   "bae": {
     "gscholar": "https://scholar.google.com/citations?user=MhRbJLEAAAAJ&hl=en",
     "twitter": "https://twitter.com/sandrabae_sb",
-    "email": "mailto:sandra.bae@colorado.edu",
+    "linkedin": "https://www.linkedin.com/in/sandra-bae-53058553/",
+    "email": "mailto:sandrabae@cs.arizona.edu",
     "cv": "../materials/sb_cv.pdf",
     "cv2": "../materials/sb_cv.pdf"
   },
@@ -33,13 +34,53 @@
     "rvanukuru": "https://rishivanukuru.com/",
     "aynnerman": "https://liu.se/en/employee/andyn27",
     "jwirfsbrock": "https://jwirfs-brock.github.io/JWB_website/",
-    "rsorensongraff": "https://rhys-sg.github.io/"
+    "rsorensongraff": "https://rhys-sg.github.io/",
+    "ctseng": "linkedin.com/in/chin-tseng-044510175",
+    "cescobedo": "https://caleb.phd/",
+    "ckohlbrenner": "https://ckohl10.github.io/",
+    "aroncone": "https://alessandro.ronc.one/",
+    "adickhans": "https://www.linkedin.com/in/alex-dickhans-19227232a/",
+    "cbearfield": "https://cyxiong.com/",
+    "kcave": "https://people.umass.edu/kcave/",
+    "prosen": "https://cspaul.com/",
+    "cgorg": "https://www.linkedin.com/in/carsten-g%C3%B6rg-31020351/"
   },
   "papers": {
+    "visualperception": {
+      "title": "Bridging Network Science and Vision Science: Mapping Perceptual Mechanisms to Network Visualization Tasks",
+      "sentence": "Mapping five key perceptual mechanisms used in node-link diagrams and adjacency matrices",
+      "venue": "IEEE Transactions on Visualization and Computer Graphics (TVCG)",
+      "year": "2025",
+      "icon": "../img/main/visual-perception.png",
+      "doi": "https://ieeexplore.ieee.org/document/10884913"
+    },
+    "freeforminterface": {
+      "title": "Computational Design and Single-Wire Sensing of 3D Printed Objects with Integrated Capacitive Touchpoints",
+      "sentence": "Supporting multiple capacitive sensing touchpoints with a single-wire connection",
+      "venue": "ACM Symposium on Computational Fabrication 2025 (forthcoming)",
+      "year": "2025",
+      "icon": "../img/main/2025_freeform_interface.png"
+    },
+    "gentact": {
+      "title": "GenTact Toolbox: A Computational Design Pipeline to Procedurally Generate Context-Driven 3D Printed Whole-Body Artificial Skins",
+      "sentence": "A computational pipeline to create versatile whole-body tactile skins tailored to both robot shape and application domain",
+      "venue": "Proceedings of International Conference on Robotics and Automation (ICRA) 2025",
+      "year": "2025",
+      "icon": "../img/main/gentact.jpg",
+      "pdf": "https://arxiv.org/abs/2412.00711"
+    },
+    "scatterplotvisualcomplexity": {
+      "title": "Uncovering How Scatterplot Features Skew Visual Class Separation",
+      "sentence": "Analyzing how people perceive visual class separation mesures through a crowdsourced study",
+      "venue": "ACM Conference on Human Factors in Computing Systems (CHI) 2025",
+      "year": "2025",
+      "icon": "../img/main/2025_vcs_perception.png",
+      "doi": "https://dl.acm.org/doi/10.1145/3706598.3713976"
+    },
     "annotation": {
       "title": "Integrating Annotations for Sonifications and Physicalizations",
       "sentence": "Exploring how annotations can be more tightly integrated into the design process of creating sonifications and physicalization",
-      "venue": "IEEE VIS 2024",
+      "venue": "Proceedings of IEEE VIS 2024",
       "year": "2024",
       "icon": "../img/main/annotation.jpg",
       "pdf": "https://arxiv.org/abs/2408.04574",

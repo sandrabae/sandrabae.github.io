@@ -5,6 +5,13 @@ class Right extends HTMLElement {
   connectedCallback() {
     this.innerHTML = `
     <h2>News</h2>
+    <b>08/18/25</b> Started as a tenure-track professor at University of Arizona</br>
+    <b>03/14/25</b> Defended my PhD! Passed my defense today! Thank you to my advisors, committee, labmates, and friends.</br>
+    <b>03/10/25</b> Visited and presented at Tufts CS. Thanks Prof. Remco Chang for hosting me!</br>
+    <b>03/03/25</b> Visited and presented at WashU CSE. Thanks Prof. Alvitta Ottley for hosting me!</br>
+    <b>02/20/25</b> Visited and presented at WPI CS. Thanks Prof. Craig Shue for hosting me!</br>
+    <b>02/06/25</b> Visited and presented at University of Arizona CS. Thanks Prof. Mihai Surdeanu for hosting me!</br>
+    <b>02/04/25</b> Visited and presented at UT Dallas CS. Thanks Prof. Jin Ryong Kim for hosting me!</br>
     <b>10/12/24</b> Traveling to Florida for IEEE VIS 2024</br>
     <b>10/01/24</b> Gave a talk at NIST</br>
     <b>09/14/24</b> Won KASF-KIA's STEM scholarship</br>
