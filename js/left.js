@@ -64,8 +64,8 @@ class Left extends HTMLElement {
               <div>
                <span><strong>Sandra Bae*</strong></span>,
                 <span><a href="${json.people.tfujiwara}" target="_blank">Takanori Fujiwara*</a></span>,
-                <span><a href="${json.people.dszafir}" target="_blank">Danielle Albers Szafir</a></span>
-                <span><a href="${json.people.edo}" target="_blank">Ellen Yi-Luen Do</a></span>
+                <span><a href="${json.people.dszafir}" target="_blank">Danielle Albers Szafir</a></span>,
+                <span><a href="${json.people.edo}" target="_blank">Ellen Yi-Luen Do</a></span>,
                 <span><a href="${json.people.mrivera}" target="_blank">Michael L. Rivera</a></span>
                 (<sup>*</sup>equally contributed)
               </div>
@@ -118,7 +118,7 @@ class Left extends HTMLElement {
             <div class="stream-meta article-metadata">
               <div>
                 <span><a href="${json.people.xwen}" target="_blank">Xin Wen</a></span>,
-                  <span><strong>Sandra Bae*</strong></span>,
+                  <span><strong>Sandra Bae</strong></span>,
                 <span><a href="${json.people.mrivera}" target="_blank">Michael L. Rivera</a></span>
               </div>
               <div class="venue">${json.papers.m2d2.venue}</div>
@@ -177,7 +177,7 @@ class Left extends HTMLElement {
                 <span><a href="${json.people.cgorg}" target="_blank">Carsten Görg</a></span>,
                 <span><a href="${json.people.prosen}" target="_blank">Paul Rosen</a></span>,
                 <span><a href="${json.people.dszafir}" target="_blank">Danielle Albers Szafir</a></span>,
-                <span><a href="${json.people.cbearfield}" target="_blank">Cindy Xiong Bearfield</a></span>,
+                <span><a href="${json.people.cbearfield}" target="_blank">Cindy Xiong Bearfield</a></span>
               </div>
               <div class="venue">${json.papers.visualperception.venue}</div>
             </div>
