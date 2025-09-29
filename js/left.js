@@ -50,6 +50,11 @@ class Left extends HTMLElement {
                 <i class="fab fa-medium fa-fw"></i>sandrabae</a></div> -->
         </div>
 
+        <div class="announcement-highlight">
+        <span class="highlight-icon">✨</span>
+        <div class="highlight-message"><b>I joined the University of Arizona as an Assistant Professor of Computer Science and started the Data Representation (D-REP) Lab. I am looking to work with highly motivated students and postdocs for Fall 2026. Visit the <a href="https://d-rep.org" rel="external nofollow noopener" target="_blank">lab's website</a> to learn more about D-REP, our ongoing projects, and the application process.</b></div></div>
+      </div>
+
 
         <div class="publications column-header">
           <h2>Publications</h2>
