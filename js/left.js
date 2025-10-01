@@ -77,7 +77,9 @@ class Left extends HTMLElement {
               <div class="venue">${json.papers.freeforminterface.venue}</div>
             </div>
             <div class="btn-links">
-      
+              <a class="btn btn-outline-primary my-1 mr-1 btn-sm" href="${json.papers.freeforminterface.pdf}" target="_blank" rel="noopener">PDF</a>
+               <a class="btn btn-outline-primary my-1 mr-1 btn-sm" href="${json.papers.freeforminterface.trailer}" target="_blank" rel="noopener">Video</a>
+               <a class="btn btn-outline-primary my-1 mr-1 btn-sm" href="${json.papers.freeforminterface.code}" target="_blank" rel="noopener">Code</a>
             </div>
           </div>
           <div class="ml-3">
@@ -105,6 +107,8 @@ class Left extends HTMLElement {
             </div>
             <div class="btn-links">
               <a class="btn btn-outline-primary my-1 mr-1 btn-sm" href="${json.papers.gentact.pdf}" target="_blank" rel="noopener">PDF</a>
+               <a class="btn btn-outline-primary my-1 mr-1 btn-sm" href="${json.papers.gentact.doi}" target="_blank" rel="noopener">DOI</a>
+               <a class="btn btn-outline-primary my-1 mr-1 btn-sm" href="${json.papers.gentact.code}" target="_blank" rel="noopener">Code</a>
             </div>
           </div>
           <div class="ml-3">

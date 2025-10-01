@@ -69,7 +69,10 @@
       "sentence": "Supporting multiple capacitive sensing touchpoints with a single-wire connection",
       "venue": "ACM Symposium on Computational Fabrication 2025 (forthcoming)",
       "year": "2025",
-      "icon": "../img/main/2025_freeform_interface.png"
+      "icon": "../img/main/2025_freeform_interface.png",
+      "pdf": "https://arxiv.org/abs/2412.00711",
+      "code": "https://github.com/d-rep-lab/3dp-singlewire-sensing",
+      "trailer": "https://youtu.be/at5puV1MHUo?si=asOLS72rP1dc6IvJ"
     },
     "gentact": {
       "title": "GenTact Toolbox: A Computational Design Pipeline to Procedurally Generate Context-Driven 3D Printed Whole-Body Artificial Skins",
@@ -77,7 +80,9 @@
       "venue": "Proceedings of International Conference on Robotics and Automation (ICRA) 2025",
       "year": "2025",
       "icon": "../img/main/gentact.jpg",
-      "pdf": "https://arxiv.org/abs/2412.00711"
+      "pdf": "https://arxiv.org/abs/2412.00711",
+      "doi": "https://doi.org/10.1109/ICRA55743.2025.11128675",
+      "code": "https://github.com/HIRO-group/GenTact"
     },
     "scatterplotvisualcomplexity": {
       "title": "Uncovering How Scatterplot Features Skew Visual Class Separation",
