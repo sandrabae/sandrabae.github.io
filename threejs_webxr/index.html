@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>Three.js Volume — Progressive Load + Mobile Perf + XR-ready</title>
+    <title>Three.js Volume — Streamed Load + MAX3D Cap + Mobile Perf</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <style>
         body {
@@ -90,19 +90,21 @@
             throw new Error('WebGL2 not available');
         }
 
-        /* -------------------- Scene -------------------- */
+        /* ---------- Scene/Renderer ---------- */
+        const isiOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, 0.01, 10000);
         const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
-
-        // Perf: lower DPR on iOS
-        const isiOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
         renderer.setPixelRatio(isiOS ? 1 : Math.min(2, devicePixelRatio));
         renderer.setSize(innerWidth, innerHeight);
         renderer.xr.enabled = true;
         renderer.xr.setReferenceSpaceType('local-floor');
         renderer.domElement.style.touchAction = 'none';
         document.body.appendChild(renderer.domElement);
+
+        const gl = renderer.getContext();
+        const MAX3D = gl.getParameter(gl.MAX_3D_TEXTURE_SIZE) || 256; // safety
 
         const hud = document.getElementById('hud');
         const tooltipEl = document.getElementById('tooltip');
@@ -115,29 +117,29 @@
         controls.touches = { ONE: THREE.TOUCH.ROTATE, TWO: THREE.TOUCH.DOLLY_PAN };
         camera.position.set(0, 0, 3); controls.update();
 
-        /* =================== CONFIG =================== */
-        const NUM_SLICES = 451;      // set lower temporarily for testing if needed
+        /* ---------- CONFIG ---------- */
+        const NUM_SLICES_ORIG = 451;
         const START_INDEX = 1;
-        const IMG_PATH = i => `./TranslationScaleCrop/${i + START_INDEX}.png`; // adjust to your layout
+        const IMG_PATH = i => `./TranslationScaleCrop/${i + START_INDEX}.png`;
 
         const SPACING = new THREE.Vector3(1, 1, 1);
-        let STEPS = 512; // will adapt after we know W/H/D
+        let STEPS = 512; // will adapt later
         const CLIM = new THREE.Vector2(0.10, 0.95);
         const BASE_ALPHA = 0.80;
         const FLIP = { x: false, y: true, z: true };
         const ROTATE_90 = false;
         const RESIZE_MAX = null;
 
-        // Larger grab area
+        // UI/drag affordances
         const FRAME_SCALE = 1.35;
         const FRAME_PROXY_PAD = 0.30;
 
-        // Progressive loading
-        const K_COARSE = 8;             // show every 8th slice first
-        const MAX_CONCURRENCY = 6;      // throttle parallel image loads
-        const PROGRESS_UPDATE_EVERY = 8; // update the on-screen % every N slices
+        // Progressive + streaming
+        const K_COARSE = isiOS ? 12 : 8;               // coarser first on iOS
+        const MAX_CONCURRENCY = isiOS ? 3 : 6;         // less parallelism on iOS
+        const PROGRESS_UPDATE_EVERY = isiOS ? 16 : 8;  // fewer texture reuploads
 
-        /* =================== Helpers =================== */
+        /* ---------- Helpers ---------- */
         function fitCameraToObject(obj, fit = 1.35) {
             const box = new THREE.Box3().setFromObject(obj);
             const size = new THREE.Vector3(); box.getSize(size);
@@ -149,7 +151,7 @@
             camera.near = Math.max(0.01, dist / 100); camera.far = dist * 200; camera.updateProjectionMatrix();
         }
 
-        // iOS-friendly image loader (safe fallbacks)
+        // iOS-friendly image loader with fallbacks
         async function loadImageData(url, targetW = null, targetH = null) {
             const img = new Image();
             img.crossOrigin = 'anonymous';
@@ -182,13 +184,13 @@
             canvas.width = tw; canvas.height = th;
             const ctx = canvas.getContext('2d', { willReadFrequently: true });
 
-            if (bmp) ctx.drawImage(bmp, 0, 0);
-            else ctx.drawImage(img, 0, 0, tw, th);
+            if (bmp) { ctx.drawImage(bmp, 0, 0); if (bmp.close) try { bmp.close(); } catch { } }
+            else { ctx.drawImage(img, 0, 0, tw, th); }
 
             try {
                 return ctx.getImageData(0, 0, tw, th);
             } catch (e) {
-                throw new Error('getImageData failed (likely cross-origin). Ensure images are same-origin or CORS-enabled.\n' + e.message);
+                throw new Error('getImageData failed (likely CORS). Ensure images are same-origin or CORS-enabled.\n' + e.message);
             }
         }
 
@@ -296,12 +298,12 @@
             onUp() { if (this.dragging && this.orbit) this.orbit.enabled = true; this.dragging = null; }
         }
 
-        /* =================== Main =================== */
+        /* ---------- Main ---------- */
         let frontMat, rt, volume, frameX, frameY, frameZ, arbRect, arbArrow, clip;
         let boxPick, pickables = [];
         let back, front;
         let tex3D = null;
-        let volU8 = null; // backing voxel buffer we progressively fill
+        let volU8 = null;
 
         const hoverRay = new THREE.Raycaster();
         const pointerNDC = new THREE.Vector2();
@@ -311,30 +313,43 @@
 
         (async function build() {
             try {
-                // --- First image to get target size ---
+                // 0) Probe first slice
                 const first = await loadImageData(IMG_PATH(0));
-                const target = { w: first.width, h: first.height };
+                let W0 = first.width, H0 = first.height, D0 = NUM_SLICES_ORIG;
 
-                // Build volume group and passes (before loading all slices) so we can display coarse quickly
-                // Unit volume in [-.5,.5]^3 scaled to voxel aspect
-                const W = target.w, H = target.h, D = NUM_SLICES;
+                // 1) Cap to GPU limits: downscale XY, stride Z
+                const xyScale = Math.min(1, MAX3D / Math.max(W0, H0));
+                const depthStride = Math.max(1, Math.ceil(D0 / Math.min(D0, MAX3D)));
+
+                const W = Math.max(1, Math.floor(W0 * xyScale));
+                const H = Math.max(1, Math.floor(H0 * xyScale));
+                const D = Math.ceil(D0 / depthStride);
+                const sliceIndexForZ = z => Math.min(D0 - 1, z * depthStride);
+
+                // 2) Scene primitives (before full load)
                 const worldSize = new THREE.Vector3(W * SPACING.x, H * SPACING.y, D * SPACING.z);
                 const fit = 1.0 / Math.max(worldSize.x, worldSize.y, worldSize.z);
                 const scaledFull = worldSize.clone().multiplyScalar(fit);
                 volume = new THREE.Group(); volume.scale.copy(scaledFull); scene.add(volume);
 
-                // Adaptive steps: scale with largest dimension
+                // adaptive steps
                 const maxDim = Math.max(W, H, D);
-                STEPS = Math.round(maxDim * 0.75);
+                STEPS = Math.round(maxDim * (isiOS ? 0.65 : 0.75));
 
-                // Render target
+                // Render target — lighter on memory (UnsignedByte)
                 const dpr = renderer.getPixelRatio();
                 rt = new THREE.WebGLRenderTarget(
                     Math.floor(innerWidth * dpr), Math.floor(innerHeight * dpr),
-                    { type: THREE.HalfFloatType, format: THREE.RGBAFormat, minFilter: THREE.NearestFilter, magFilter: THREE.NearestFilter, depthBuffer: true, stencilBuffer: false }
+                    {
+                        type: THREE.UnsignedByteType,
+                        format: THREE.RGBAFormat,
+                        minFilter: THREE.NearestFilter,
+                        magFilter: THREE.NearestFilter,
+                        depthBuffer: true,
+                        stencilBuffer: false
+                    }
                 );
 
-                // Pass meshes in SAME scene
                 const boxGeo = new THREE.BoxGeometry(1, 1, 1);
                 const backMat = new THREE.ShaderMaterial({
                     side: THREE.BackSide,
@@ -432,7 +447,7 @@
 
                     proxy.userData.dragOpts = {
                         id: axis, axis: axis, target: g,
-                        onChange: () => { // clamp within volume box
+                        onChange: () => {
                             if (axis === 'x') g.position.x = Math.max(-0.5, Math.min(0.5, g.position.x));
                             if (axis === 'y') g.position.y = Math.max(-0.5, Math.min(0.5, g.position.y));
                             if (axis === 'z') g.position.z = Math.max(-0.5, Math.min(0.5, g.position.z));
@@ -441,7 +456,6 @@
                     };
                     rect.userData.dragOpts = proxy.userData.dragOpts;
                     g.userData.dragOpts = proxy.userData.dragOpts;
-
                     return g;
                 }
 
@@ -459,13 +473,11 @@
                 frameY.add(labelY); labelY.position.set(0, labelOffset, 0);
                 frameZ.add(labelZ); labelZ.position.set(0, labelOffset, 0);
 
-                /* ---------- Arbitrary plane (OFF by default) ---------- */
+                /* ---------- Arbitrary plane ---------- */
                 const arbSize = FRAME_SCALE * 1.55;
                 const arbGeo = new THREE.PlaneGeometry(arbSize, arbSize, 1, 1);
                 const arbRectEdges = new THREE.LineSegments(new THREE.EdgesGeometry(arbGeo), new THREE.LineBasicMaterial({ color: 0xff9955 }));
-                arbRect = new THREE.Group();
-                arbRect.add(arbRectEdges);
-                volume.add(arbRect);
+                arbRect = new THREE.Group(); arbRect.add(arbRectEdges); volume.add(arbRect);
 
                 arbArrow = new THREE.ArrowHelper(new THREE.Vector3(0, 0, 1), new THREE.Vector3(0, 0, 0), 1.0, 0xff9955, 0.16, 0.10);
                 arbRect.add(arbArrow);
@@ -473,8 +485,7 @@
                 const arrowProxyGeo = new THREE.CylinderGeometry(0.10, 0.10, 1.6, 16, 1, true);
                 arrowProxyGeo.rotateX(Math.PI / 2);
                 const arrowProxy = new THREE.Mesh(arrowProxyGeo, new THREE.MeshBasicMaterial({ transparent: true, opacity: 0.0, depthWrite: false }));
-                arrowProxy.position.set(0, 0, 0.55);
-                arbRect.add(arrowProxy);
+                arrowProxy.position.set(0, 0, 0.55); arbRect.add(arrowProxy);
 
                 const labelA = createTextSprite('PLANE (OFF)', '#ffbb77'); arbRect.add(labelA); labelA.position.set(0, labelOffset, 0);
 
@@ -495,7 +506,7 @@
                 );
                 volume.add(boxPick);
 
-                // Desktop/touch drag controller
+                // Drag controller
                 const drag = new DragController(camera, renderer.domElement, controls);
                 drag.setScene(scene);
                 drag.setPickables(pickables);
@@ -544,6 +555,9 @@
                 gui.add(params, 'Show tooltip');
 
                 // Tooltip hover
+                const hoverRay = new THREE.Raycaster();
+                const pointerNDC = new THREE.Vector2();
+                let hoveredFrame = null;
                 function setPointerFromEvent(e) {
                     const r = renderer.domElement.getBoundingClientRect();
                     pointerNDC.x = ((e.clientX - r.left) / r.width) * 2 - 1; pointerNDC.y = -((e.clientY - r.top) / r.height) * 2 + 1;
@@ -578,38 +592,36 @@
                     hoveredFrame = null; tooltipEl.style.display = 'none';
                 });
 
-                /* ---------- Progressive volume: coarse first, then refine ---------- */
-                // Build coarse proxy by sampling every Kth slice, then fill all progressively.
+                /* ---------- Progressive: coarse first (no retention), then stream full ---------- */
+                function gray(data, i2d) { return ((data[i2d] + data[i2d + 1] + data[i2d + 2]) / 3) | 0; }
 
-                function grayscaleAt(data, i2d) {
-                    return ((data[i2d] + data[i2d + 1] + data[i2d + 2]) / 3) | 0;
-                }
-
-                function buildCoarseVolumePlaceholder(coarseImages, W, H, D, step) {
+                async function buildCoarsePlaceholder(W, H, D, step) {
                     const vol = new Uint8Array(W * H * D);
-                    for (let z = 0; z < D; z++) {
-                        const nearest = Math.min(D - 1, Math.round(z / step) * step);
-                        const img = coarseImages[nearest] || coarseImages[0];
-                        const data = img.data;
-                        let base3d = z * W * H;
+                    for (let z = 0; z < D; z += step) {
+                        const src = sliceIndexForZ(z);
+                        const img = await loadImageData(IMG_PATH(src), W, H);
+                        const base3d = z * W * H;
                         for (let y = 0; y < H; y++) {
-                            let rowBase = y * W;
+                            const rowBase = y * W;
                             for (let x = 0; x < W; x++) {
                                 const i2d = (y * W + x) * 4;
-                                vol[base3d + rowBase + x] = grayscaleAt(data, i2d);
+                                vol[base3d + rowBase + x] = gray(img.data, i2d);
                             }
+                        }
+                        // nearest-neighbor fill between coarse slices
+                        const nextZ = Math.min(D - 1, z + step);
+                        for (let zz = z + 1; zz < nextZ; zz++) {
+                            const dstBase = zz * W * H;
+                            vol.set(vol.subarray(base3d, base3d + W * H), dstBase);
                         }
                     }
                     return vol;
                 }
 
-                // 1) Load sparse slices (every Kth)
-                const coarse = new Array(D);
-                for (let z = 0; z < D; z += K_COARSE) {
-                    coarse[z] = await loadImageData(IMG_PATH(z), W, H);
-                }
-                // 2) Show coarse immediately
-                volU8 = buildCoarseVolumePlaceholder(coarse, W, H, D, K_COARSE);
+                // Coarse first
+                progressEl.style.display = 'block';
+                progressEl.textContent = 'Preparing coarse volume...';
+                volU8 = await buildCoarsePlaceholder(W, H, D, K_COARSE);
                 tex3D = new THREE.Data3DTexture(volU8, W, H, D);
                 tex3D.format = THREE.RedFormat;
                 tex3D.type = THREE.UnsignedByteType;
@@ -620,53 +632,47 @@
                 tex3D.needsUpdate = true;
                 frontMat.uniforms.u_data.value = tex3D;
 
-                // 3) In the background, load all slices with throttling and patch-update volU8
-                progressEl.style.display = 'block';
+                // Stream all slices (stride-aware), copy→discard
                 let loadedCount = 0;
-                const full = new Array(D);
-
                 await new Promise((resolve, reject) => {
-                    const q = [...Array(D).keys()];
+                    const queue = [...Array(D).keys()];
                     let active = 0, i = 0;
 
-                    const tickProgress = () => {
+                    const tick = () => {
                         const pct = Math.round((loadedCount / D) * 100);
                         progressEl.textContent = `Loading slices: ${loadedCount}/${D} (${pct}%)`;
                     };
 
                     const kick = () => {
-                        while (active < MAX_CONCURRENCY && i < q.length) {
-                            const z = q[i++]; active++;
-                            loadImageData(IMG_PATH(z), W, H)
+                        while (active < MAX_CONCURRENCY && i < queue.length) {
+                            const z = queue[i++]; active++;
+                            const src = sliceIndexForZ(z);
+                            loadImageData(IMG_PATH(src), W, H)
                                 .then(img => {
-                                    full[z] = img;
-                                    // Patch-copy this slice into volU8
                                     const data = img.data;
                                     const base3d = z * W * H;
                                     for (let y = 0; y < H; y++) {
-                                        let rowBase = y * W;
+                                        const rowBase = y * W;
                                         for (let x = 0; x < W; x++) {
                                             const i2d = (y * W + x) * 4;
-                                            volU8[base3d + rowBase + x] = grayscaleAt(data, i2d);
+                                            volU8[base3d + rowBase + x] = gray(data, i2d);
                                         }
                                     }
                                     loadedCount++;
-                                    if (loadedCount % PROGRESS_UPDATE_EVERY === 0) tex3D.needsUpdate = true;
-                                    tickProgress();
+                                    if ((loadedCount % PROGRESS_UPDATE_EVERY) === 0) tex3D.needsUpdate = true;
                                 })
                                 .catch(reject)
                                 .finally(() => {
                                     active--;
-                                    if (i >= q.length && active === 0) resolve();
+                                    if (i >= queue.length && active === 0) resolve();
                                     else kick();
                                 });
                         }
                     };
-                    tickProgress();
+                    tick();
                     kick();
                 });
 
-                // Final update after full load
                 tex3D.needsUpdate = true;
                 progressEl.style.display = 'none';
 
@@ -676,13 +682,13 @@
                     `Touch / Desktop:
  • Orbit: 1-finger rotate • 2-finger dolly/pan
  • Drag a red frame to move that axis-plane (perpendicular slice)
- • Drag the orange frame to translate (enable in GUI)
- • Drag the orange ARROW to rotate
- • Toggle planes in the GUI. Enable "Show tooltip" for dx/dy/dz/dl.
-Progressive loading is enabled (coarse first, then sharpens).`;
+ • (GUI) Toggle orange plane; drag frame to translate, arrow to rotate
+ • (GUI) "Show tooltip" for dx/dy/dz/dl
+Performance:
+ • Streamed slices, MAX_3D cap = ${MAX3D}, stride=${depthStride}, DPR=${renderer.getPixelRatio()}`;
 
                 function render() {
-                    // Pass 1: back faces to RT
+                    // Pass 1: back faces → exit coords
                     back.visible = true;
                     front.visible = false;
                     renderer.setRenderTarget(rt);
@@ -690,7 +696,7 @@ Progressive loading is enabled (coarse first, then sharpens).`;
                     renderer.clear(true, true, true);
                     renderer.render(scene, camera);
 
-                    // Pass 2: front faces composite
+                    // Pass 2: front faces → composite
                     back.visible = false;
                     front.visible = true;
                     renderer.setRenderTarget(null);
@@ -711,7 +717,7 @@ Progressive loading is enabled (coarse first, then sharpens).`;
                     }
                 });
 
-                // WebXR UI (hidden tip on iPhone)
+                // WebXR UI (hidden on iPhone)
                 setupVRUI();
                 async function setupVRUI() {
                     let supportsImmersiveVR = false;
