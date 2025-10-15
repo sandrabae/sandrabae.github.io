@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Three.js Volume — Progressive Load + Mobile Perf + XR-ready</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: #111;
+            color: #ddd;
+            font: 12px system-ui
+        }
+
+        #hud {
+            position: fixed;
+            left: 8px;
+            bottom: 8px;
+            background: rgba(0, 0, 0, .35);
+            padding: 6px 8px;
+            border-radius: 6px;
+            white-space: pre
+        }
+
+        #tooltip {
+            position: fixed;
+            left: 0;
+            top: 0;
+            transform: translate(12px, 12px);
+            background: rgba(0, 0, 0, .7);
+            color: #fff;
+            padding: 6px 8px;
+            border-radius: 6px;
+            font: 12px system-ui;
+            white-space: pre;
+            pointer-events: none;
+            display: none;
+            border: 1px solid rgba(255, 255, 255, .15)
+        }
+
+        #tip {
+            position: fixed;
+            right: 8px;
+            bottom: 8px;
+            background: rgba(0, 0, 0, .45);
+            color: #fff;
+            padding: 8px 10px;
+            border-radius: 6px;
+            font: 12px system-ui;
+            display: none
+        }
+
+        #progress {
+            position: fixed;
+            left: 8px;
+            top: 8px;
+            background: rgba(0, 0, 0, .6);
+            color: #fff;
+            padding: 6px 8px;
+            border-radius: 6px;
+            font: 12px system-ui;
+            display: none
+        }
+    </style>
+    <script type="importmap">
+  { "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+  }}
+  </script>
+</head>
+
+<body>
+    <div id="hud"></div>
+    <div id="tooltip"></div>
+    <div id="tip"></div>
+    <div id="progress"></div>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { VRButton } from 'three/addons/webxr/VRButton.js';
+        import { XRControllerModelFactory } from 'three/addons/webxr/XRControllerModelFactory.js';
+        import { GUI } from 'https://cdn.jsdelivr.net/npm/lil-gui@0.19/+esm';
+
+        if (!document.createElement('canvas').getContext('webgl2')) {
+            document.body.innerHTML = '<div style="padding:20px;color:#ddd">WebGL2 is required.</div>';
+            throw new Error('WebGL2 not available');
+        }
+
+        /* -------------------- Scene -------------------- */
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, 0.01, 10000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
+
+        // Perf: lower DPR on iOS
+        const isiOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+        renderer.setPixelRatio(isiOS ? 1 : Math.min(2, devicePixelRatio));
+        renderer.setSize(innerWidth, innerHeight);
+        renderer.xr.enabled = true;
+        renderer.xr.setReferenceSpaceType('local-floor');
+        renderer.domElement.style.touchAction = 'none';
+        document.body.appendChild(renderer.domElement);
+
+        const hud = document.getElementById('hud');
+        const tooltipEl = document.getElementById('tooltip');
+        const tip = document.getElementById('tip');
+        const progressEl = document.getElementById('progress');
+
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true; controls.dampingFactor = 0.08;
+        controls.mouseButtons = { LEFT: THREE.MOUSE.ROTATE, MIDDLE: THREE.MOUSE.DOLLY, RIGHT: THREE.MOUSE.PAN };
+        controls.touches = { ONE: THREE.TOUCH.ROTATE, TWO: THREE.TOUCH.DOLLY_PAN };
+        camera.position.set(0, 0, 3); controls.update();
+
+        /* =================== CONFIG =================== */
+        const NUM_SLICES = 451;      // set lower temporarily for testing if needed
+        const START_INDEX = 1;
+        const IMG_PATH = i => `./TranslationScaleCrop/${i + START_INDEX}.png`; // adjust to your layout
+
+        const SPACING = new THREE.Vector3(1, 1, 1);
+        let STEPS = 512; // will adapt after we know W/H/D
+        const CLIM = new THREE.Vector2(0.10, 0.95);
+        const BASE_ALPHA = 0.80;
+        const FLIP = { x: false, y: true, z: true };
+        const ROTATE_90 = false;
+        const RESIZE_MAX = null;
+
+        // Larger grab area
+        const FRAME_SCALE = 1.35;
+        const FRAME_PROXY_PAD = 0.30;
+
+        // Progressive loading
+        const K_COARSE = 8;             // show every 8th slice first
+        const MAX_CONCURRENCY = 6;      // throttle parallel image loads
+        const PROGRESS_UPDATE_EVERY = 8; // update the on-screen % every N slices
+
+        /* =================== Helpers =================== */
+        function fitCameraToObject(obj, fit = 1.35) {
+            const box = new THREE.Box3().setFromObject(obj);
+            const size = new THREE.Vector3(); box.getSize(size);
+            const center = new THREE.Vector3(); box.getCenter(center);
+            controls.target.copy(center);
+            const maxDim = Math.max(size.x, size.y, size.z);
+            const dist = (maxDim / 2) / Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+            camera.position.copy(center).add(new THREE.Vector3(0, 0, dist * fit));
+            camera.near = Math.max(0.01, dist / 100); camera.far = dist * 200; camera.updateProjectionMatrix();
+        }
+
+        // iOS-friendly image loader (safe fallbacks)
+        async function loadImageData(url, targetW = null, targetH = null) {
+            const img = new Image();
+            img.crossOrigin = 'anonymous';
+            img.decoding = 'async';
+            img.src = url;
+            await new Promise((resolve, reject) => {
+                img.onload = resolve;
+                img.onerror = () => reject(new Error('Image failed to load: ' + url));
+            });
+
+            let tw = img.naturalWidth, th = img.naturalHeight;
+            if (targetW && targetH) { tw = targetW; th = targetH; }
+            else if (RESIZE_MAX) {
+                const s = Math.min(1, RESIZE_MAX / Math.max(tw, th));
+                tw = Math.max(1, Math.round(tw * s));
+                th = Math.max(1, Math.round(th * s));
+            }
+
+            const hasCreateImageBitmap = typeof createImageBitmap === 'function';
+            const hasOffscreen = typeof OffscreenCanvas !== 'undefined';
+
+            let bmp = null;
+            if (hasCreateImageBitmap) {
+                try {
+                    bmp = await createImageBitmap(img, { resizeWidth: tw, resizeHeight: th, resizeQuality: 'high' });
+                } catch (_) { /* fall back */ }
+            }
+
+            const canvas = hasOffscreen ? new OffscreenCanvas(tw, th) : document.createElement('canvas');
+            canvas.width = tw; canvas.height = th;
+            const ctx = canvas.getContext('2d', { willReadFrequently: true });
+
+            if (bmp) ctx.drawImage(bmp, 0, 0);
+            else ctx.drawImage(img, 0, 0, tw, th);
+
+            try {
+                return ctx.getImageData(0, 0, tw, th);
+            } catch (e) {
+                throw new Error('getImageData failed (likely cross-origin). Ensure images are same-origin or CORS-enabled.\n' + e.message);
+            }
+        }
+
+        function createTextSprite(text, color = '#ffffff', scale = 0.18) {
+            const w = 256, h = 128;
+            const canvas = document.createElement('canvas'); canvas.width = w; canvas.height = h;
+            const ctx = canvas.getContext('2d');
+            const tex = new THREE.CanvasTexture(canvas); tex.minFilter = THREE.LinearFilter;
+            const mat = new THREE.SpriteMaterial({ map: tex, depthTest: false, transparent: true });
+            const spr = new THREE.Sprite(mat); spr.scale.set(scale, scale * 0.5, 1);
+            function draw(t) {
+                ctx.clearRect(0, 0, w, h);
+                ctx.fillStyle = 'rgba(0,0,0,0.55)';
+                const r = 20; ctx.beginPath();
+                ctx.moveTo(r, 0); ctx.lineTo(w - r, 0); ctx.quadraticCurveTo(w, 0, w, r);
+                ctx.lineTo(w, h - r); ctx.quadraticCurveTo(w, h, w - r, h);
+                ctx.lineTo(r, h); ctx.quadraticCurveTo(0, h, 0, h - r);
+                ctx.lineTo(0, r); ctx.quadraticCurveTo(0, 0, r, 0); ctx.closePath(); ctx.fill();
+                ctx.fillStyle = color; ctx.font = 'bold 56px system-ui, sans-serif';
+                ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(t, w / 2, h / 2);
+                tex.needsUpdate = true;
+            }
+            spr.userData.setText = draw; draw(text); return spr;
+        }
+
+        class DragController {
+            constructor(camera, dom, orbit) {
+                this.camera = camera; this.dom = dom; this.orbit = orbit;
+                this.ray = new THREE.Raycaster(); this.pointer = new THREE.Vector2(); this.dragging = null;
+                this.pickables = null;
+                dom.addEventListener('pointerdown', e => this.onDown(e));
+                dom.addEventListener('pointermove', e => this.onMove(e));
+                dom.addEventListener('pointerup', e => this.onUp(e));
+                dom.addEventListener('pointercancel', e => this.onUp(e));
+            }
+            setScene(s) { this.scene = s; }
+            setPickables(list) { this.pickables = list; }
+            _updatePointer(e) {
+                const r = this.dom.getBoundingClientRect();
+                this.pointer.x = ((e.clientX - r.left) / r.width) * 2 - 1; this.pointer.y = -((e.clientY - r.top) / r.height) * 2 + 1;
+            }
+
+            onDown(e) {
+                this._updatePointer(e);
+                this.ray.setFromCamera(this.pointer, this.camera);
+                const hits = this.ray.intersectObjects(this.pickables || this.scene.children, true);
+
+                let chosen = null;
+                for (const h of hits) {
+                    let o = h.object;
+                    while (o && !o.userData.dragOpts) o = o.parent;
+                    if (!o) continue;
+                    chosen = { obj: o, hit: h, opts: o.userData.dragOpts }; break;
+                }
+                if (!chosen) return;
+
+                const isTouch = e.pointerType === 'touch';
+                if (!isTouch && !e.shiftKey && chosen.opts.id !== 'arb-rot') return;
+
+                const moveObj = chosen.opts.target || chosen.obj;
+                const dragging = { obj: moveObj, opts: chosen.opts, hit: chosen.hit, mode: 'translate' };
+
+                if (chosen.opts.id === 'arb-rot' || (chosen.opts.id === 'arb' && (e.ctrlKey || e.metaKey))) {
+                    dragging.mode = 'rotate';
+                    dragging.lastXY = { x: e.clientX, y: e.clientY };
+                } else {
+                    const n = this.camera.getWorldDirection(new THREE.Vector3()).normalize();
+                    dragging.plane = new THREE.Plane().setFromNormalAndCoplanarPoint(n, chosen.hit.point.clone());
+                    dragging.offset = chosen.hit.point.clone().sub(moveObj.getWorldPosition(new THREE.Vector3()));
+                }
+
+                this.dragging = dragging;
+                if (this.orbit) this.orbit.enabled = false;
+                e.preventDefault();
+            }
+
+            onMove(e) {
+                if (!this.dragging) return;
+                const { obj, opts, mode } = this.dragging;
+
+                if (mode === 'rotate') {
+                    const dx = e.clientX - this.dragging.lastXY.x;
+                    const dy = e.clientY - this.dragging.lastXY.y;
+                    this.dragging.lastXY.x = e.clientX; this.dragging.lastXY.y = e.clientY;
+                    const k = 0.005;
+                    obj.rotation.y -= dx * k;
+                    obj.rotation.x -= dy * k;
+                    opts.onChange(obj);
+                    return;
+                }
+
+                this._updatePointer(e); this.ray.setFromCamera(this.pointer, this.camera);
+                const p = new THREE.Vector3();
+                if (!this.ray.ray.intersectPlane(this.dragging.plane, p)) return;
+                const targetWorld = p.clone().sub(this.dragging.offset);
+                const parent = obj.parent || this.scene;
+                const targetLocal = parent.worldToLocal(targetWorld.clone());
+                if (opts.axis === 'x') { targetLocal.y = obj.position.y; targetLocal.z = obj.position.z; }
+                if (opts.axis === 'y') { targetLocal.x = obj.position.x; targetLocal.z = obj.position.z; }
+                if (opts.axis === 'z') { targetLocal.x = obj.position.x; targetLocal.y = obj.position.y; }
+                obj.position.copy(targetLocal);
+                opts.onChange(obj);
+            }
+
+            onUp() { if (this.dragging && this.orbit) this.orbit.enabled = true; this.dragging = null; }
+        }
+
+        /* =================== Main =================== */
+        let frontMat, rt, volume, frameX, frameY, frameZ, arbRect, arbArrow, clip;
+        let boxPick, pickables = [];
+        let back, front;
+        let tex3D = null;
+        let volU8 = null; // backing voxel buffer we progressively fill
+
+        const hoverRay = new THREE.Raycaster();
+        const pointerNDC = new THREE.Vector2();
+        let hoveredFrame = null;
+        const baseCol = new THREE.Color(0xff6b6b);
+        const hiCol = new THREE.Color(0xffb2b2);
+
+        (async function build() {
+            try {
+                // --- First image to get target size ---
+                const first = await loadImageData(IMG_PATH(0));
+                const target = { w: first.width, h: first.height };
+
+                // Build volume group and passes (before loading all slices) so we can display coarse quickly
+                // Unit volume in [-.5,.5]^3 scaled to voxel aspect
+                const W = target.w, H = target.h, D = NUM_SLICES;
+                const worldSize = new THREE.Vector3(W * SPACING.x, H * SPACING.y, D * SPACING.z);
+                const fit = 1.0 / Math.max(worldSize.x, worldSize.y, worldSize.z);
+                const scaledFull = worldSize.clone().multiplyScalar(fit);
+                volume = new THREE.Group(); volume.scale.copy(scaledFull); scene.add(volume);
+
+                // Adaptive steps: scale with largest dimension
+                const maxDim = Math.max(W, H, D);
+                STEPS = Math.round(maxDim * 0.75);
+
+                // Render target
+                const dpr = renderer.getPixelRatio();
+                rt = new THREE.WebGLRenderTarget(
+                    Math.floor(innerWidth * dpr), Math.floor(innerHeight * dpr),
+                    { type: THREE.HalfFloatType, format: THREE.RGBAFormat, minFilter: THREE.NearestFilter, magFilter: THREE.NearestFilter, depthBuffer: true, stencilBuffer: false }
+                );
+
+                // Pass meshes in SAME scene
+                const boxGeo = new THREE.BoxGeometry(1, 1, 1);
+                const backMat = new THREE.ShaderMaterial({
+                    side: THREE.BackSide,
+                    vertexShader: `varying vec3 v01; void main(){ v01=position*0.5+0.5; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0); }`,
+                    fragmentShader: `precision highp float; varying vec3 v01; void main(){ gl_FragColor=vec4(v01,1.0); }`
+                });
+                back = new THREE.Mesh(boxGeo, backMat); volume.add(back);
+
+                clip = {
+                    u_clipX: { value: new THREE.Vector4(1, 0, 0, 0.5) },
+                    u_clipY: { value: new THREE.Vector4(0, 1, 0, 0.5) },
+                    u_clipZ: { value: new THREE.Vector4(0, 0, 1, 0.5) },
+                    u_clipArb: { value: new THREE.Vector4(0, 0, 1, 0.5) },
+                    u_useX: { value: true },
+                    u_useY: { value: true },
+                    u_useZ: { value: true },
+                    u_useArb: { value: false }
+                };
+                frontMat = new THREE.ShaderMaterial({
+                    side: THREE.FrontSide, transparent: false, depthWrite: true,
+                    uniforms: {
+                        u_data: { value: null }, u_exit: { value: rt.texture },
+                        u_res: { value: new THREE.Vector2(rt.width, rt.height) },
+                        u_steps: { value: STEPS }, u_baseA: { value: BASE_ALPHA }, u_clim: { value: CLIM.clone() },
+                        ...clip
+                    },
+                    vertexShader: `varying vec3 v01; void main(){ v01=position*0.5+0.5; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0); }`,
+                    fragmentShader:/*glsl*/`
+            precision highp float; precision highp sampler3D;
+            uniform sampler3D u_data; uniform sampler2D u_exit;
+            uniform vec2 u_res; uniform vec2 u_clim;
+            uniform int u_steps; uniform float u_baseA;
+            uniform vec4 u_clipX, u_clipY, u_clipZ, u_clipArb;
+            uniform bool u_useX, u_useY, u_useZ, u_useArb;
+            varying vec3 v01;
+            float win(float v, vec2 c){ return clamp((v-c.x)/max(1e-6,(c.y-c.x)),0.0,1.0); }
+            bool allow(vec3 p01){
+              vec3 q = p01 - 0.5;
+              if(u_useX   && dot(u_clipX.xyz,   q) > u_clipX.w)   return false;
+              if(u_useY   && dot(u_clipY.xyz,   q) > u_clipY.w)   return false;
+              if(u_useZ   && dot(u_clipZ.xyz,   q) > u_clipZ.w)   return false;
+              if(u_useArb && dot(u_clipArb.xyz, q) > u_clipArb.w) return false;
+              return true;
+            }
+            void main(){
+              vec2 uv = gl_FragCoord.xy / u_res;
+              vec4 exitTex = texture2D(u_exit, uv);
+              if(exitTex.a < 0.5) discard;
+              vec3 exit01 = exitTex.xyz;
+
+              vec3 start01 = v01;
+              vec3 dir01 = exit01 - start01;
+              vec3 step01 = dir01 / float(u_steps);
+
+              vec4 accum = vec4(0.0);
+              vec3 p = start01;
+              for(int i=0;i<1024;i++){
+                if(i>=u_steps) break;
+                if(allow(p)){
+                  float s = texture(u_data, p).r;
+                  float w = win(s, u_clim);
+                  float a = w * (u_baseA / float(u_steps));
+                  accum.rgb += (1.0 - accum.a) * a * vec3(w);
+                  accum.a   += (1.0 - accum.a) * a;
+                  if(accum.a > 0.995) break;
+                }
+                p += step01;
+              }
+              if(accum.a <= 0.0) discard;
+              gl_FragColor = vec4(accum.rgb, 1.0);
+            }`
+                });
+                front = new THREE.Mesh(boxGeo, frontMat); volume.add(front);
+
+                // Outline
+                volume.add(new THREE.LineSegments(
+                    new THREE.EdgesGeometry(new THREE.BoxGeometry(1, 1, 1)),
+                    new THREE.LineBasicMaterial({ color: 0x888888 })
+                ));
+
+                /* ---------- Frames & Proxies ---------- */
+                function makeFrameGroup(axis, color = 0xff6b6b) {
+                    const rect = new THREE.LineSegments(
+                        new THREE.EdgesGeometry(new THREE.BoxGeometry(FRAME_SCALE, FRAME_SCALE, 0.001)),
+                        new THREE.LineBasicMaterial({ color, transparent: true, opacity: 1.0 })
+                    );
+                    const proxy = new THREE.Mesh(
+                        new THREE.PlaneGeometry(FRAME_SCALE + FRAME_PROXY_PAD, FRAME_SCALE + FRAME_PROXY_PAD),
+                        new THREE.MeshBasicMaterial({ transparent: true, opacity: 0.0, depthWrite: false })
+                    );
+                    proxy.raycast = THREE.Mesh.prototype.raycast;
+
+                    const g = new THREE.Group(); g.add(rect); g.add(proxy);
+                    g.userData.rect = rect; g.userData.proxy = proxy; g.userData.axis = axis;
+
+                    proxy.userData.dragOpts = {
+                        id: axis, axis: axis, target: g,
+                        onChange: () => { // clamp within volume box
+                            if (axis === 'x') g.position.x = Math.max(-0.5, Math.min(0.5, g.position.x));
+                            if (axis === 'y') g.position.y = Math.max(-0.5, Math.min(0.5, g.position.y));
+                            if (axis === 'z') g.position.z = Math.max(-0.5, Math.min(0.5, g.position.z));
+                            syncClipFromFrames();
+                        }
+                    };
+                    rect.userData.dragOpts = proxy.userData.dragOpts;
+                    g.userData.dragOpts = proxy.userData.dragOpts;
+
+                    return g;
+                }
+
+                const labelOffset = (FRAME_SCALE / 2) + 0.12;
+                const labelX = createTextSprite('X', '#ff7777');
+                const labelY = createTextSprite('Y', '#ff7777');
+                const labelZ = createTextSprite('Z', '#ff7777');
+
+                frameX = makeFrameGroup('x'); frameX.rotation.y = Math.PI / 2; volume.add(frameX);
+                frameY = makeFrameGroup('y'); frameY.rotation.x = -Math.PI / 2; volume.add(frameY);
+                frameZ = makeFrameGroup('z'); volume.add(frameZ);
+                frameZ.userData.proxy.position.z += 0.0001;
+
+                frameX.add(labelX); labelX.position.set(0, labelOffset, 0);
+                frameY.add(labelY); labelY.position.set(0, labelOffset, 0);
+                frameZ.add(labelZ); labelZ.position.set(0, labelOffset, 0);
+
+                /* ---------- Arbitrary plane (OFF by default) ---------- */
+                const arbSize = FRAME_SCALE * 1.55;
+                const arbGeo = new THREE.PlaneGeometry(arbSize, arbSize, 1, 1);
+                const arbRectEdges = new THREE.LineSegments(new THREE.EdgesGeometry(arbGeo), new THREE.LineBasicMaterial({ color: 0xff9955 }));
+                arbRect = new THREE.Group();
+                arbRect.add(arbRectEdges);
+                volume.add(arbRect);
+
+                arbArrow = new THREE.ArrowHelper(new THREE.Vector3(0, 0, 1), new THREE.Vector3(0, 0, 0), 1.0, 0xff9955, 0.16, 0.10);
+                arbRect.add(arbArrow);
+
+                const arrowProxyGeo = new THREE.CylinderGeometry(0.10, 0.10, 1.6, 16, 1, true);
+                arrowProxyGeo.rotateX(Math.PI / 2);
+                const arrowProxy = new THREE.Mesh(arrowProxyGeo, new THREE.MeshBasicMaterial({ transparent: true, opacity: 0.0, depthWrite: false }));
+                arrowProxy.position.set(0, 0, 0.55);
+                arbRect.add(arrowProxy);
+
+                const labelA = createTextSprite('PLANE (OFF)', '#ffbb77'); arbRect.add(labelA); labelA.position.set(0, labelOffset, 0);
+
+                arbRect.userData.dragOpts = { id: 'arb', axis: 'free', target: arbRect, onChange: () => { syncClipFromArb(); } };
+                arrowProxy.userData.dragOpts = { id: 'arb-rot', axis: 'free', target: arbRect, onChange: () => { syncClipFromArb(); } };
+
+                // Pickables
+                pickables = [
+                    frameX.userData.proxy, frameY.userData.proxy, frameZ.userData.proxy,
+                    frameX.userData.rect, frameY.userData.rect, frameZ.userData.rect,
+                    arbRect, arrowProxy
+                ];
+
+                // Tooltip pick box
+                boxPick = new THREE.Mesh(
+                    new THREE.BoxGeometry(1, 1, 1),
+                    new THREE.MeshBasicMaterial({ transparent: true, opacity: 0.0, depthWrite: false })
+                );
+                volume.add(boxPick);
+
+                // Desktop/touch drag controller
+                const drag = new DragController(camera, renderer.domElement, controls);
+                drag.setScene(scene);
+                drag.setPickables(pickables);
+
+                const clamp01 = v => Math.max(-0.5, Math.min(0.5, v));
+                function syncClipFromFrames() {
+                    clip.u_clipX.value.set(1, 0, 0, clamp01(frameX.position.x));
+                    clip.u_clipY.value.set(0, 1, 0, clamp01(frameY.position.y));
+                    clip.u_clipZ.value.set(0, 0, 1, clamp01(frameZ.position.z));
+                }
+                function syncClipFromArb() {
+                    const nLocal = new THREE.Vector3(0, 0, 1).applyEuler(arbRect.rotation);
+                    const s = volume.scale;
+                    const nBox = new THREE.Vector3(nLocal.x / s.x, nLocal.y / s.y, nLocal.z / s.z).normalize();
+                    const p0Box = new THREE.Vector3(arbRect.position.x / s.x, arbRect.position.y / s.y, arbRect.position.z / s.z);
+                    let c = nBox.dot(p0Box);
+                    c = THREE.MathUtils.clamp(c, -0.5, 0.5);
+                    const posLocal = new THREE.Vector3(nBox.x * c * s.x, nBox.y * c * s.y, nBox.z * c * s.z);
+                    arbRect.position.copy(posLocal);
+                    arbArrow.setDirection(nBox); arbArrow.position.set(0, 0, 0);
+                    clip.u_clipArb.value.set(nBox.x, nBox.y, nBox.z, c);
+                }
+
+                // Initial
+                clip.u_clipX.value.w = 0.5; clip.u_clipY.value.w = 0.5; clip.u_clipZ.value.w = 0.5;
+                clip.u_clipArb.value.set(0, 0, 1, 0.5);
+                syncClipFromFrames();
+                syncClipFromArb();
+                arbRect.visible = false;
+
+                /* ---------- GUI ---------- */
+                const gui = new GUI({ width: 260 });
+                const params = {
+                    'X plane': true,
+                    'Y plane': true,
+                    'Z plane': true,
+                    'Arbitrary plane (orange)': false,
+                    'Show tooltip': false
+                };
+                gui.add(params, 'X plane').onChange(v => { clip.u_useX.value = v; frameX.visible = v; });
+                gui.add(params, 'Y plane').onChange(v => { clip.u_useY.value = v; frameY.visible = v; });
+                gui.add(params, 'Z plane').onChange(v => { clip.u_useZ.value = v; frameZ.visible = v; });
+                gui.add(params, 'Arbitrary plane (orange)').onChange(v => {
+                    clip.u_useArb.value = v; arbRect.visible = v; labelA.userData.setText(`PLANE (${v ? 'ON' : 'OFF'})`);
+                });
+                gui.add(params, 'Show tooltip');
+
+                // Tooltip hover
+                function setPointerFromEvent(e) {
+                    const r = renderer.domElement.getBoundingClientRect();
+                    pointerNDC.x = ((e.clientX - r.left) / r.width) * 2 - 1; pointerNDC.y = -((e.clientY - r.top) / r.height) * 2 + 1;
+                }
+                function ascendToFrameGroup(o) { while (o && !(o.userData && o.userData.rect)) o = o.parent; return o; }
+                function updateHover(e) {
+                    setPointerFromEvent(e); hoverRay.setFromCamera(pointerNDC, camera);
+                    const hits = hoverRay.intersectObjects(pickables, true);
+                    const hit = hits[0];
+                    const hitGroup = hit ? ascendToFrameGroup(hit.object) : null;
+                    if (hoveredFrame && hoveredFrame !== hitGroup) hoveredFrame.userData.rect.material.color.copy(baseCol);
+                    if (hitGroup && hoveredFrame !== hitGroup) hitGroup.userData.rect.material.color.copy(hiCol);
+                    hoveredFrame = hitGroup || null;
+
+                    if (!params['Show tooltip']) { tooltipEl.style.display = 'none'; return; }
+                    const boxHits = hoverRay.intersectObject(boxPick, true);
+                    if (boxHits.length === 0) { tooltipEl.style.display = 'none'; return; }
+                    const pWorld = boxHits[0].point.clone();
+                    const pLocal = volume.worldToLocal(pWorld.clone());
+                    const dx = pLocal.x.toFixed(3);
+                    const dy = pLocal.y.toFixed(3);
+                    const dz = pLocal.z.toFixed(3);
+                    const dl = Math.hypot(pLocal.x, pLocal.y, pLocal.z).toFixed(3);
+                    tooltipEl.textContent = `dx: ${dx}\ndy: ${dy}\ndz: ${dz}\ndl: ${dl}`;
+                    tooltipEl.style.left = `${e.clientX}px`;
+                    tooltipEl.style.top = `${e.clientY}px`;
+                    tooltipEl.style.display = 'block';
+                }
+                renderer.domElement.addEventListener('pointermove', updateHover);
+                renderer.domElement.addEventListener('pointerleave', () => {
+                    if (hoveredFrame) hoveredFrame.userData.rect.material.color.copy(baseCol);
+                    hoveredFrame = null; tooltipEl.style.display = 'none';
+                });
+
+                /* ---------- Progressive volume: coarse first, then refine ---------- */
+                // Build coarse proxy by sampling every Kth slice, then fill all progressively.
+
+                function grayscaleAt(data, i2d) {
+                    return ((data[i2d] + data[i2d + 1] + data[i2d + 2]) / 3) | 0;
+                }
+
+                function buildCoarseVolumePlaceholder(coarseImages, W, H, D, step) {
+                    const vol = new Uint8Array(W * H * D);
+                    for (let z = 0; z < D; z++) {
+                        const nearest = Math.min(D - 1, Math.round(z / step) * step);
+                        const img = coarseImages[nearest] || coarseImages[0];
+                        const data = img.data;
+                        let base3d = z * W * H;
+                        for (let y = 0; y < H; y++) {
+                            let rowBase = y * W;
+                            for (let x = 0; x < W; x++) {
+                                const i2d = (y * W + x) * 4;
+                                vol[base3d + rowBase + x] = grayscaleAt(data, i2d);
+                            }
+                        }
+                    }
+                    return vol;
+                }
+
+                // 1) Load sparse slices (every Kth)
+                const coarse = new Array(D);
+                for (let z = 0; z < D; z += K_COARSE) {
+                    coarse[z] = await loadImageData(IMG_PATH(z), W, H);
+                }
+                // 2) Show coarse immediately
+                volU8 = buildCoarseVolumePlaceholder(coarse, W, H, D, K_COARSE);
+                tex3D = new THREE.Data3DTexture(volU8, W, H, D);
+                tex3D.format = THREE.RedFormat;
+                tex3D.type = THREE.UnsignedByteType;
+                tex3D.minFilter = THREE.LinearFilter;
+                tex3D.magFilter = THREE.LinearFilter;
+                tex3D.unpackAlignment = 1;
+                tex3D.wrapS = tex3D.wrapT = tex3D.wrapR = THREE.ClampToEdgeWrapping;
+                tex3D.needsUpdate = true;
+                frontMat.uniforms.u_data.value = tex3D;
+
+                // 3) In the background, load all slices with throttling and patch-update volU8
+                progressEl.style.display = 'block';
+                let loadedCount = 0;
+                const full = new Array(D);
+
+                await new Promise((resolve, reject) => {
+                    const q = [...Array(D).keys()];
+                    let active = 0, i = 0;
+
+                    const tickProgress = () => {
+                        const pct = Math.round((loadedCount / D) * 100);
+                        progressEl.textContent = `Loading slices: ${loadedCount}/${D} (${pct}%)`;
+                    };
+
+                    const kick = () => {
+                        while (active < MAX_CONCURRENCY && i < q.length) {
+                            const z = q[i++]; active++;
+                            loadImageData(IMG_PATH(z), W, H)
+                                .then(img => {
+                                    full[z] = img;
+                                    // Patch-copy this slice into volU8
+                                    const data = img.data;
+                                    const base3d = z * W * H;
+                                    for (let y = 0; y < H; y++) {
+                                        let rowBase = y * W;
+                                        for (let x = 0; x < W; x++) {
+                                            const i2d = (y * W + x) * 4;
+                                            volU8[base3d + rowBase + x] = grayscaleAt(data, i2d);
+                                        }
+                                    }
+                                    loadedCount++;
+                                    if (loadedCount % PROGRESS_UPDATE_EVERY === 0) tex3D.needsUpdate = true;
+                                    tickProgress();
+                                })
+                                .catch(reject)
+                                .finally(() => {
+                                    active--;
+                                    if (i >= q.length && active === 0) resolve();
+                                    else kick();
+                                });
+                        }
+                    };
+                    tickProgress();
+                    kick();
+                });
+
+                // Final update after full load
+                tex3D.needsUpdate = true;
+                progressEl.style.display = 'none';
+
+                /* ---------- Render (same scene, two passes) ---------- */
+                fitCameraToObject(volume, 1.35);
+                hud.textContent =
+                    `Touch / Desktop:
+ • Orbit: 1-finger rotate • 2-finger dolly/pan
+ • Drag a red frame to move that axis-plane (perpendicular slice)
+ • Drag the orange frame to translate (enable in GUI)
+ • Drag the orange ARROW to rotate
+ • Toggle planes in the GUI. Enable "Show tooltip" for dx/dy/dz/dl.
+Progressive loading is enabled (coarse first, then sharpens).`;
+
+                function render() {
+                    // Pass 1: back faces to RT
+                    back.visible = true;
+                    front.visible = false;
+                    renderer.setRenderTarget(rt);
+                    renderer.setClearColor(0x000000, 0.0);
+                    renderer.clear(true, true, true);
+                    renderer.render(scene, camera);
+
+                    // Pass 2: front faces composite
+                    back.visible = false;
+                    front.visible = true;
+                    renderer.setRenderTarget(null);
+                    renderer.render(scene, camera);
+
+                    controls.update();
+                }
+                renderer.setAnimationLoop(render);
+
+                // Resize
+                addEventListener('resize', () => {
+                    camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix();
+                    renderer.setSize(innerWidth, innerHeight);
+                    if (rt) {
+                        const dpr = renderer.getPixelRatio();
+                        rt.setSize(Math.floor(innerWidth * dpr), Math.floor(innerHeight * dpr));
+                        if (frontMat) frontMat.uniforms.u_res.value.set(rt.width, rt.height);
+                    }
+                });
+
+                // WebXR UI (hidden tip on iPhone)
+                setupVRUI();
+                async function setupVRUI() {
+                    let supportsImmersiveVR = false;
+                    if (navigator.xr && navigator.xr.isSessionSupported) {
+                        try { supportsImmersiveVR = await navigator.xr.isSessionSupported('immersive-vr'); } catch { }
+                    }
+                    if (supportsImmersiveVR) {
+                        document.body.appendChild(VRButton.createButton(renderer));
+                    } else {
+                        tip.textContent = 'VR not available on iOS Safari. Use Android/Quest for immersive mode. Touch works here.';
+                        tip.style.display = 'block';
+                    }
+                }
+
+            } catch (err) {
+                const msg = document.createElement('div');
+                msg.style.cssText = `
+          position:fixed; left:8px; top:8px; z-index:9999;
+          background:rgba(0,0,0,.85); color:#fff; padding:10px 12px;
+          border-radius:8px; max-width:90vw; font:12px system-ui; white-space:pre-wrap;
+        `;
+                msg.textContent = 'Error: ' + (err?.message || err);
+                document.body.appendChild(msg);
+                console.error(err);
+            }
+        })();
+    </script>
+</body>
+
+</html>
