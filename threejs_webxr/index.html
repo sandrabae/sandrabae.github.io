@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>Three.js Volume — VR-safe (no static) + Controllers + Mobile Perf</title>
+    <title>Three.js Volume — VR-safe + Controllers + Streamed Loading</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <style>
         body {
@@ -120,7 +120,7 @@
         /* ---------- CONFIG ---------- */
         const NUM_SLICES_ORIG = 451;
         const START_INDEX = 1;
-        const IMG_PATH = i => `./TranslationScaleCrop/${i + START_INDEX}.png`;
+        const IMG_PATH = i => `./TranslationScaleCrop/${i + START_INDEX}.png`;  // <-- adjust if needed
 
         const SPACING = new THREE.Vector3(1, 1, 1);
         let STEPS = 512; // adapt later
@@ -215,7 +215,7 @@
             setPickables(list) { this.pickables = list; }
             _updatePointer(e) {
                 const r = this.dom.getBoundingClientRect();
-                this.pointer.x = ((e.clientX + r.left * -1) / r.width) * 2 - 1; this.pointer.y = -((e.clientY - r.top) / r.height) * 2 + 1;
+                this.pointer.x = ((e.clientX - r.left) / r.width) * 2 - 1; this.pointer.y = -((e.clientY - r.top) / r.height) * 2 + 1;
             }
 
             onDown(e) {
@@ -283,7 +283,7 @@
             onUp() { if (this.dragging && this.orbit) this.orbit.enabled = true; this.dragging = null; }
         }
 
-        /* ---------- World Root (for VR grab/turn) ---------- */
+        /* ---------- World Root (VR grabs/turns move this) ---------- */
         const worldRoot = new THREE.Group();
         scene.add(worldRoot);
 
@@ -320,18 +320,18 @@
                 const fit = 1.0 / Math.max(worldSize.x, worldSize.y, worldSize.z);
                 const scaledFull = worldSize.clone().multiplyScalar(fit);
                 volume = new THREE.Group(); volume.scale.copy(scaledFull);
-                worldRoot.add(volume); // attach to world root for VR manipulation
+                worldRoot.add(volume);
 
                 // adaptive steps
                 const maxDim = Math.max(W, H, D);
                 STEPS = Math.round(maxDim * (isiOS ? 0.65 : 0.75));
 
-                // Exit-coordinate RT (will render mono during XR)
+                // Exit-coordinate RT (HalfFloat for VR quality)
                 const dpr = renderer.getPixelRatio();
                 rt = new THREE.WebGLRenderTarget(
                     Math.floor(innerWidth * dpr), Math.floor(innerHeight * dpr),
                     {
-                        type: THREE.HalfFloatType,   // half-float helps reduce shimmer
+                        type: THREE.HalfFloatType,
                         format: THREE.RGBAFormat,
                         minFilter: THREE.NearestFilter,
                         magFilter: THREE.NearestFilter,
@@ -579,7 +579,7 @@
                     hoveredFrame = null; tooltipEl.style.display = 'none';
                 });
 
-                /* ---------- Progressive: coarse first (no retention), then stream full ---------- */
+                /* ---------- Progressive: coarse first, then stream full ---------- */
                 function gray(data, i2d) { return ((data[i2d] + data[i2d + 1] + data[i2d + 2]) / 3) | 0; }
 
                 async function buildCoarsePlaceholder(W, H, D, step) {
@@ -770,7 +770,7 @@
                     if (snapCooldown > 0) snapCooldown -= dt;
                 }
 
-                /* ---------- Render (VR-safe two-pass) ---------- */
+                /* ---------- Render (VR-safe two-pass, with XR-mono back pass) ---------- */
                 fitCameraToObject(worldRoot, 1.35);
                 hud.textContent =
                     `Touch/Desktop:
@@ -781,7 +781,7 @@ VR:
 Perf:
  • Streamed slices, MAX_3D=${MAX3D}, stride=${depthStride}, DPR=${renderer.getPixelRatio()}`;
 
-                // Resize exit RT to XR render size on session start/end
+                // Resize exit RT to XR buffer on session start/end and place content in front of user
                 function resizeExitRTToXR() {
                     const sz = renderer.getDrawingBufferSize(new THREE.Vector2());
                     rt.setSize(sz.x, sz.y);
@@ -789,7 +789,17 @@ Perf:
                 }
                 renderer.xr.addEventListener('sessionstart', () => {
                     resizeExitRTToXR();
-                    frontMat.uniforms.u_steps.value = Math.round(frontMat.uniforms.u_steps.value * 1.2); // a touch more quality in XR
+                    frontMat.uniforms.u_steps.value = Math.round(frontMat.uniforms.u_steps.value * 1.2);
+
+                    // Place the volume ~1.5m in front of the XR camera and face the user
+                    const xrCam = renderer.xr.getCamera(camera);
+                    const camPos = new THREE.Vector3();
+                    xrCam.getWorldPosition(camPos);
+                    const fwd = new THREE.Vector3(0, 0, -1).applyQuaternion(xrCam.quaternion).normalize();
+                    const target = camPos.clone().addScaledVector(fwd, 1.5);
+                    worldRoot.position.copy(target);
+                    worldRoot.position.y -= 0.2; // small nudge toward chest height
+                    worldRoot.quaternion.copy(xrCam.quaternion);
                 });
                 renderer.xr.addEventListener('sessionend', () => {
                     const dpr = renderer.getPixelRatio();
@@ -804,14 +814,21 @@ Perf:
 
                     const inXR = renderer.xr.isPresenting;
 
-                    // Pass 1: back faces → exit coords (force MONO in XR to avoid stereo mismatch/static)
+                    // Keep exit RT/u_res synced during XR (some headsets resize dynamically)
+                    if (inXR) {
+                        const sz = renderer.getDrawingBufferSize(new THREE.Vector2());
+                        if (rt.width !== sz.x || rt.height !== sz.y) rt.setSize(sz.x, sz.y);
+                        frontMat.uniforms.u_res.value.set(rt.width, rt.height);
+                    }
+
+                    // Pass 1: back faces → exit coords (force MONO in XR)
                     const prevXR = renderer.xr.enabled;
                     if (inXR) renderer.xr.enabled = false;
                     back.visible = true; front.visible = false;
                     renderer.setRenderTarget(rt);
                     renderer.setClearColor(0x000000, 0.0);
                     renderer.clear(true, true, true);
-                    renderer.render(scene, camera);   // scene contains worldRoot→volume
+                    renderer.render(scene, camera);
                     renderer.setRenderTarget(null);
                     if (inXR) renderer.xr.enabled = prevXR;
 
@@ -824,7 +841,7 @@ Perf:
                 }
                 renderer.setAnimationLoop(render);
 
-                // Resize
+                // Resize (desktop)
                 addEventListener('resize', () => {
                     camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix();
                     renderer.setSize(innerWidth, innerHeight);
@@ -845,7 +862,7 @@ Perf:
                     if (supportsImmersiveVR) {
                         document.body.appendChild(VRButton.createButton(renderer));
                     } else {
-                        tip.textContent = 'VR not available on this device/browser. Use a WebXR headset (e.g., Quest) for immersive mode.';
+                        tip.textContent = 'VR not available on this device/browser. Use a WebXR headset for immersive mode.';
                         tip.style.display = 'block';
                     }
                 }
