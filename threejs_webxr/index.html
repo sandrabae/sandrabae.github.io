@@ -387,7 +387,7 @@
             void main(){
               vec2 uv = gl_FragCoord.xy / u_res;
               vec4 exitTex = texture2D(u_exit, uv);
-              if(exitTex.a < 0.5) discard;
+            //   if(exitTex.a < 0.5) discard;
               vec3 exit01 = exitTex.xyz;
 
               vec3 start01 = v01;
@@ -408,7 +408,7 @@
                 }
                 p += step01;
               }
-              if(accum.a <= 0.0) discard;
+            //   if(accum.a <= 0.0) discard;
               gl_FragColor = vec4(accum.rgb, 1.0);
             }`
                 });
