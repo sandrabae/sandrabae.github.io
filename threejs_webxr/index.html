@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>Three.js Volume — Streamed Load + MAX3D Cap + Mobile Perf</title>
+    <title>Three.js Volume — VR-safe (no static) + Controllers + Mobile Perf</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <style>
         body {
@@ -123,12 +123,9 @@
         const IMG_PATH = i => `./TranslationScaleCrop/${i + START_INDEX}.png`;
 
         const SPACING = new THREE.Vector3(1, 1, 1);
-        let STEPS = 512; // will adapt later
+        let STEPS = 512; // adapt later
         const CLIM = new THREE.Vector2(0.10, 0.95);
         const BASE_ALPHA = 0.80;
-        const FLIP = { x: false, y: true, z: true };
-        const ROTATE_90 = false;
-        const RESIZE_MAX = null;
 
         // UI/drag affordances
         const FRAME_SCALE = 1.35;
@@ -151,7 +148,6 @@
             camera.near = Math.max(0.01, dist / 100); camera.far = dist * 200; camera.updateProjectionMatrix();
         }
 
-        // iOS-friendly image loader with fallbacks
         async function loadImageData(url, targetW = null, targetH = null) {
             const img = new Image();
             img.crossOrigin = 'anonymous';
@@ -164,34 +160,23 @@
 
             let tw = img.naturalWidth, th = img.naturalHeight;
             if (targetW && targetH) { tw = targetW; th = targetH; }
-            else if (RESIZE_MAX) {
-                const s = Math.min(1, RESIZE_MAX / Math.max(tw, th));
-                tw = Math.max(1, Math.round(tw * s));
-                th = Math.max(1, Math.round(th * s));
-            }
 
             const hasCreateImageBitmap = typeof createImageBitmap === 'function';
             const hasOffscreen = typeof OffscreenCanvas !== 'undefined';
 
             let bmp = null;
             if (hasCreateImageBitmap) {
-                try {
-                    bmp = await createImageBitmap(img, { resizeWidth: tw, resizeHeight: th, resizeQuality: 'high' });
-                } catch (_) { /* fall back */ }
+                try { bmp = await createImageBitmap(img, { resizeWidth: tw, resizeHeight: th, resizeQuality: 'high' }); }
+                catch (_) { }
             }
 
             const canvas = hasOffscreen ? new OffscreenCanvas(tw, th) : document.createElement('canvas');
             canvas.width = tw; canvas.height = th;
             const ctx = canvas.getContext('2d', { willReadFrequently: true });
-
             if (bmp) { ctx.drawImage(bmp, 0, 0); if (bmp.close) try { bmp.close(); } catch { } }
             else { ctx.drawImage(img, 0, 0, tw, th); }
 
-            try {
-                return ctx.getImageData(0, 0, tw, th);
-            } catch (e) {
-                throw new Error('getImageData failed (likely CORS). Ensure images are same-origin or CORS-enabled.\n' + e.message);
-            }
+            return ctx.getImageData(0, 0, tw, th);
         }
 
         function createTextSprite(text, color = '#ffffff', scale = 0.18) {
@@ -230,7 +215,7 @@
             setPickables(list) { this.pickables = list; }
             _updatePointer(e) {
                 const r = this.dom.getBoundingClientRect();
-                this.pointer.x = ((e.clientX - r.left) / r.width) * 2 - 1; this.pointer.y = -((e.clientY - r.top) / r.height) * 2 + 1;
+                this.pointer.x = ((e.clientX + r.left * -1) / r.width) * 2 - 1; this.pointer.y = -((e.clientY - r.top) / r.height) * 2 + 1;
             }
 
             onDown(e) {
@@ -298,7 +283,11 @@
             onUp() { if (this.dragging && this.orbit) this.orbit.enabled = true; this.dragging = null; }
         }
 
-        /* ---------- Main ---------- */
+        /* ---------- World Root (for VR grab/turn) ---------- */
+        const worldRoot = new THREE.Group();
+        scene.add(worldRoot);
+
+        /* ---------- Main build ---------- */
         let frontMat, rt, volume, frameX, frameY, frameZ, arbRect, arbArrow, clip;
         let boxPick, pickables = [];
         let back, front;
@@ -330,18 +319,19 @@
                 const worldSize = new THREE.Vector3(W * SPACING.x, H * SPACING.y, D * SPACING.z);
                 const fit = 1.0 / Math.max(worldSize.x, worldSize.y, worldSize.z);
                 const scaledFull = worldSize.clone().multiplyScalar(fit);
-                volume = new THREE.Group(); volume.scale.copy(scaledFull); scene.add(volume);
+                volume = new THREE.Group(); volume.scale.copy(scaledFull);
+                worldRoot.add(volume); // attach to world root for VR manipulation
 
                 // adaptive steps
                 const maxDim = Math.max(W, H, D);
                 STEPS = Math.round(maxDim * (isiOS ? 0.65 : 0.75));
 
-                // Render target — lighter on memory (UnsignedByte)
+                // Exit-coordinate RT (will render mono during XR)
                 const dpr = renderer.getPixelRatio();
                 rt = new THREE.WebGLRenderTarget(
                     Math.floor(innerWidth * dpr), Math.floor(innerHeight * dpr),
                     {
-                        type: THREE.UnsignedByteType,
+                        type: THREE.HalfFloatType,   // half-float helps reduce shimmer
                         format: THREE.RGBAFormat,
                         minFilter: THREE.NearestFilter,
                         magFilter: THREE.NearestFilter,
@@ -499,14 +489,14 @@
                     arbRect, arrowProxy
                 ];
 
-                // Tooltip pick box
+                // Tooltip pick box (for dx/dy/dz/dl)
                 boxPick = new THREE.Mesh(
                     new THREE.BoxGeometry(1, 1, 1),
                     new THREE.MeshBasicMaterial({ transparent: true, opacity: 0.0, depthWrite: false })
                 );
                 volume.add(boxPick);
 
-                // Drag controller
+                // Desktop/touch drag
                 const drag = new DragController(camera, renderer.domElement, controls);
                 drag.setScene(scene);
                 drag.setPickables(pickables);
@@ -555,9 +545,6 @@
                 gui.add(params, 'Show tooltip');
 
                 // Tooltip hover
-                const hoverRay = new THREE.Raycaster();
-                const pointerNDC = new THREE.Vector2();
-                let hoveredFrame = null;
                 function setPointerFromEvent(e) {
                     const r = renderer.domElement.getBoundingClientRect();
                     pointerNDC.x = ((e.clientX - r.left) / r.width) * 2 - 1; pointerNDC.y = -((e.clientY - r.top) / r.height) * 2 + 1;
@@ -608,7 +595,6 @@
                                 vol[base3d + rowBase + x] = gray(img.data, i2d);
                             }
                         }
-                        // nearest-neighbor fill between coarse slices
                         const nextZ = Math.min(D - 1, z + step);
                         for (let zz = z + 1; zz < nextZ; zz++) {
                             const dstBase = zz * W * H;
@@ -676,33 +662,165 @@
                 tex3D.needsUpdate = true;
                 progressEl.style.display = 'none';
 
-                /* ---------- Render (same scene, two passes) ---------- */
-                fitCameraToObject(volume, 1.35);
-                hud.textContent =
-                    `Touch / Desktop:
- • Orbit: 1-finger rotate • 2-finger dolly/pan
- • Drag a red frame to move that axis-plane (perpendicular slice)
- • (GUI) Toggle orange plane; drag frame to translate, arrow to rotate
- • (GUI) "Show tooltip" for dx/dy/dz/dl
-Performance:
- • Streamed slices, MAX_3D cap = ${MAX3D}, stride=${depthStride}, DPR=${renderer.getPixelRatio()}`;
+                /* ---------- VR controllers & locomotion ---------- */
+                const controllerModelFactory = new XRControllerModelFactory();
 
+                function makeController(i) {
+                    const c = renderer.xr.getController(i); c.userData.index = i;
+
+                    // visible ray
+                    const rayGeom = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, -1)]);
+                    const ray = new THREE.Line(rayGeom, new THREE.LineBasicMaterial({ transparent: true, opacity: 0.6 }));
+                    ray.scale.z = 3.0; c.add(ray);
+
+                    c.addEventListener('selectstart', onSelectStart);
+                    c.addEventListener('selectend', onSelectEnd);
+                    c.addEventListener('squeezestart', onSqueezeStart);
+                    c.addEventListener('squeezeend', onSqueezeEnd);
+
+                    scene.add(c);
+                    const grip = renderer.xr.getControllerGrip(i);
+                    grip.add(controllerModelFactory.createControllerModel(grip));
+                    scene.add(grip);
+                    return c;
+                }
+                const controller1 = makeController(0);
+                const controller2 = makeController(1);
+
+                const vrRaycaster = new THREE.Raycaster();
+                const vrTargets = pickables;
+                let vrDrag = null;  // { controller, obj, plane, offset, opts, mode }
+                let grabbing = null;// { controller, worldToController }
+
+                function buildPointerRay(controller) {
+                    const m = controller.matrixWorld;
+                    const origin = new THREE.Vector3().setFromMatrixPosition(m);
+                    const dir = new THREE.Vector3(0, 0, -1).applyMatrix4(new THREE.Matrix4().extractRotation(m)).normalize();
+                    return { origin, dir };
+                }
+                function onSelectStart(e) {
+                    const c = e.target;
+                    const { origin, dir } = buildPointerRay(c);
+                    vrRaycaster.ray.origin.copy(origin);
+                    vrRaycaster.ray.direction.copy(dir);
+
+                    const hits = vrRaycaster.intersectObjects(vrTargets, true);
+                    if (!hits.length) return;
+
+                    let o = hits[0].object;
+                    while (o && !o.userData.dragOpts) o = o.parent;
+                    if (!o) return;
+                    const opts = o.userData.dragOpts;
+                    const obj = opts.target || o;
+
+                    const n = dir.clone().negate();
+                    const plane = new THREE.Plane().setFromNormalAndCoplanarPoint(n, hits[0].point.clone());
+                    const offset = hits[0].point.clone().sub(obj.getWorldPosition(new THREE.Vector3()));
+
+                    vrDrag = { controller: c, obj, opts, plane, offset, mode: (opts.id === 'arb-rot' ? 'rotate' : 'translate') };
+                }
+                function onSelectEnd() { vrDrag = null; }
+
+                function onSqueezeStart(e) {
+                    const c = e.target;
+                    const inv = new THREE.Matrix4().copy(c.matrixWorld).invert();
+                    const worldToController = new THREE.Matrix4().multiplyMatrices(inv, worldRoot.matrixWorld);
+                    grabbing = { controller: c, worldToController };
+                }
+                function onSqueezeEnd() { grabbing = null; }
+
+                const SNAP_DEG = 30;
+                const DEADZONE = 0.35;
+                let snapCooldown = 0;
+                function processThumbsticks(dt) {
+                    [controller1, controller2].forEach(c => {
+                        const gp = c.gamepad;
+                        if (!gp || !gp.axes) return;
+                        const x = gp.axes[2] ?? gp.axes[0] ?? 0;
+                        if (snapCooldown > 0) return;
+                        if (x > DEADZONE) { worldRoot.rotateY(-THREE.MathUtils.degToRad(SNAP_DEG)); snapCooldown = 0.2; }
+                        else if (x < -DEADZONE) { worldRoot.rotateY(+THREE.MathUtils.degToRad(SNAP_DEG)); snapCooldown = 0.2; }
+                    });
+                }
+
+                function updateVR(dt) {
+                    if (vrDrag) {
+                        const c = vrDrag.controller;
+                        const { origin, dir } = buildPointerRay(c);
+                        const p = new THREE.Vector3();
+                        const line = new THREE.Line3(origin, origin.clone().addScaledVector(dir, 10));
+                        if (vrDrag.plane.intersectLine(line, p)) {
+                            const targetWorld = p.clone().sub(vrDrag.offset);
+                            const parent = vrDrag.obj.parent || scene;
+                            const targetLocal = parent.worldToLocal(targetWorld);
+                            const { obj, opts } = vrDrag;
+                            if (opts.axis === 'x') { targetLocal.y = obj.position.y; targetLocal.z = obj.position.z; }
+                            if (opts.axis === 'y') { targetLocal.x = obj.position.x; targetLocal.z = obj.position.z; }
+                            if (opts.axis === 'z') { targetLocal.x = obj.position.x; targetLocal.y = obj.position.y; }
+                            obj.position.copy(targetLocal);
+                            opts.onChange(obj);
+                        }
+                    }
+                    if (grabbing) {
+                        const m = new THREE.Matrix4().multiplyMatrices(grabbing.controller.matrixWorld, grabbing.worldToController);
+                        worldRoot.matrix.copy(m);
+                        worldRoot.matrix.decompose(worldRoot.position, worldRoot.quaternion, worldRoot.scale);
+                    }
+                    processThumbsticks(dt);
+                    if (snapCooldown > 0) snapCooldown -= dt;
+                }
+
+                /* ---------- Render (VR-safe two-pass) ---------- */
+                fitCameraToObject(worldRoot, 1.35);
+                hud.textContent =
+                    `Touch/Desktop:
+ • Orbit: 1-finger rotate • 2-finger dolly/pan
+ • Drag a red frame to move that axis-plane; toggle orange plane in GUI
+VR:
+ • Trigger = drag frames/plane • Grip = grab world • Stick = snap-turn
+Perf:
+ • Streamed slices, MAX_3D=${MAX3D}, stride=${depthStride}, DPR=${renderer.getPixelRatio()}`;
+
+                // Resize exit RT to XR render size on session start/end
+                function resizeExitRTToXR() {
+                    const sz = renderer.getDrawingBufferSize(new THREE.Vector2());
+                    rt.setSize(sz.x, sz.y);
+                    frontMat.uniforms.u_res.value.set(sz.x, sz.y);
+                }
+                renderer.xr.addEventListener('sessionstart', () => {
+                    resizeExitRTToXR();
+                    frontMat.uniforms.u_steps.value = Math.round(frontMat.uniforms.u_steps.value * 1.2); // a touch more quality in XR
+                });
+                renderer.xr.addEventListener('sessionend', () => {
+                    const dpr = renderer.getPixelRatio();
+                    rt.setSize(Math.floor(innerWidth * dpr), Math.floor(innerHeight * dpr));
+                    frontMat.uniforms.u_res.value.set(rt.width, rt.height);
+                });
+
+                let lastT = performance.now();
                 function render() {
-                    // Pass 1: back faces → exit coords
-                    back.visible = true;
-                    front.visible = false;
+                    const now = performance.now();
+                    const dt = (now - lastT) / 1000; lastT = now;
+
+                    const inXR = renderer.xr.isPresenting;
+
+                    // Pass 1: back faces → exit coords (force MONO in XR to avoid stereo mismatch/static)
+                    const prevXR = renderer.xr.enabled;
+                    if (inXR) renderer.xr.enabled = false;
+                    back.visible = true; front.visible = false;
                     renderer.setRenderTarget(rt);
                     renderer.setClearColor(0x000000, 0.0);
                     renderer.clear(true, true, true);
-                    renderer.render(scene, camera);
-
-                    // Pass 2: front faces → composite
-                    back.visible = false;
-                    front.visible = true;
+                    renderer.render(scene, camera);   // scene contains worldRoot→volume
                     renderer.setRenderTarget(null);
+                    if (inXR) renderer.xr.enabled = prevXR;
+
+                    // Pass 2: front faces → main (stereo if inXR)
+                    back.visible = false; front.visible = true;
                     renderer.render(scene, camera);
 
-                    controls.update();
+                    if (!inXR) controls.update();
+                    if (inXR) updateVR(dt);
                 }
                 renderer.setAnimationLoop(render);
 
@@ -710,14 +828,14 @@ Performance:
                 addEventListener('resize', () => {
                     camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix();
                     renderer.setSize(innerWidth, innerHeight);
-                    if (rt) {
+                    if (!renderer.xr.isPresenting) {
                         const dpr = renderer.getPixelRatio();
                         rt.setSize(Math.floor(innerWidth * dpr), Math.floor(innerHeight * dpr));
-                        if (frontMat) frontMat.uniforms.u_res.value.set(rt.width, rt.height);
+                        frontMat.uniforms.u_res.value.set(rt.width, rt.height);
                     }
                 });
 
-                // WebXR UI (hidden on iPhone)
+                // WebXR UI (button or tip)
                 setupVRUI();
                 async function setupVRUI() {
                     let supportsImmersiveVR = false;
@@ -727,7 +845,7 @@ Performance:
                     if (supportsImmersiveVR) {
                         document.body.appendChild(VRButton.createButton(renderer));
                     } else {
-                        tip.textContent = 'VR not available on iOS Safari. Use Android/Quest for immersive mode. Touch works here.';
+                        tip.textContent = 'VR not available on this device/browser. Use a WebXR headset (e.g., Quest) for immersive mode.';
                         tip.style.display = 'block';
                     }
                 }
