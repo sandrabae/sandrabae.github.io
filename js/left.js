@@ -16,13 +16,13 @@ class Left extends HTMLElement {
                 <tr></tr>
                 <tr>
                   <td class="cell-column align-top">
-                    <h2 id="logo-title">Pushing data beyond the flat screen</h2>
+                    <h2 id="logo-title">Advancing the science and engineering of data representations</h2>
                     <div class="paragraph-spacing">
-                      <p style="padding-top:5px;">Hi I'm Sandra Bae. I advance data visual analytics by using data representations that are beyond 2D. Using theoretical and experimental approaches, my research addresses fundamental and applied challenges in data visualization, particularly for spatial and multi-dimensional datasets.</p>
+                      <p style="padding-top:5px;">Hi I'm Sandra Bae. I advance data analytics by designing data representations that are beyond 2D. Using theoretical and experimental approaches, my research addresses fundamental and applied challenges in data visualizations, particularly for spatial and multi-dimensional datasets.</p>
 
                       <p>I am an Assistant Professor in Computer Science at the University of Arizona. 
-                      I earned my Ph.D from the ATLAS Institute at the University of Colorado, Boulder (2025), where I was advised by Profs. <a href="${json.people.edo}">Ellen Do</a>, <a href="${json.people.dszafir}">Danielle Albers Szafir</a>, and <a href="${json.people.mrivera}">Michael L. Rivera</a>. I completed my M.S. in Computer Science (2020) as a NASA JPL Master's Thesis Educational Fellow and my B.A. in Human-Computer Interaction (2018), both from the University of California, Davis. My broader research interests include human-computer interaction, data visualization, computational geometry & fabrication, optimization, and tangible Interactions.</p>
-                  		<p>When I'm not in the lab, you can probably find my nose in a good book, my hands on a rock, or my feet in the mountains.</p>
+                      I earned my Ph.D from the ATLAS Institute at the University of Colorado, Boulder (2025), where I was advised by Profs. <a href="${json.people.edo}">Ellen Do</a>, <a href="${json.people.dszafir}">Danielle Albers Szafir</a>, and <a href="${json.people.mrivera}">Michael L. Rivera</a>. I completed my M.S. in Computer Science (2020) as a NASA JPL Master's Thesis Educational Fellow and my B.A. in Human-Computer Interaction (2018), both from the University of California, Davis. My broader research interests include human-computer interaction, data visualization, computational geometry & fabrication, optimization, and tangible interactions.</p>
+                  		<p>When I'm not in the lab, you can probably find my nose in a good book, my hands on a rock, my eye behind a camera, or my feet in the mountains.</p>
                       <!-- </div> -->
                   	</div>
                     </div>
@@ -78,6 +78,7 @@ class Left extends HTMLElement {
             </div>
             <div class="btn-links">
               <a class="btn btn-outline-primary my-1 mr-1 btn-sm" href="${json.papers.freeforminterface.pdf}" target="_blank" rel="noopener">PDF</a>
+              <a class="btn btn-outline-primary my-1 mr-1 btn-sm" href="${json.papers.freeforminterface.doi}" target="_blank" rel="noopener">DOI</a>
                <a class="btn btn-outline-primary my-1 mr-1 btn-sm" href="${json.papers.freeforminterface.trailer}" target="_blank" rel="noopener">Video</a>
                <a class="btn btn-outline-primary my-1 mr-1 btn-sm" href="${json.papers.freeforminterface.code}" target="_blank" rel="noopener">Code</a>
             </div>

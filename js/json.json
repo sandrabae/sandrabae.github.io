@@ -70,9 +70,10 @@
       "venue": "ACM Symposium on Computational Fabrication 2025 (forthcoming)",
       "year": "2025",
       "icon": "../img/main/2025_freeform_interface.png",
-      "pdf": "https://arxiv.org/abs/2412.00711",
+      "pdf": "https://www.arxiv.org/abs/2509.25387",
+      "doi": "https://dl.acm.org/doi/full/10.1145/3745778.3766650",
       "code": "https://github.com/d-rep-lab/3dp-singlewire-sensing",
-      "trailer": "https://youtu.be/at5puV1MHUo?si=asOLS72rP1dc6IvJ"
+      "trailer": "https://youtu.be/leWiqnmo2pU?si=O7Kmc57FBy6CMyP-"
     },
     "gentact": {
       "title": "GenTact Toolbox: A Computational Design Pipeline to Procedurally Generate Context-Driven 3D Printed Whole-Body Artificial Skins",
