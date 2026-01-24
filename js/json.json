@@ -3,7 +3,7 @@
     "gscholar": "https://scholar.google.com/citations?user=tsJCgD4AAAAJ&hl=en&oi=ao",
     "twitter": "https://twitter.com/sandrabae_sb",
     "linkedin": "https://www.linkedin.com/in/sandra-bae-53058553/",
-    "email": "mailto:sandrabae@cs.arizona.edu",
+    "email": "mailto:sandrabae@arizona.edu",
     "cv": "../materials/sb_cv.pdf",
     "cv2": "../materials/sb_cv.pdf"
   },
@@ -67,7 +67,7 @@
     "freeforminterface": {
       "title": "Computational Design and Single-Wire Sensing of 3D Printed Objects with Integrated Capacitive Touchpoints",
       "sentence": "Supporting multiple capacitive sensing touchpoints with a single-wire connection",
-      "venue": "ACM Symposium on Computational Fabrication 2025 (forthcoming)",
+      "venue": "ACM Symposium on Computational Fabrication 2025",
       "year": "2025",
       "icon": "../img/main/2025_freeform_interface.png",
       "pdf": "https://www.arxiv.org/abs/2509.25387",
