@@ -18,7 +18,9 @@ class Left extends HTMLElement {
                   <td class="cell-column align-top">
                     <h2 id="logo-title">Advancing the science and engineering of data representations</h2>
                     <div class="paragraph-spacing">
-                      <p style="padding-top:5px;">Hi I'm Sandra Bae. I advance data analytics by engineering data representations beyond the 2D screen—physical, spatial, and multimodal forms that act as scientific instruments for sensemaking. Using theoretical and experimental approaches, my research addresses fundamental and applied challenges in data visualizations, particularly for spatial and multi-dimensional datasets.</p>
+                      <p style="padding-top:5px;">Hi I'm Sandra Bae. I advance data analytics by designing new ways to represent and interact with data.
+                      My work explores physical, spatial, and multimodal forms that help people reason about complex, high-dimensional datasets. Through theory and experimentation, I study how these representations can expand what we are able to see and understand.
+                      </p>
 
                       <p>I am an Assistant Professor in Computer Science at the University of Arizona. 
                       I earned my Ph.D from the ATLAS Institute at the University of Colorado, Boulder (2025), where I was advised by Profs. <a href="${json.people.edo}">Ellen Do</a>, <a href="${json.people.dszafir}">Danielle Albers Szafir</a>, and <a href="${json.people.mrivera}">Michael L. Rivera</a>. I completed my M.S. in Computer Science (2020) as a NASA JPL Master's Thesis Educational Fellow and my B.A. in Human-Computer Interaction (2018), both from the University of California, Davis. My broader research interests include human-computer interaction, data visualization, computational geometry & fabrication, optimization, and tangible interactions.</p>
