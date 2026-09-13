@@ -44,9 +44,30 @@
     "kcave": "https://people.umass.edu/kcave/",
     "prosen": "https://cspaul.com/",
     "cgorg": "https://www.linkedin.com/in/carsten-g%C3%B6rg-31020351/",
-    "xwen": "https://xinwen-xw.github.io/"
+    "xwen": "https://xinwen-xw.github.io/",
+    "kranjan": "https://krithik-ranjan.github.io/",
+    "rliang": "https://howieliang.github.io/",
+    "shouben": "https://stevenhouben.be/",
+    "hvaniterson": "https://hannahvaniterson.nl/",
+    "tlu": "https://scholar.google.com/citations?user=7XLszYQAAAAJ&hl=en"
   },
   "papers": {
+    "paperblox": {
+      "title": "PaperBlox: Reducing Equipment Barriers in TUI Prototyping via Paper Templates and Computer Vision",
+      "sentence": "A paper-template and computer vision approach for reducing equipment barriers in tangible user interface prototyping",
+      "venue": "Nordic Conference on Human-Computer Interaction (NordiCHI) 2026",
+      "year": "2026",
+      "icon": "../img/main/paperblox.png",
+      "trailer": ""
+    },
+    "reactivision": {
+      "title": "Why (not) ReacTiVision: Emerging Challenges and Opportunities for Building Tangible User Interfaces with Computer Vision Toolkits",
+      "sentence": "An examination of emerging challenges and opportunities in using computer vision to build tangible user interfaces",
+      "venue": "ACM Tangible, Embedded, and Embodied Interaction (TEI) 2026 <br><b>Best Paper Honorable Mention Award (Top 3%) 🏆</b>",
+      "year": "2026",
+      "icon": "../img/main/WNR.jpg",
+      "trailer": ""
+    },
     "m2d2": {
       "title": "Enabling Recycling of Multi-Material 3D Printed Objects through Computational Design and Disassembly by Dissolution",
       "sentence": "A 3D printing process using dissolvable interfaces that preserve the object's function",
@@ -99,6 +120,7 @@
       "venue": "Proceedings of IEEE VIS 2024",
       "year": "2024",
       "icon": "../img/main/annotation.jpg",
+      "doi": "https://ieeexplore.ieee.org/document/10771128",
       "pdf": "https://arxiv.org/abs/2408.04574",
       "trailer": "https://youtu.be/eAGwGnYYQ7s"
     },

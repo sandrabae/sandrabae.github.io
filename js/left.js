@@ -18,13 +18,18 @@ class Left extends HTMLElement {
                   <td class="cell-column align-top">
                     <h2 id="logo-title">Advancing the science and engineering of data representations</h2>
                     <div class="paragraph-spacing">
-                      <p style="padding-top:5px;">Hi I'm Sandra Bae. I advance data analytics by designing new ways to represent and interact with data.
-                      My work explores physical, spatial, and multimodal forms that help people reason about complex, high-dimensional datasets. Through theory and experimentation, I study how these representations can expand what we are able to see and understand.
+                      <p style="padding-top:5px;"> I am an Assistant Professor in Computer Science at the University of Arizona, where I co-direct the <a href="https://d-rep.org/">D-REP Lab</a>. I advance data representation and interaction by developing new ways to help people reason with data.
                       </p>
 
-                      <p>I am an Assistant Professor in Computer Science at the University of Arizona. 
-                      I earned my Ph.D from the ATLAS Institute at the University of Colorado, Boulder (2025), where I was advised by Profs. <a href="${json.people.edo}">Ellen Do</a>, <a href="${json.people.dszafir}">Danielle Albers Szafir</a>, and <a href="${json.people.mrivera}">Michael L. Rivera</a>. I completed my M.S. in Computer Science (2020) as a NASA JPL Master's Thesis Educational Fellow and my B.A. in Human-Computer Interaction (2018), both from the University of California, Davis. My broader research interests include human-computer interaction, data visualization, computational geometry & fabrication, optimization, and tangible interactions.</p>
-                  		<p>When I'm not in the lab, you can probably find my nose in a good book, my hands on a rock, my eye behind a camera, or my feet in the mountains.</p>
+                      <p>
+                        My research examines how different ways of representing data shape what people can perceive and reason about. To that end, I also develop new computational and physical capabilities that expand the space of possible representations, opening up new ways of seeing, understanding, and interacting with complex datasets. I pursue this through perceptual and cognitive studies of how people interpret data representations, computational design and sensing methods for realizing new ones, and multimodal interactions that create new ways for people to engage with them. Much of this work is developed together with students in the D-REP Lab and collaborators, whose ideas, expertise, and perspectives shape the questions we pursue.
+                      </p>
+
+                      <p>
+                        I earned my Ph.D. from the ATLAS Institute at the University of Colorado Boulder (2025), my M.S. in Computer Science from the University of California, Davis (2020), and my B.A. in Human-Computer Interaction from UC Davis (2018). During my M.S., I was a NASA JPL Master's Thesis Educational Fellow. </p>
+                        <p>
+                        When I'm not in the lab, you can probably find my nose in a good book, my hands on a rock, my eye behind a camera, or my feet in the mountains.
+                      </p>
                       <!-- </div> -->
                   	</div>
                     </div>
@@ -54,14 +59,83 @@ class Left extends HTMLElement {
 
         <div class="announcement-highlight">
         <span class="highlight-icon">✨</span>
-        <div class="highlight-message"><b>I joined the University of Arizona as an Assistant Professor of Computer Science and started the Data Representation (D-REP) Lab. I am looking to work with highly motivated students and postdocs for Fall 2026. Visit the <a href="https://d-rep.org" rel="external nofollow noopener" target="_blank">lab's website</a> to learn more about D-REP, our ongoing projects, and the application process.</b></div></div>
+        <div class="highlight-message"><b>I joined the University of Arizona as an Assistant Professor of Computer Science and started the Data Representation (D-REP) Lab. I am looking to work with highly motivated students and postdocs for Fall 2027. Visit the <a href="https://d-rep.org" rel="external nofollow noopener" target="_blank">lab's website</a> to learn more about D-REP, our ongoing projects, and the application process.</b></div></div>
       </div>
 
 
         <div class="publications column-header">
           <h2>Publications</h2>
 
-                <div class="media stream-item">
+
+    <div class="media stream-item">
+  <div class="media-body">
+    <h3 class="article-title mb-0 mt-0">
+      ${json.papers.paperblox.title}
+    </h3>
+
+    <div class="article-style">
+      ${json.papers.paperblox.sentence}
+    </div>
+
+    <div class="stream-meta article-metadata">
+      <div>
+        <span><a href="${json.people.hvaniterson}" target="_blank">Hannah van Iterson</a></span>,
+        <span><a href="${json.people.tlu}" target="_blank">Tianqin Lu</a></span>,
+        <span><strong>Sandra Bae</strong></span>,
+        <span><a href="${json.people.shouben}" target="_blank">Steven Houben</a></span>,
+        <span><a href="${json.people.rliang}" target="_blank">Rong-Hao Liang</a></span>
+      </div>
+
+      <div class="venue">
+        ${json.papers.paperblox.venue}
+      </div>
+    </div>
+  </div>
+
+  <div class="ml-3">
+    <a href="#">
+      <img src="${json.papers.paperblox.icon}" alt="">
+    </a>
+  </div>
+</div>
+
+
+
+
+          <div class="media stream-item">
+  <div class="media-body">
+    <h3 class="article-title mb-0 mt-0">
+      ${json.papers.reactivision.title}
+    </h3>
+
+    <div class="article-style">
+      ${json.papers.reactivision.sentence}
+    </div>
+
+    <div class="stream-meta article-metadata">
+      <div>
+        <span><a href="${json.people.kranjan}" target="_blank">Krithik Ranjan</a></span>,
+        <span><strong>Sandra Bae</strong></span>,
+        <span><a href="${json.people.pgyory}" target="_blank">Peter Gyory</a></span>,
+        <span><a href="${json.people.edo}" target="_blank">Ellen Yi-Luen Do</a></span>,
+        <span><a href="${json.people.rliang}" target="_blank">Rong-Hao Liang</a></span>,
+        <span><a href="${json.people.czheng}" target="_blank">Clement Zheng</a></span>
+      </div>
+
+      <div class="venue">
+        ${json.papers.reactivision.venue}
+      </div>
+    </div>
+  </div>
+
+  <div class="ml-3">
+    <a href="#">
+      <img src="${json.papers.reactivision.icon}" alt="">
+    </a>
+  </div>
+</div>
+
+        <div class="media stream-item">
           <div class="media-body">
             <h3 class="article-title mb-0 mt-0">
               ${json.papers.freeforminterface.title}
@@ -219,6 +293,7 @@ class Left extends HTMLElement {
               <div class="venue">${json.papers.annotation.venue}</div>
             </div>
             <div class="btn-links">
+             <a class="btn btn-outline-primary my-1 mr-1 btn-sm" href="${json.papers.annotation.doi}" target="_blank" rel="noopener">DOI</a>
               <a class="btn btn-outline-primary my-1 mr-1 btn-sm" href="${json.papers.annotation.pdf}" target="_blank" rel="noopener">PDF</a>
               <a class="btn btn-outline-primary my-1 mr-1 btn-sm" href="${json.papers.annotation.trailer}" target="_blank" rel="noopener">Trailer</a>
             </div>

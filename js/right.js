@@ -5,7 +5,13 @@ class Right extends HTMLElement {
   connectedCallback() {
     this.innerHTML = `
     <h2>News</h2>
+    <b>08/31/26</b> Attended the Dagstuhl Seminar on Perception-Informed Network Visualization and presented on network perception</br>
+    <b>07/26/26</b> Visited and presented at Sony CSL Kyoto. Thanks Yusuke Sakai for hosting me!</br>
+    <b>06/30/26</b> PaperBlox accepted to NordiCHI 2026</br>
+    <b>03/11/26</b> Received a Best Poster Honorable Mention at ACM TEI 2026</br>
+    <b>11/19/2025</b> Why (not) ReacTiVision accepted to ACM TEI 2026</br>
     <b>08/18/25</b> Started as a tenure-track professor at University of Arizona</br>
+   <b>2025</b> Our CHI 2025 paper received a Best Paper Award (Top 1%)</br>
     <b>03/14/25</b> Defended my PhD! Thank you to my advisors, committee, labmates, and friends.</br>
     <b>03/10/25</b> Visited and presented at Tufts CS. Thanks Prof. Remco Chang for hosting me!</br>
     <b>03/03/25</b> Visited and presented at WashU CSE. Thanks Prof. Alvitta Ottley for hosting me!</br>
