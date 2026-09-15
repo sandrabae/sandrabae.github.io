@@ -18,7 +18,7 @@ class Left extends HTMLElement {
                   <td class="cell-column align-top">
                     <h2 id="logo-title">Advancing the science and engineering of data representations</h2>
                     <div class="paragraph-spacing">
-                      <p style="padding-top:5px;"> I am an Assistant Professor in Computer Science at the University of Arizona, where I co-direct the <a href="https://d-rep.org/">D-REP Lab</a>. I advance data representation and interaction by developing new ways to help people reason with data.
+                      <p style="padding-top:5px;"> Hi, I'm Sandra Bae. I am an Assistant Professor in Computer Science at the University of Arizona, where I co-direct the <a href="https://d-rep.org/">D-REP Lab</a>. I advance data representation and interaction by developing new ways to help people reason with data.
                       </p>
 
                       <p>
