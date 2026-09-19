@@ -18,11 +18,11 @@ class Left extends HTMLElement {
                   <td class="cell-column align-top">
                     <h2 id="logo-title">Advancing the science and engineering of data representations</h2>
                     <div class="paragraph-spacing">
-                      <p style="padding-top:5px;"> Hi, I'm Sandra Bae. I am an Assistant Professor in Computer Science at the University of Arizona, where I co-direct the <a href="https://d-rep.org/">D-REP Lab</a>. I advance data representation and interaction by developing new ways to help people reason with data.
+                      <p style="padding-top:5px;"> Hi, I'm Sandra Bae. I am an Assistant Professor in Computer Science at the University of Arizona, where I co-direct the <a href="https://d-rep.org/">D-REP Lab</a>. I develop theories and tools for designing data representations that support human perception, reasoning, and interaction with information.
                       </p>
 
                       <p>
-                        My research examines how different ways of representing data shape what people can perceive and reason about. To that end, I also develop new computational and physical capabilities that expand the space of possible representations, opening up new ways of seeing, understanding, and interacting with complex datasets. I pursue this through perceptual and cognitive studies of how people interpret data representations, computational design and sensing methods for realizing new ones, and multimodal interactions that create new ways for people to engage with them. Much of this work is developed together with students in the D-REP Lab and collaborators, whose ideas, expertise, and perspectives shape the questions we pursue.
+                        My research examines how the design of a representation shapes what people can understand and do with data. I combine approaches from visualization, human-computer interaction, cognitive science, artificial intelligence, sensing, and computational fabrication to study the principles that make representations effective and to expand the space of what representations can be. I pursue this through perceptual and cognitive studies of how people interpret representations, computational and physical methods for realizing new ones, and interactive and adaptive systems that allow representations to respond to human intent and context. Across this work, I aim to connect what people need to understand or accomplish with the representational properties that can best support those goals. Much of this work is developed together with students in the D-REP Lab and collaborators, whose ideas, expertise, and perspectives shape the questions we pursue.
                       </p>
 
                       <p>
