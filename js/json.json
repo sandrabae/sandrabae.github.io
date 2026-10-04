@@ -58,7 +58,8 @@
       "venue": "Nordic Conference on Human-Computer Interaction (NordiCHI) 2026",
       "year": "2026",
       "icon": "../img/main/paperblox.png",
-      "trailer": ""
+      "trailer": "",
+      "doi": "https://dl.acm.org/doi/10.1145/3829807.3829824"
     },
     "reactivision": {
       "title": "Why (not) ReacTiVision: Emerging Challenges and Opportunities for Building Tangible User Interfaces with Computer Vision Toolkits",
@@ -66,7 +67,8 @@
       "venue": "ACM Tangible, Embedded, and Embodied Interaction (TEI) 2026 <br><b>Best Paper Honorable Mention Award (Top 3%) 🏆</b>",
       "year": "2026",
       "icon": "../img/main/WNR.jpg",
-      "trailer": ""
+      "trailer": "https://www.linkedin.com/posts/rong-hao-liang-33275351_tei2026-computervision-tangibleinteraction-ugcPost-7439791272183312384-SC-r/",
+      "doi": "https://dl.acm.org/doi/abs/10.1145/3731459.3773326"
     },
     "m2d2": {
       "title": "Enabling Recycling of Multi-Material 3D Printed Objects through Computational Design and Disassembly by Dissolution",

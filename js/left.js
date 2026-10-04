@@ -22,7 +22,7 @@ class Left extends HTMLElement {
                       </p>
 
                       <p>
-                        My research examines how the design of a representation shapes what people can understand and do with data. I study both sides of this question: the principles that make a representation effective, and the new forms representations can take when those principles guide their design. I pursue this through perceptual and cognitive studies of how people interpret representations, computational and physical methods for realizing new ones, and interactive and adaptive systems that allow representations to respond to human intent and context. Across this work, I aim to connect what people need to understand or accomplish with the representational properties that can best support those goals. Much of this work is developed together with students in the D-REP Lab and collaborators, whose ideas, expertise, and perspectives shape the questions we pursue.
+                        My research examines how the design of a representation shapes what people can understand and do with data. My aim is to design data representations, across digital, physical, and immersive media, around what people need to understand or accomplish. I pursue this through perceptual and cognitive studies of how people interpret representations, computational and physical methods for realizing new ones, and sensing and adaptive systems that respond to how people interact. Current projects explore settings ranging from science education to scientific discovery to human oversight of AI. Much of this work is developed together with students in the D-REP Lab and collaborators, whose ideas, expertise, and perspectives shape the questions we pursue.
                       </p>
 
                       <p>
@@ -90,6 +90,9 @@ class Left extends HTMLElement {
         ${json.papers.paperblox.venue}
       </div>
     </div>
+    <div class="btn-links">
+              <a class="btn btn-outline-primary my-1 mr-1 btn-sm" href="${json.papers.paperblox.doi}" target="_blank" rel="noopener">DOI</a>
+            </div>
   </div>
 
   <div class="ml-3">
@@ -126,6 +129,10 @@ class Left extends HTMLElement {
         ${json.papers.reactivision.venue}
       </div>
     </div>
+     <div class="btn-links">
+              <a class="btn btn-outline-primary my-1 mr-1 btn-sm" href="${json.papers.reactivision.doi}" target="_blank" rel="noopener">DOI</a>
+               <a class="btn btn-outline-primary my-1 mr-1 btn-sm" href="${json.papers.freeforminterface.trailer}" target="_blank" rel="noopener">Video</a>
+            </div>
   </div>
 
   <div class="ml-3">
